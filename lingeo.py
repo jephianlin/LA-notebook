@@ -42,6 +42,11 @@ def random_int_vec(l, r=5):
     """
     return vector(random_int_list(l,r))
 
+def draw_two_vec(x, y):
+    yx = y.inner_product(x) / x.norm()**2
+    yy = (y - yx*x).norm()
+    return arrow((0,0), (x.norm(), 0), color="red") + arrow((0,0), (yx, yy), color="blue")
+
 def vector_plot(v=None, start=None, dim=None, viewer='threejs', **kwds):
     if dim == None:
         dim = len(v)
