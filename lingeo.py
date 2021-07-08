@@ -100,8 +100,8 @@ def draw_span(vectors, p=None, dim=None, viewer='threejs', width=5):
             if coefs[i] > 0:
                 pic += vector_plot(vec, start, viewer=viewer, color=clr)
             elif coefs[i] < 0:
-                pic += vector_plot(-vec, start, viewer=viewer, color=clr)
+                pic += vector_plot(vec, start - vec, viewer=viewer, color=clr)
             else:
                 pic += vector_plot(vec, start, viewer=viewer, color=clr)
-                pic += vector_plot(-vec, start, viewer=viewer, color=clr)
+                pic += vector_plot(vec, start - vec, viewer=viewer, color=clr)
     return pic
