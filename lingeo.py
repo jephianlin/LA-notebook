@@ -12,6 +12,7 @@ from sage.combinat.tuple import Tuples
 from sage.rings.rational_field import QQ
 
 from sage.modules.free_module_element import vector
+from sage.matrix.constructor import matrix
 from sage.matrix.special import zero_matrix
 
 # from sage.plot.text import text
