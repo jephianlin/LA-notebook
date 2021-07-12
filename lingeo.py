@@ -13,6 +13,7 @@ from sage.rings.rational_field import QQ
 
 from sage.modules.free_module_element import vector
 from sage.matrix.constructor import matrix
+from sage.matrix.special import identity_matrix
 from sage.matrix.special import zero_matrix
 
 # from sage.plot.text import text
@@ -231,3 +232,53 @@ def betak_solver(ref, free, k):
         j = pivots[i]
         betak[j] = -sum([ref[i,jj]*betak[jj] for jj in range(j+1,n)])
     return  matrix(n,betak)
+
+def row_space_matrix(A):
+    m,n = A.dimensions()
+    R = A.rref()
+    pivots = find_pivots(R)
+    free = [i for i in range(n) if i not in pivots]
+    r = len(pivots)
+    Rp = R[:r,:] ### r x n
+    H = zero_matrix(Rp.base_ring(), n, n-r) ### n x (n-r)
+    H[pivots] = -Rp[:, free]
+    H[free] = identity_matrix(n-r)
+    return Rp
+
+def kernel_matrix(A):
+    m,n = A.dimensions()
+    R = A.rref()
+    pivots = find_pivots(R)
+    free = [i for i in range(n) if i not in pivots]
+    r = len(pivots)
+    Rp = R[:r,:] ### r x n
+    H = zero_matrix(Rp.base_ring(), n, n-r) ### n x (n-r)
+    H[pivots] = -Rp[:, free]
+    H[free] = identity_matrix(n-r)
+    return H
+
+def column_space_matrix(A):
+    m,n = A.dimensions()
+    AI = A.augment(identity_matrix(3), subdivide=True)
+    RB = AI.rref()
+    R = RB[:,:n]
+    B = RB[:,n:]
+    pivots = find_pivots(R)
+    free = [i for i in range(n) if i not in pivots]
+    r = len(pivots)
+    C = A[:, pivots] ### m x r
+    Bp = B[r:,:] ### (m-r) x m
+    return C
+
+def left_kernel_matrix(A):
+    m,n = A.dimensions()
+    AI = A.augment(identity_matrix(3), subdivide=True)
+    RB = AI.rref()
+    R = RB[:,:n]
+    B = RB[:,n:]
+    pivots = find_pivots(R)
+    free = [i for i in range(n) if i not in pivots]
+    r = len(pivots)
+    C = A[:, pivots] ### m x r
+    Bp = B[r:,:] ### (m-r) x m
+    return Bp
