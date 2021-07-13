@@ -259,7 +259,7 @@ def kernel_matrix(A):
 
 def column_space_matrix(A):
     m,n = A.dimensions()
-    AI = A.augment(identity_matrix(3), subdivide=True)
+    AI = A.augment(identity_matrix(m), subdivide=True)
     RB = AI.rref()
     R = RB[:,:n]
     B = RB[:,n:]
@@ -272,7 +272,7 @@ def column_space_matrix(A):
 
 def left_kernel_matrix(A):
     m,n = A.dimensions()
-    AI = A.augment(identity_matrix(3), subdivide=True)
+    AI = A.augment(identity_matrix(m), subdivide=True)
     RB = AI.rref()
     R = RB[:,:n]
     B = RB[:,n:]
