@@ -134,6 +134,8 @@ def random_ref(m, n, r, bound=5, return_pivots=False):
         Note: the first pivot always locates at (0,0).
     """
     R = zero_matrix(m,n)
+    if r == 0:
+        return R, [] if return_pivots else R
     all_numbers = list(range(-bound, bound+1))
     all_choices = list(Combinations(list(range(1,n)),r-1))
     pivots = [0] + choice(all_choices)
