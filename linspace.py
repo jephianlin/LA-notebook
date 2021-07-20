@@ -1,7 +1,9 @@
 from sage.calculus.var import var
+from sage.calculus.all import symbolic_expression
 
 from sage.symbolic.ring import SR
 
+from sage.modules.free_module_element import vector
 from sage.matrix.special import zero_matrix
 from sage.matrix.special import diagonal_matrix
 
@@ -20,6 +22,14 @@ def vtom(v, m, n):
         i,j = k//n, k%n
         M[i,j] = v[k]
     return M
+
+def ptov(p, d):
+    p_poly = symbolic_expression(p).polynomial(SR)
+    v = vector([p_poly[i] for i in range(d+1)])
+    return v
+
+def mtov(A):
+    return vector(A.list())
 
 def projection_on_vector(u, v, return_mtx=False):
     """return the projection of u onto v"""
