@@ -1,3 +1,5 @@
+from sage.misc.prandom import choice
+
 from sage.calculus.var import var
 from sage.calculus.all import symbolic_expression
 
@@ -85,3 +87,63 @@ def QR(A):
             R[coefs.dimensions()[0], j] = 1
     R = R[:Q.dimensions()[1], :]
     return Q, R
+
+### classes of vector spaces
+class Rn:
+    def __init__(self, n):
+        self.dim = n
+    def __repr__(self):
+        return "The vector space of all vectors over RR of length %s."%self.dim
+    
+class poly:
+    def __init__(self, d, zeros=None):
+        self.deg = d
+        self.zeros = zeros
+        self.num_zeros = 0 if zeros == None else len(zeros)
+        self.dim = max(0, d + 1 - self.num_zeros)
+    def __repr__(self):
+        if self.deg == -1:
+            return "The vector space consisting of only the zero polynomial."
+        if self.zeros == None:
+            return "The vector space of all polynomials p of degree at most %s."%self.deg
+        else:
+            return "The vector space of all polynomials p of degree at most %s "%self.deg + \
+        "such that p(x) = 0 for all x in %s."%self.zeros
+    
+class mtx:
+    def __init__(self, m, n):
+        self.m = m
+        self.n = n
+        self.dim = m * n
+    def __repr__(self):
+        return "The vector space of all %s x %s matrices."%(self.m, self.n)
+    
+class sym_mtx:
+    def __init__(self, n):
+        self.n = n
+        self.dim = n * (n + 1) / 2
+    def __repr__(self):
+        return "The vector space of all %s x %s symmetric matrices."%(self.n, self.n)
+    
+class skew_mtx:
+    def __init__(self, n):
+        self.n = n
+        self.dim = n * (n - 1) / 2
+    def __repr__(self):
+        return "The vector space of all %s x %s skew-symmetric matrices."%(self.n, self.n)
+
+def nvspace(n, poly_zeros=3):
+    want = [Rn(n), poly(n-1)]
+    for i in range(1, poly_zeros + 1):
+        want.append(poly(n-1 + i, list(range(1, i+1))))
+    for i in range(1,n+1):
+        if n % i == 0:
+            want.append(mtx(i, n // i))
+        if sym_mtx(i).dim == n:
+            want.append(sym_mtx(i))
+        if skew_mtx(i).dim == n:
+            want.append(skew_mtx(i))
+    return want
+
+def random_nvspace(n, poly_zeros=3):
+    return choice(nvspace(n, poly_zeros))
