@@ -121,14 +121,14 @@ class mtx:
 class sym_mtx:
     def __init__(self, n):
         self.n = n
-        self.dim = n * (n + 1) / 2
+        self.dim = n * (n + 1) // 2
     def __repr__(self):
         return "The vector space of all %s x %s symmetric matrices."%(self.n, self.n)
     
 class skew_mtx:
     def __init__(self, n):
         self.n = n
-        self.dim = n * (n - 1) / 2
+        self.dim = n * (n - 1) // 2
     def __repr__(self):
         return "The vector space of all %s x %s skew-symmetric matrices."%(self.n, self.n)
 
