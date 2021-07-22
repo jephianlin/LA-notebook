@@ -147,3 +147,14 @@ def nvspace(n, poly_zeros=3):
 
 def random_nvspace(n, poly_zeros=3):
     return choice(nvspace(n, poly_zeros))
+
+def lagrange_polynomials(lambdas):
+    x = var("x")
+    polys = []
+    for i in range(len(lambdas)):
+        p = symbolic_expression(1)
+        for k in range(len(lambdas)):
+            if k != i:
+                p *= ( (x - lambdas[k]) / (lambdas[i] - lambdas[k]))
+        polys.append(p)
+    return polys
