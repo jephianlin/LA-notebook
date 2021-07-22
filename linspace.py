@@ -4,6 +4,7 @@ from sage.calculus.var import var
 from sage.calculus.all import symbolic_expression
 
 from sage.symbolic.ring import SR
+from sage.rings.rational_field import QQ
 
 from sage.modules.free_module_element import vector
 from sage.matrix.special import zero_matrix
@@ -158,3 +159,14 @@ def lagrange_polynomials(lambdas):
                 p *= ( (x - lambdas[k]) / (lambdas[i] - lambdas[k]))
         polys.append(p)
     return polys
+
+def syl(p,q, ring=QQ):
+    p_poly = symbolic_expression(p).polynomial(ring)
+    q_poly = symbolic_expression(q).polynomial(ring)
+    m,n = p_poly.degree(), q_poly.degree()
+    A = zero_matrix(ring, m + n)
+    for i in range(n):
+        A[:,i] = ptov(x**i * p, m+n-1)
+    for i in range(m):
+        A[:,n + i] = ptov(x**i * q, m+n-1)
+    return A
