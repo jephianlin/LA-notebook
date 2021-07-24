@@ -51,4 +51,18 @@ a. [Sage: 矩陣、線性方程組](1aa-Sage-Matrices-and-linear-equations.ipynb
 
 ### 3. 線性函數
 
-1. 
+1. [函數基本概念](301-Function-basics.ipynb)
+2. [線性函數](302-Linear-function.ipynb)
+3. [將矩陣視為線性函數](303-Matrix-as-a-linear-function.ipynb)
+4. [將線性函數化為矩陣](304-Linear-function-as-a-matrix.ipynb)
+5. [Rn 中的向量表示法](305-Vector-representation-in-Rn.ipynb)
+6. [向量空間中的向量表示法](306-Vector-representation-in-a-vector-space.ipynb)
+7. [基底轉換](307-Change-of-basis.ipynb)
+8. [同構](308-Isomorphism.ipynb)
+9. [Rn 中的矩陣表示法](309-Matrix-representation-in-Rn.ipynb)
+10. [Rn 中的矩陣表示法](310-Matrix-representation-in-a-vector-space.ipynb)
+11. [拉格朗日多項式、凡德孟矩陣](311-Lagrange-polynomials-and-Vandermonde-matrix.ipynb)
+12. [西爾維斯特矩陣、結式](312-Sylvester-matrix-and-resultant.ipynb)
+13. [體驗譜分解](313-Understanding-the-spectral-decomposition.ipynb)
+14. [體驗奇異值分解](314-Understanding-the-singular-value-decomposition.ipynb)
+15. [體驗喬丹標準型](315-Understanding-the-Jordan-canonical-form.ipynb)
