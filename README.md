@@ -29,6 +29,18 @@
 
 a. [Sage: 矩陣、線性方程組](1aa-Sage-Matrices-and-linear-equations.ipynb)
 
+```
+Basic geometry & subspaces
+101 --> 102 --> {103,104} --> 105
+
+Affine subspace & solutions
+(102 -->)
+106 --> 107 --> 108 --> {109,110} --> 111
+
+Topics
+112, 113, 114, 10a
+```
+
 
 ### 2. 線性空間
 
@@ -48,6 +60,20 @@ a. [Sage: 矩陣、線性方程組](1aa-Sage-Matrices-and-linear-equations.ipynb
 14. [基底正交化](214-Gram--Schmidt-orthogonalization.ipynb)
 15. [垂直子空間](215-Direct-sum-of-orthogonal-subspaces.ipynb)
 
+```
+Spaces in Rn
+201 --> 202 --> {203,204} --> 205 --> 206 --> 207
+
+Abstract spaces
+208 --> 209 --> 210
+
+Operations of spaces
+211 -->  212
+
+Inner product space
+213 --> 214 --> 215
+```
+
 
 ### 3. 線性函數
 
@@ -60,9 +86,33 @@ a. [Sage: 矩陣、線性方程組](1aa-Sage-Matrices-and-linear-equations.ipynb
 7. [基底轉換](307-Change-of-basis.ipynb)
 8. [同構](308-Isomorphism.ipynb)
 9. [Rn 中的矩陣表示法](309-Matrix-representation-in-Rn.ipynb)
-10. [Rn 中的矩陣表示法](310-Matrix-representation-in-a-vector-space.ipynb)
+10. [向量空間中的矩陣表示法](310-Matrix-representation-in-a-vector-space.ipynb)
 11. [拉格朗日多項式、凡德孟矩陣](311-Lagrange-polynomials-and-Vandermonde-matrix.ipynb)
 12. [西爾維斯特矩陣、結式](312-Sylvester-matrix-and-resultant.ipynb)
 13. [體驗譜分解](313-Understanding-the-spectral-decomposition.ipynb)
 14. [體驗奇異值分解](314-Understanding-the-singular-value-decomposition.ipynb)
 15. [體驗喬丹標準型](315-Understanding-the-Jordan-canonical-form.ipynb)
+
+```
+Linear function
+301 --> 302 --> 303 -->304
+
+Vector and matrix representations
+305 --> 306 --> 307 --> 308 --> 309 --> 310
+
+Topics
+311, 312, 313, 314, 315
+```
+
+### 4. 行列式值
+
+
+### 5. 矩陣對角化
+
+
+### 6. 對稱矩陣論
+
+
+### 附錄
+
+A. 索引暨翻譯對照表
