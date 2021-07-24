@@ -6,7 +6,7 @@
 這比較像是一個做實驗的過程﹐實驗執行者是是自己的大腦﹐而實驗對象是各個數學概念；  
 好好地把這份實驗紀錄下來﹐讓你未來的大腦可以快速回顧自己曾經做過的事吧！  
 
-
+**點[這裡](https://github.com/jephianlin/LA-notebook/releases/download/v0.1/LA-notebook.zip)下載整份筆記本**
 
 ## 目錄
 
