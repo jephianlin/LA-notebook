@@ -10,7 +10,7 @@
 
 ## 目錄
 
-### 線性幾何
+### 1. 線性幾何
 
 1. [向量、長度、角度](101-Vector-length-angle.ipynb)
 2. [$\\mathbb{R}^n$ 中的子空間](102-Subspaces-in-Rn.ipynb)
@@ -26,7 +26,29 @@
 12. [反矩陣](112-Matrix-inverse.ipynb)
 13. [基本矩陣](113-Elementary-matrices.ipynb)
 14. [四大基礎子空間](114-Four-fundamental-subspaces.ipynb)
+
 a. [Sage: 矩陣、線性方程組](1aa-Sage-Matrices-and-linear-equations.ipynb)
 
 
+### 2. 線性空間
 
+1. [線性獨立](201-Linear-independence.ipynb)
+2. [基底](202-Basis.ipynb)
+3. [行空間、左零解空間、及其基底](203-Column-space-left-kernel-and-their-bases.ipynb)
+4. [列空間、零解空間、及其基底](204-Row-space-kernel-and-their-bases.ipynb)
+5. [基底交換法則](205-Basis-exchange-lemma.ipynb)
+6. [維度、擴充與縮限法則](206-Dimension-expanding-and-shrinking-lemmas.ipynb)
+7. [秩與核數](207-Rank-and-nullity.ipynb)
+8. [向量空間](208-Vector-space.ipynb)
+9. [向量子空間](209-Subspaces-in-a-vector-space.ipynb)
+10. [常見的向量空間](210-Common-vector-spaces.ipynb)
+11. [建構新的子空間](211-Constructing-new-subspaces.ipynb)
+12. [建構新的向量空間](212-Constructing-new-vector-spaces.ipynb)
+13. [垂直幾何](213-Orthogonal-geometry.ipynb)
+14. [基底正交化](214-Gram--Schmidt-orthogonalization.ipynb)
+15. [垂直子空間](215-Direct-sum-of-orthogonal-subspaces.ipynb)
+
+
+### 3. 線性函數
+
+1. 
