@@ -6,7 +6,30 @@
 這比較像是一個做實驗的過程﹐實驗執行者是是自己的大腦﹐而實驗對象是各個數學概念；  
 好好地把這份實驗紀錄下來﹐讓你未來的大腦可以快速回顧自己曾經做過的事吧！  
 
-**點[這裡](https://github.com/jephianlin/LA-notebook/releases/download/v0.1/LA-notebook.zip)下載整份筆記本**
+**[下載整份筆記本](https://github.com/jephianlin/LA-notebook/releases/download/v0.1/LA-notebook.zip)**
+
+## 使用方式
+
+這份講義必須用 Jupyter 開啟，配合 SageMath 核心才能執行其中的程式碼。  
+以下提供兩種方式安裝 SageMath。
+
+### 1. 在自己的機器上安裝 SageMath（速度較快）
+
+1. 參考 [安裝指南](https://docs.google.com/document/d/1CXc1Aw8qA_jpN2mar-i7Ik3jB3fswXYkGp9ww4Rb_QU/edit?usp=sharing) 下載並安裝 SageMath
+2. 用上方連結下載整份筆記本
+3. 利用 SageMath 安裝好的 Jupyter Notebook 開啟課程檔案中的 `ipynb` 檔
+
+若自己的電腦無法安裝，或是希望使用網頁版
+可以依照以下的步驟在 CoCalc 上開啟
+
+### 2. 在 [CoCalc](https://cocalc.com/app) 上開啟講義（速度會比較慢）
+
+1. 申請 [CoCalc](https://cocalc.com/app) 帳號
+2. 用上方連結下載整份筆記本
+3. 登入後點擊 Create New Project…（輸入自己想要的名稱）
+4. 點 Upload 上傳第二步下載的 `LA-notebook.zip`
+5. 點擊上傳的 `zip` 檔解壓縮
+
 
 ## 目錄
 
