@@ -37,22 +37,22 @@
 
 ### 1. 線性幾何
 
-1. [向量、長度、角度](101-Vector-length-angle.html)
-2. [Rn 中的子空間](102-Subspaces-in-Rn.html)
-3. [矩陣的行空間](103-Column-space-of-a-matrix.html)
-4. [矩陣的列空間](104-Row-space-of-a-matrix.html)
-5. [投影與鏡射](105-Projection-and-reflection.html)
-6. [Rn 中的仿射子空間](106-Affine-subspaces-in-Rn.html)
-7. [Ax = b 的解集合](107-Solution-set-of-Ax-=-b.html)
-8. [列運算](108-Row-operations.html)
-9. [特解](109-Finding-a-particular-solution.html)
-10. [零解](110-Finding-the-homogeneous-solutions.html)
-11. [解的個數](111-Number-of-solutions.html)
-12. [反矩陣](112-Matrix-inverse.html)
-13. [基本矩陣](113-Elementary-matrices.html)
-14. [四大基礎子空間](114-Four-fundamental-subspaces.html)
+1. [向量、長度、角度](html/101-Vector-length-angle.html)
+2. [Rn 中的子空間](html/102-Subspaces-in-Rn.html)
+3. [矩陣的行空間](html/103-Column-space-of-a-matrix.html)
+4. [矩陣的列空間](html/104-Row-space-of-a-matrix.html)
+5. [投影與鏡射](html/105-Projection-and-reflection.html)
+6. [Rn 中的仿射子空間](html/106-Affine-subspaces-in-Rn.html)
+7. [Ax = b 的解集合](html/107-Solution-set-of-Ax-=-b.html)
+8. [列運算](html/108-Row-operations.html)
+9. [特解](html/109-Finding-a-particular-solution.html)
+10. [零解](html/110-Finding-the-homogeneous-solutions.html)
+11. [解的個數](html/111-Number-of-solutions.html)
+12. [反矩陣](html/112-Matrix-inverse.html)
+13. [基本矩陣](html/113-Elementary-matrices.html)
+14. [四大基礎子空間](html/114-Four-fundamental-subspaces.html)
 
-a. [Sage: 矩陣、線性方程組](1aa-Sage-Matrices-and-linear-equations.html)
+a. [Sage: 矩陣、線性方程組](html/1aa-Sage-Matrices-and-linear-equations.html)
 
 ```
 Basic geometry & subspaces
@@ -69,21 +69,21 @@ Topics
 
 ### 2. 線性空間
 
-1. [線性獨立](201-Linear-independence.html)
-2. [基底](202-Basis.html)
-3. [行空間、左零解空間、及其基底](203-Column-space-left-kernel-and-their-bases.html)
-4. [列空間、零解空間、及其基底](204-Row-space-kernel-and-their-bases.html)
-5. [基底交換法則](205-Basis-exchange-lemma.html)
-6. [維度、擴充與縮限法則](206-Dimension-expanding-and-shrinking-lemmas.html)
-7. [秩與核數](207-Rank-and-nullity.html)
-8. [向量空間](208-Vector-space.html)
-9. [向量子空間](209-Subspaces-in-a-vector-space.html)
-10. [常見的向量空間](210-Common-vector-spaces.html)
-11. [建構新的子空間](211-Constructing-new-subspaces.html)
-12. [建構新的向量空間](212-Constructing-new-vector-spaces.html)
-13. [垂直幾何](213-Orthogonal-geometry.html)
-14. [基底正交化](214-Gram--Schmidt-orthogonalization.html)
-15. [垂直子空間](215-Direct-sum-of-orthogonal-subspaces.html)
+1. [線性獨立](html/201-Linear-independence.html)
+2. [基底](html/202-Basis.html)
+3. [行空間、左零解空間、及其基底](html/203-Column-space-left-kernel-and-their-bases.html)
+4. [列空間、零解空間、及其基底](html/204-Row-space-kernel-and-their-bases.html)
+5. [基底交換法則](html/205-Basis-exchange-lemma.html)
+6. [維度、擴充與縮限法則](html/206-Dimension-expanding-and-shrinking-lemmas.html)
+7. [秩與核數](html/207-Rank-and-nullity.html)
+8. [向量空間](html/208-Vector-space.html)
+9. [向量子空間](html/209-Subspaces-in-a-vector-space.html)
+10. [常見的向量空間](html/210-Common-vector-spaces.html)
+11. [建構新的子空間](html/211-Constructing-new-subspaces.html)
+12. [建構新的向量空間](html/212-Constructing-new-vector-spaces.html)
+13. [垂直幾何](html/213-Orthogonal-geometry.html)
+14. [基底正交化](html/214-Gram--Schmidt-orthogonalization.html)
+15. [垂直子空間](html/215-Direct-sum-of-orthogonal-subspaces.html)
 
 ```
 Spaces in Rn
@@ -102,21 +102,21 @@ Inner product space
 
 ### 3. 線性函數
 
-1. [函數基本概念](301-Function-basics.html)
-2. [線性函數](302-Linear-function.html)
-3. [將矩陣視為線性函數](303-Matrix-as-a-linear-function.html)
-4. [將線性函數化為矩陣](304-Linear-function-as-a-matrix.html)
-5. [Rn 中的向量表示法](305-Vector-representation-in-Rn.html)
-6. [向量空間中的向量表示法](306-Vector-representation-in-a-vector-space.html)
-7. [基底轉換](307-Change-of-basis.html)
-8. [同構](308-Isomorphism.html)
-9. [Rn 中的矩陣表示法](309-Matrix-representation-in-Rn.html)
-10. [向量空間中的矩陣表示法](310-Matrix-representation-in-a-vector-space.html)
-11. [拉格朗日多項式、凡德孟矩陣](311-Lagrange-polynomials-and-Vandermonde-matrix.html)
-12. [西爾維斯特矩陣、結式](312-Sylvester-matrix-and-resultant.html)
-13. [體驗譜分解](313-Understanding-the-spectral-decomposition.html)
-14. [體驗奇異值分解](314-Understanding-the-singular-value-decomposition.html)
-15. [體驗喬丹標準型](315-Understanding-the-Jordan-canonical-form.html)
+1. [函數基本概念](html/301-Function-basics.html)
+2. [線性函數](html/302-Linear-function.html)
+3. [將矩陣視為線性函數](html/303-Matrix-as-a-linear-function.html)
+4. [將線性函數化為矩陣](html/304-Linear-function-as-a-matrix.html)
+5. [Rn 中的向量表示法](html/305-Vector-representation-in-Rn.html)
+6. [向量空間中的向量表示法](html/306-Vector-representation-in-a-vector-space.html)
+7. [基底轉換](html/307-Change-of-basis.html)
+8. [同構](html/308-Isomorphism.html)
+9. [Rn 中的矩陣表示法](html/309-Matrix-representation-in-Rn.html)
+10. [向量空間中的矩陣表示法](html/310-Matrix-representation-in-a-vector-space.html)
+11. [拉格朗日多項式、凡德孟矩陣](html/311-Lagrange-polynomials-and-Vandermonde-matrix.html)
+12. [西爾維斯特矩陣、結式](html/312-Sylvester-matrix-and-resultant.html)
+13. [體驗譜分解](html/313-Understanding-the-spectral-decomposition.html)
+14. [體驗奇異值分解](html/314-Understanding-the-singular-value-decomposition.html)
+15. [體驗喬丹標準型](html/315-Understanding-the-Jordan-canonical-form.html)
 
 ```
 Linear function
