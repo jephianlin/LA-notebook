@@ -14249,7 +14249,7 @@ But we will prove they are really a basis in the future.)</p>
 求 ${\bf b}$ 在 $V$ 上的投影。<br>
 （如果你發覺 $A^\top A$ 不可逆的話﹐<br>
 記得把一些不重要的向量拿掉。<br>
-只要生成出來是 $V$﹐<br>
+只要生成出來是 $V$，<br>
 不一定要把全部向量放進去。）</p>
 
 </div>
@@ -14285,7 +14285,7 @@ But we will prove they are really a basis in the future.)</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $A$ 為一 $m\times n$ 矩陣。<br>
-我們知道高斯消去法不會影響列空間﹐<br>
+我們知道高斯消去法不會影響列空間，<br>
 因此自然地 $\operatorname{Row}(A) = \operatorname{span}(\beta_R)$。</p>
 <p>以下我們說明為什麼 $\operatorname{ker}(A) = \operatorname{span}(\beta_K)$。</p>
 
@@ -14295,7 +14295,7 @@ But we will prove they are really a basis in the future.)</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>令 $R$ 為 $A$ 的最簡階梯形式矩陣。<br>
 我們把領導變數拉到左邊、自由變數拉到右邊<br>
-（最後求完解以後再把變數順序拉回來就好）﹐<br>
+（最後求完解以後再把變數順序拉回來就好），<br>
 因此我們可以假設 $R$ 的非零列長得像 $R' = \begin{bmatrix} I_r &amp; Y \end{bmatrix}$。<br>
 我們把每個 $\mathbb{R}^n$ 的向量都寫成 $({\bf v}_1, {\bf v}_2)$ 使得 ${\bf v}_1\in\mathbb{R}^4$ 而 ${\bf v}_2\in\mathbb{R}^{n-r}$。<br>
 說明 
@@ -14315,7 +14315,7 @@ $$\operatorname{ker}(A) = \operatorname{ker}(R') = \{(-Y{\bf v}_2, {\bf v}_2): {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>藉由 $H^\top$ 和 $R'$ 的形式的相似性﹐<br>
+<h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>藉由 $H^\top$ 和 $R'$ 的形式的相似性，<br>
 說明 $\operatorname{ker}(H^\top) = \operatorname{Col}(R'^\top)$。</p>
 
 </div>
@@ -14331,7 +14331,7 @@ $$\operatorname{ker}(A) = \operatorname{ker}(R') = \{(-Y{\bf v}_2, {\bf v}_2): {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $m\times n$ 矩陣。<br>
 令 ${\bf u}_1,\ldots,{\bf u}_n$ 為 $A$ 的各行向量。<br>
-接下來我們說明 $\operatorname{Col}(A) = \operatorname{span}(\beta_C)$ 及 $\operatorname{ker}(A^\top) = \operatorname{\beta_L}$。<br>
+接下來我們說明 $\operatorname{Col}(A) = \operatorname{span}(\beta_C)$ 及 $\operatorname{ker}(A^\top) = \operatorname{span}(\beta_L)$。<br>
 令 $\left[\begin{array}{c|c} R &amp; B \end{array}\right]$ 為 $\left[\begin{array}{c|c} A &amp; I_m \end{array}\right]$ 的最簡階梯形式矩陣。</p>
 
 </div>
@@ -14370,7 +14370,7 @@ $$\left[\begin{array}{c|c} A &amp; I_m \end{array}\right] \begin{bmatrix} {\bf e
 令 ${\bf b}\in\operatorname{Col}(A)^\perp$ 則 ${\bf b}^\top A = {\bf 0}$。<br>
 考慮 ${\bf v}^\top = {\bf b}^\top \left[\begin{array}{c|c} A &amp; I_m \end{array}\right] = 
 \left[\begin{array}{c|c} {\bf 0}^\top &amp; {\bf b}^\top\end{array}\right]$。<br>
-說明 ${\bf v}^\top$ 也落在 $\left[\begin{array}{c|c} R &amp; B \end{array}\right]$ 的列空間中﹐進而說明 ${\bf b}\operatorname{span}(\beta_L)$。</p>
+說明 ${\bf v}^\top$ 也落在 $\left[\begin{array}{c|c} R &amp; B \end{array}\right]$ 的列空間中﹐進而說明 ${\bf b}\in\operatorname{span}(\beta_L)$。</p>
 <p>因為 $\operatorname{Col}(A)^\top = \operatorname{ker}(A^\top)$﹐<br>
 所以 $\operatorname{ker}(A^\top) = \operatorname{span}(\beta_L)^\perp$。</p>
 
