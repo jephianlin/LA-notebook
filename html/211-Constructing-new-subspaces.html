@@ -13986,7 +13986,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">lingeo</span> <span class="kn">import</span> <span class="n">random_good_matrix</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">lingeo</span> <span class="kn">import</span> <span class="n">random_good_matrix</span><span class="p">,</span> <span class="n">column_space_matrix</span><span class="p">,</span> <span class="n">left_kernel_matrix</span><span class="p">,</span> <span class="n">kernel_matrix</span>
 </pre></div>
 
      </div>
@@ -14055,7 +14055,7 @@ $$\dim(U + V) = \dim(U) + \dim(V) - \dim(U \cap V).$$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Suppose $V_1, \ldots, V_k$ are some subspaces in the same vector space.<br>
 We say $\{V_1, \ldots, V_k\}$ is linearly independent if<br>
-for any ${\bf v}_1\in V_1, \ldots, {\bf v}_q\in V_q$ the only coefficients $c_1,\ldots, c_k\in\mathbb{R}$ satisfying<br>
+for any ${\bf v}_1\in V_1, \ldots, {\bf v}_k\in V_k$ the only coefficients $c_1,\ldots, c_k\in\mathbb{R}$ satisfying<br>
 $$c_1{\bf v}_1 + \cdots + c_k{\bf v}_k = {\bf 0}$$<br>
 is $c_1 = \cdots = c_k = 0$.</p>
 
@@ -14115,9 +14115,7 @@ use the notation $V_1 \oplus \cdots \oplus V_k$ instead to emphasize the linearl
 <span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">r</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">random_good_matrix</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
 <span class="n">AU</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">AU</span><span class="o">.</span><span class="n">add_multiple_of_column</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">AV</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span>
-<span class="n">AV</span><span class="o">.</span><span class="n">add_multiple_of_column</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">AUAV</span> <span class="o">=</span> <span class="n">AU</span><span class="o">.</span><span class="n">augment</span><span class="p">(</span><span class="n">AV</span><span class="p">,</span> <span class="n">subdivide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ A_U | A_V ] =&quot;</span><span class="p">)</span>
@@ -14125,8 +14123,17 @@ use the notation $V_1 \oplus \cdots \oplus V_k$ instead to emphasize the linearl
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;R =&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">AUAV</span><span class="o">.</span><span class="n">rref</span><span class="p">())</span>
 
+<span class="n">BU</span> <span class="o">=</span> <span class="n">left_kernel_matrix</span><span class="p">(</span><span class="n">AU</span><span class="p">)</span>
+<span class="n">BV</span> <span class="o">=</span> <span class="n">left_kernel_matrix</span><span class="p">(</span><span class="n">AV</span><span class="p">)</span>
+<span class="n">BUBV</span> <span class="o">=</span> <span class="n">BU</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">BV</span><span class="p">,</span> <span class="n">subdivide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
-    <span class="k">pass</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dim( U + V ) =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;basis of U + V = columns of&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">column_space_matrix</span><span class="p">(</span><span class="n">AUAV</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dim( U cap V) =&quot;</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;basis of U cap V = columns of&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">kernel_matrix</span><span class="p">(</span><span class="n">BUBV</span><span class="p">))</span>
 </pre></div>
 
      </div>
@@ -14144,13 +14151,13 @@ use the notation $V_1 \oplus \cdots \oplus V_k$ instead to emphasize the linearl
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求 $\dim(U\cup V)$。</p>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求 $\dim(U\cap V)$。</p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>求 $U\cup V$ 的一組基底。</p>
+<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>求 $U\cap V$ 的一組基底。</p>
 
 </div>
 </div>
