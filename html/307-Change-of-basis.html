@@ -14060,9 +14060,9 @@ Therefore, if we have another basis $\gamma$, then we have</p>
 <span class="n">print_ans</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">random_good_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">random_good_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">e1</span><span class="p">,</span><span class="n">e2</span><span class="p">,</span><span class="n">e3</span> <span class="o">=</span> <span class="n">identity_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">u1</span><span class="p">,</span><span class="n">u2</span><span class="p">,</span><span class="n">u3</span> <span class="o">=</span> <span class="n">A</span>
-<span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span> <span class="o">=</span> <span class="n">B</span>
+<span class="n">e1</span><span class="p">,</span><span class="n">e2</span><span class="p">,</span><span class="n">e3</span> <span class="o">=</span> <span class="n">identity_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="n">u1</span><span class="p">,</span><span class="n">u2</span><span class="p">,</span><span class="n">u3</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;alpha has three vectors:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;e1 =&quot;</span><span class="p">,</span> <span class="n">e1</span><span class="p">)</span>
@@ -14105,7 +14105,7 @@ Therefore, if we have another basis $\gamma$, then we have</p>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>計算 $[\operatorname{id}]_\beta^\gamma$ 及 $[\operatorname{id}]_\alpha^\gamma$﹐<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>計算 $[\operatorname{id}]_\beta^\gamma$ 及 $[\operatorname{id}]_\alpha^\gamma$，<br>
 並確認 $[\operatorname{id}]_\beta^\gamma [\operatorname{id}]_\alpha^\beta = [\operatorname{id}]_\alpha^\gamma$。</p>
 
 </div>
