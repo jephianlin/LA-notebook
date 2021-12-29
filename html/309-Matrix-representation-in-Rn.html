@@ -14025,7 +14025,7 @@ $$[f]_\alpha^\beta = \begin{bmatrix}
  [f({\bf v}_1)]_\beta &amp; \cdots &amp; [f({\bf v}_n)]_\beta \\ 
  | &amp; ~ &amp; | \\
 \end{bmatrix}$$
-has the property that $f({\bf b}) = [f]_\alpha^\beta [{\bf b}]_\alpha = [f({\bf b})]_\beta$.<br>
+has the property that $[f({\bf b})]_\beta = [f]_\alpha^\beta [{\bf b}]_\alpha$.<br>
 Therefore, we call $[f]_\alpha^\beta$ the <strong>matrix representation</strong> of $f$ with respect to $\alpha$ and $\beta$.</p>
 
 </div>
@@ -14107,11 +14107,11 @@ $$\begin{array}{ccc}
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[b]_alpha =&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[f(b)]_beta =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="o">*</span><span class="n">v</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(b) =&quot;</span><span class="p">,</span> <span class="n">beta</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(b) =&quot;</span><span class="p">,</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[f]_alpha^beta =&quot;</span><span class="p">)</span>
     <span class="n">show</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[f] =&quot;</span><span class="p">)</span>
-    <span class="n">show</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="n">beta</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">inverse</span><span class="p">())</span>
 </pre></div>
 
      </div>
