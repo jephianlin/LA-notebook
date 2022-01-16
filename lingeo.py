@@ -9,12 +9,16 @@ from sage.plot.point import point
 from sage.combinat.combination import Combinations
 from sage.combinat.tuple import Tuples
 
+from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
+from sage.rings.qqbar import QQbar
+from sage.symbolic.ring import SR
 
 from sage.modules.free_module_element import vector
 from sage.matrix.constructor import matrix
 from sage.matrix.special import identity_matrix
 from sage.matrix.special import zero_matrix
+from sage.matrix.special import elementary_matrix
 
 # from sage.plot.text import text
 # from sage.plot.plot3d.shapes2 import text3d
@@ -188,6 +192,55 @@ def random_good_matrix(m, n, r, bound=5, return_answer=False):
     else:
         return A
     
+def row_operation_process(A, inv=False):
+    """
+    Input:
+        A: mxn matrix over ZZ, QQ, or QQbar
+        rev: whether to return [E1^{-1}, ..., Ek^{-1}] instead
+             such that A = E1^{-1}...Ek^{-1}R
+    Output:
+        Let R be the reduced echelon form of A.
+        Return a list [E1, ..., Ek] such that Ek...E1A = R.
+    """
+    R = copy(A)
+    if R.base_ring() in [ZZ, QQ]:
+        R.change_ring(QQ)
+        field = QQ
+    if R.base_ring() in [QQbar, SR]:
+        try:
+            R.change_ring(QQbar)
+            field = QQbar
+        except NotImplementedError:
+            raise TypeError("Input matrix should be over at least QQbar")
+            
+    i,j = 0,0
+    m,n = R.dimensions()
+    elems = []
+    for j in range(n):
+        for k in range(i,m):
+            if R[k,j] != 0:
+                if k != i:
+                    R.swap_rows(i,k)
+                    elems.append(elementary_matrix(field, m, row1=i, row2=k))
+                if R[i,j] != 1:
+                    k = R[i,j]
+                    R.rescale_row(i, 1/k)
+                    elems.append(elementary_matrix(field, m, row1=i, scale=1/k))
+                for h in range(m):
+                    if h != i and R[h,j] != 0:
+                        k = R[h,j]
+                        R.add_multiple_of_row(h, i, -k)
+                        elems.append(elementary_matrix(field, m, row1=h, row2=i, scale=-k))
+                i += 1
+                break
+    elems_inv = []
+    for E in elems:
+        elems_inv.append(E.inverse())
+    if inv:
+        return elems_inv
+    else:
+        return elems
+
 def find_pivots(ref):
     """Find the pivots of a reduced echelon form.
     
