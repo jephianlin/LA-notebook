@@ -204,11 +204,11 @@ def row_operation_process(A, inv=False):
     """
     R = copy(A)
     if R.base_ring() in [ZZ, QQ]:
-        R.change_ring(QQ)
+        R = R.change_ring(QQ)
         field = QQ
     if R.base_ring() in [QQbar, SR]:
         try:
-            R.change_ring(QQbar)
+            R = R.change_ring(QQbar)
             field = QQbar
         except NotImplementedError:
             raise TypeError("Input matrix should be over at least QQbar")
