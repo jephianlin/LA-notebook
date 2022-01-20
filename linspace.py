@@ -12,8 +12,9 @@ from sage.matrix.special import diagonal_matrix
 
 from lingeo import column_space_matrix
 
+x = var("x")
+
 def vtop(v):
-    x = var("x")
     total = 0*x
     for i in range(len(v)):
         total += v[i] * x**i
@@ -150,7 +151,6 @@ def random_nvspace(n, poly_zeros=3):
     return choice(nvspace(n, poly_zeros))
 
 def lagrange_polynomials(lambdas):
-    x = var("x")
     polys = []
     for i in range(len(lambdas)):
         p = symbolic_expression(1)
