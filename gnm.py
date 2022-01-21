@@ -10,66 +10,80 @@ from sage.matrix.special import zero_matrix
 def random_permutation(n, indexing=1):
     nums = list(range(indexing, n + indexing))
     shuffle(nums)
-    return nums
+    return list_permutation(nums)
 
-def permutation_digraph(sigma, weight=None):
-    indexing = min(sigma)
-    n = len(sigma)
-    V = list(range(indexing, n + indexing))
-    if weight == None:
-        E = [(i + indexing, sigma[i]) for i in range(n)]
-    else:
-        E = [(i + indexing, sigma[i], weight[i, sigma[i] - indexing]) for i in range(n)]
-    g = DiGraph([V, E], loops=True)
-    g.set_pos(g.layout_circular())
-    return g
+class list_permutation:
+    def __init__(self, l):
+        self.one_line = l
+        self.indexing = min(l)
+        self.n = len(l)
+        self.base = list(range(self.indexing, self.n + self.indexing))
+
+    def __repr__(self):
+        return "%s"%self.one_line
+    
+    def of(self, i):
+        return self.one_line[i - self.indexing]
+
+    def digraph(self, weight=None):
+        indexing = self.indexing
+        n = self.n
+        V = self.base
+        if weight == None:
+            E = [(i, self.of(i)) for i in V]
+        else:
+            E = [(i, self.of(i), weight[i - indexing, self.of(i) - indexing]) for i in V]
+            ### matrix weight is always 0-indexing
+        g = DiGraph([V, E], loops=True)
+        g.set_pos(g.layout_circular())
+        return g
  
-def permutation_matrix(sigma):
-    indexing = min(sigma)
-    n = len(sigma)
-    P = zero_matrix(n)
-    for i in range(n):
-        P[i, sigma[i] - indexing] = 1
-    return P
+    def matrix(self):
+        indexing = self.indexing
+        n = self.n
+        P = zero_matrix(n)
+        for i in self.base:
+            P[i - indexing, self.of(i) - indexing] = 1
+        return P
 
-def permutation_sign(sigma):
-    return permutation_matrix(sigma).det()
+    def sign(self):
+        return self.matrix().det()
 
-def permutation_sort(sigma):
-    sigmap = copy(sigma)
-    indexing = min(sigma)
-    n = len(sigma)
-    swaps = []
-    for i in range(n):
-        hunt = i + indexing
-        for j in range(i,n):
-            if sigmap[j] == hunt:
-                if i != j:
-                    sigmap[j] = sigmap[i]
-                    sigmap[i] = hunt
-                    swaps.append((i + indexing, j + indexing))
-                break
-    return swaps
+    def sort(self):
+        sigmap = copy(self.one_line)
+        indexing = self.indexing
+        n = self.n
+        swaps = []
+        for i in range(n):
+            hunt = i + indexing
+            for j in range(i,n):
+                if sigmap[j] == hunt:
+                    if i != j:
+                        sigmap[j] = sigmap[i]
+                        sigmap[i] = hunt
+                        swaps.append((i + indexing, j + indexing))
+                    break
+        return swaps
 
-def two_line_repr(sigma):
-    indexing = min(sigma)
-    n = len(sigma)
-    r = matrix([list(range(indexing, n + indexing)), sigma])
-    return r
+    def two_line_repr(self):
+        indexing = self.indexing
+        n = self.n
+        r = matrix([self.base, self.one_line])
+        return r
 
-def cycle_repr(sigma):
-    indexing = min(sigma)
-    n = len(sigma)
-    base = list(range(indexing, n + indexing))
-    cycles = []
-    while base != []:
-        cycle = [base.pop(0)]
-        while True:
-            nxt = sigma[cycle[-1] - indexing]
-            if nxt in base:
-                base.remove(nxt)
-                cycle.append(nxt)
-            else:
-                break
-        cycles.append(tuple(cycle))
-    return cycles
+    def cycle_repr(self):
+        indexing = self.indexing
+        n = self.n
+        base = copy(self.base)
+        cycles = []
+        while base != []:
+            cycle = [base.pop(0)]
+            while True:
+                nxt = self.of(cycle[-1])
+                if nxt in base:
+                    base.remove(nxt)
+                    cycle.append(nxt)
+                else:
+                    break
+            cycles.append(tuple(cycle))
+        return cycles
