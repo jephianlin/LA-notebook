@@ -8,10 +8,7 @@ from sage.graphs.digraph import DiGraph
 from sage.matrix.constructor import matrix
 from sage.matrix.special import zero_matrix
 
-def random_permutation(n, indexing=1):
-    nums = list(range(indexing, n + indexing))
-    shuffle(nums)
-    return list_permutation(nums)
+from sage.plot.plot import graphics_array
 
 class list_permutation:
     def __init__(self, l):
@@ -95,3 +92,46 @@ class list_permutation:
                     break
             cycles.append(tuple(cycle))
         return cycles
+    
+def random_permutation(n, indexing=1):
+    nums = list(range(indexing, n + indexing))
+    shuffle(nums)
+    return list_permutation(nums)
+
+def matrix_digraph(A, indexing=1):
+    n = A.dimensions()[0]
+    Gamma = DiGraph(A, loops=True)
+    Gamma.relabel({i: i+indexing for i in range(n)}, inplace=True)
+    Gamma.set_pos(Gamma.layout_circular())
+    return Gamma
+
+def effective_permutations(A, indexing=1):
+    ### using 0-indexing for A
+    n = A.dimensions()[0]
+    perms = [[]]
+    for i in range(n):
+        new_perms = []
+        for j in range(n):
+            if A[i,j] != 0:
+                for perm in perms:
+                    if j not in perm:
+                        new_perm = copy(perm)
+                        new_perm.append(j)
+                        new_perms.append(new_perm)
+        perms = new_perms
+    return [list_permutation([i + indexing for i in perm]) for perm in perms]
+
+def illustrate_det(A, each_row=4, each_size=4):
+    perms = effective_permutations(A)
+    pics = []
+    for perm in perms:
+        s = perm.sign()
+        w = perm.weight(A)
+        H = perm.digraph(A)
+        pic = H.plot(figsize=[each_size, each_size], 
+                     edge_labels=True, 
+                     title="%s * %s"%(s,w)
+                    )
+        pics.append(pic)
+    g_array = graphics_array(pics, ncols=each_row)
+    g_array.show(figsize=[g_array.ncols() * each_size, g_array.nrows() * each_size])
