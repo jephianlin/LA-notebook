@@ -1,6 +1,7 @@
 from copy import copy
 
 from sage.misc.prandom import shuffle
+from sage.misc.misc_c import prod
 
 from sage.graphs.digraph import DiGraph
 
@@ -48,6 +49,13 @@ class list_permutation:
 
     def sign(self):
         return self.matrix().det()
+    
+    def weight(self, weight):
+        indexing = self.indexing
+        n = self.n
+        V = self.base
+        weights = [weight[i - indexing, self.of(i) - indexing] for i in V]
+        return prod(weights, 1)
 
     def sort(self):
         sigmap = copy(self.one_line)
