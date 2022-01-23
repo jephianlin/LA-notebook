@@ -6,7 +6,8 @@
 這比較像是一個做實驗的過程﹐實驗執行者是是自己的大腦﹐而實驗對象是各個數學概念；  
 好好地把這份實驗紀錄下來﹐讓你未來的大腦可以快速回顧自己曾經做過的事吧！  
 
-**[下載整份筆記本](https://github.com/jephianlin/LA-notebook/releases/download/v0.1/LA-notebook.zip)**
+
+**下載整份筆記本**：請至 [LA-notebook Releases](https://github.com/jephianlin/LA-notebook/releases) 下載最新版本的原始碼；網頁最上方，一般使用者請點 Source code (zip) 下載。
 
 ## 使用方式
 
