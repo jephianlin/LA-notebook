@@ -56,11 +56,11 @@ a. [Sage: 矩陣、線性方程組](html/1aa-Sage-Matrices-and-linear-equations.
 
 ```
 Basic geometry & subspaces
-101 --> 102 --> {103,104} --> 105
+101 --> 102 --> {103, 104} --> 105
 
 Affine subspace & solutions
 (102 -->)
-106 --> 107 --> 108 --> {109,110} --> 111
+106 --> 107 --> 108 --> {109, 110} --> 111
 
 Topics
 112, 113, 114, 10a
@@ -87,7 +87,7 @@ Topics
 
 ```
 Spaces in Rn
-201 --> 202 --> {203,204} --> 205 --> 206 --> 207
+201 --> 202 --> {203, 204} --> 205 --> 206 --> 207
 
 Abstract spaces
 208 --> 209 --> 210
@@ -129,13 +129,113 @@ Topics
 311, 312, 313, 314, 315
 ```
 
+
 ### 4. 行列式值
+
+1. [小型矩陣的行列式值](html/401-Determinant-for-small-matrices.html)
+2. [將可逆矩陣展開為基本矩陣的乘積](html/402-Invertible-matrix-as-the-product-of-elementary-matrices.html)
+3. [基本矩陣與行超平行體](html/403-Elementary-matrix-acts-on-columns.html)
+4. [基本矩陣與列超平行體](html/404-Elementary-matrix-acts-on-rows.html)
+5. [行列式值的定義](html/405-Definition-of-the-determinant.html)
+6. [判斷矩陣是否可逆](html/406-Invertibility.html)
+7. [矩陣乘積與轉置](html/407-Matrix-multiplication-and-transpose.html)
+8. [區塊矩陣](html/408-Block-matrix.html)
+9. [分配律、拉普拉斯展開](html/409-Distributive-law-and-Laplace-expansion.html)
+10. [伴隨矩陣](html/410-Adjugate.html)
+11. [克拉瑪公式](html/411-Cramer's-rule.html)
+12. [排列矩陣](html/412-Permutation-matrix.html)
+13. [排列展開式](html/413-Permutation-expansion.html)
+14. [代數圖論觀點](html/414-Interpretation-through-graph-theory.html)
+15. [行列式值是定義完善的](html/415-Determinant-is-well-defined.html)
+
+```
+Determinant for small matrices
+401
+
+Geometric interpretations
+402 --> {403, 404}
+
+Definition and properties
+405 --> {406, 407, 408} --> 409
+
+Adjugate
+410 --> 411
+
+Permutation expansion
+412 --> 413 --> {414, 415}
+```
 
 
 ### 5. 矩陣對角化
 
+_內容尚未完成_
+
+1. [找一組好基底]()
+2. [二次曲線]()
+3. [線性微分方程組]()
+4. [遞迴關係式]()
+5. [矩陣指數]()
+6. [特徵多項式]()
+7. [特徵多項式係數]()
+8. [矩陣對角化]()
+9. [代數重數與幾何重數]()
+10. [特徵空間]()
+11. [圖與特徵方程式]()
+12. [凱力–漢米頓定理]()
+13. [最小多項式]()
+14. [喬丹標準型]()
+
+a. [Python: NumPy]()
+
+```
+Good basis
+501 --> {502, 503, 504, 505}
+
+Characteristic polynomial
+506 --> 507
+
+Diagonalization
+508 --> 509 --> 510
+
+Topics
+511, 512, 513, 514, 50a
+
+```
+
 
 ### 6. 對稱矩陣論
+
+_內容尚未完成_
+
+1. [化簡]()
+2. [薛爾上三角化]()
+3. [對稱矩陣與正規矩陣]()
+4. [譜分解]()
+5. [奇異值分解]()
+6. [體驗主成份分析]()
+7. [慣性]()
+8. [正定與半正定矩陣]()
+9. [瑞利商]()
+10. [柯西交錯定理]()
+11. [等量分割]()
+12. [變異數]()
+13. [主成份分析]()
+14. [拉普拉斯矩陣]()
+15. [譜聚類與群數]()
+
+```
+Schur triangulation
+601 --> 602 --> 603 --> 604 --> 605 --> 606
+
+Symmetric matrix
+607 --> 608 --> 609 --> 610 --> 611
+
+Statistics
+612 --> 613
+
+Laplacian matrix
+614 --> 615
+```
 
 
 ### 附錄
