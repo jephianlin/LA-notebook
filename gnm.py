@@ -3,6 +3,9 @@ from copy import copy
 from sage.misc.prandom import shuffle
 from sage.misc.misc_c import prod
 
+from sage.combinat.combination import Combinations
+
+from sage.graphs.graph import Graph
 from sage.graphs.digraph import DiGraph
 
 from sage.matrix.constructor import matrix
@@ -23,9 +26,9 @@ class list_permutation:
     def of(self, i):
         return self.one_line[i - self.indexing]
 
-    def digraph(self, weight=None):
+    def digraph(self, weight=None, as_subgraph=None):
         indexing = self.indexing
-        n = self.n
+        k = self.n
         V = self.base
         if weight == None:
             E = [(i, self.of(i)) for i in V]
@@ -33,7 +36,14 @@ class list_permutation:
             E = [(i, self.of(i), weight[i - indexing, self.of(i) - indexing]) for i in V]
             ### matrix weight is always 0-indexing
         g = DiGraph([V, E], loops=True)
-        g.set_pos(g.layout_circular())
+        if as_subgraph == None:
+            alpha,n = V,k
+        else:
+            alpha,n = as_subgraph
+            g.relabel({V[i]: alpha[i] for i in range(k)}, inplace=True)
+        n_pos = Graph(n).layout_circular()
+        k_pos = {i: n_pos[i - indexing] for i in alpha}
+        g.set_pos(k_pos)
         return g
  
     def matrix(self):
@@ -98,11 +108,18 @@ def random_permutation(n, indexing=1):
     shuffle(nums)
     return list_permutation(nums)
 
-def matrix_digraph(A, indexing=1):
-    n = A.dimensions()[0]
-    Gamma = DiGraph(A, loops=True)
-    Gamma.relabel({i: i+indexing for i in range(n)}, inplace=True)
-    Gamma.set_pos(Gamma.layout_circular())
+def matrix_digraph(A, indexing=1, as_subgraph=None):
+    k = A.dimensions()[0]
+    Gamma = DiGraph(A, loops=True, multiedges=False, weighted=True)
+    if as_subgraph == None:
+        Gamma.relabel({i: i+indexing for i in range(k)}, inplace=True)
+        alpha,n = list(range(indexing, k + indexing)), k
+    else:
+        alpha,n = as_subgraph
+        Gamma.relabel({i: alpha[i] for i in range(k)}, inplace=True)
+    n_pos = Graph(n).layout_circular()
+    k_pos = {i: n_pos[i - indexing] for i in alpha}
+    Gamma.set_pos(k_pos)
     return Gamma
 
 def effective_permutations(A, indexing=1):
@@ -121,17 +138,31 @@ def effective_permutations(A, indexing=1):
         perms = new_perms
     return [list_permutation([i + indexing for i in perm]) for perm in perms]
 
-def illustrate_det(A, each_row=4, each_size=4):
-    perms = effective_permutations(A)
+def illustrate_det(A, indexing=1, each_row=4, each_size=4, to_show=True, as_subgraph=None):
+    perms = effective_permutations(A, indexing)
     pics = []
     for perm in perms:
         s = perm.sign()
         w = perm.weight(A)
-        H = perm.digraph(A)
+        H = perm.digraph(A, as_subgraph=as_subgraph)
         pic = H.plot(figsize=[each_size, each_size], 
                      edge_labels=True, 
                      title="%s * %s"%(s,w)
                     )
         pics.append(pic)
-    g_array = graphics_array(pics, ncols=each_row)
-    g_array.show(figsize=[g_array.ncols() * each_size, g_array.nrows() * each_size])
+    if to_show and pics != []:
+        g_array = graphics_array(pics, ncols=each_row)
+        g_array.show(figsize=[g_array.ncols() * each_size, g_array.nrows() * each_size])
+    return pics
+
+def illustrate_sk(A, k, indexing=1, each_row=4, each_size=4, to_show=True):
+    n = A.dimensions()[0]
+    pics = []
+    for alpha_m in Combinations(list(range(n)), k):
+        Asub = A[alpha_m, alpha_m]
+        alpha = [i + indexing for i in alpha_m]
+        pics += illustrate_det(Asub, indexing, each_row, each_size, to_show=False, as_subgraph=(alpha,n))
+    if to_show and pics != []:
+        g_array = graphics_array(pics, ncols=each_row)
+        g_array.show(figsize=[g_array.ncols() * each_size, g_array.nrows() * each_size])
+    return pics
