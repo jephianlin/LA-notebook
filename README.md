@@ -169,24 +169,22 @@ Permutation expansion
 
 ### 5. 矩陣對角化
 
-_內容尚未完成_
+1. [找一組好基底](html/501-Find-a-good-basis.html)
+2. [二次曲線](html/502-Quadratic-curve.html)
+3. [遞迴關係式](html/503-Recurrence-relation.html)
+4. [線性微分方程](html/504-Linear-differential-equation.html)
+5. [矩陣指數](html/505-Matrix-exponential.html)
+6. [特徵多項式](html/506-Characteristic-polynomial.html)
+7. [特徵多項式係數](html/507-Coefficients-of-the-characteristic-polynomial.html)
+8. [矩陣對角化](html/508-Diagonalization.html)
+9. [代數重數與幾何重數](html/509-Algebraic-multiplicity-and-geometric-multiplicity.html)
+10. [特徵空間](html/510-Eigenspace.html)
+11. [圖與特徵方程式](html/511-Graph-and-characteristic-polynomial.html)
+12. [凱力–漢米頓定理](html/512-Cayley--Hamilton-theorem.html)
+13. [最小多項式](html/513-Minimal-polynomial.html)
+14. [喬丹標準型](html/514-Jordan-canonical-form.html)
 
-1. [找一組好基底]()
-2. [二次曲線]()
-3. [遞迴關係式]()
-4. [線性微分方程]()
-5. [矩陣指數]()
-6. [特徵多項式]()
-7. [特徵多項式係數]()
-8. [矩陣對角化]()
-9. [代數重數與幾何重數]()
-10. [特徵空間]()
-11. [圖與特徵方程式]()
-12. [凱力–漢米頓定理]()
-13. [最小多項式]()
-14. [喬丹標準型]()
-
-a. [Python: NumPy 與數值線性代數]()
+a. [Python: NumPy 與數值線性代數](html/5aa-Python-NumPy-and-numerical-linear-algebra.html)
 
 ```
 Good basis
