@@ -186,7 +186,7 @@ _內容尚未完成_
 13. [最小多項式]()
 14. [喬丹標準型]()
 
-a. [Python: NumPy]()
+a. [Python: NumPy 與數值線性代數]()
 
 ```
 Good basis
