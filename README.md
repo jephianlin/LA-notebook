@@ -203,23 +203,21 @@ Topics
 
 ### 6. 對稱矩陣論
 
-_內容尚未完成_
-
-1. [對一個特徵向量化簡]()
-2. [薛爾上三角化]()
-3. [對稱矩陣與正規矩陣]()
-4. [譜分解]()
-5. [奇異值分解]()
-6. [體驗主成份分析]()
-7. [慣性]()
-8. [正定與半正定矩陣]()
-9. [瑞利商]()
-10. [柯西交錯定理]()
-11. [等量分割]()
-12. [共變異數矩陣]()
-13. [主成份分析]()
-14. [拉普拉斯矩陣]()
-15. [拉普拉斯嵌入法與譜分群]()
+1. [對一個特徵向量化簡](html/601-Reduction.html)
+2. [薛爾上三角化](html/602-Schur-triangulation.html)
+3. [對稱矩陣與正規矩陣](html/603-Symmetric-matrices-and-normal-matrices.html)
+4. [譜分解](html/604-Spectral-decomposition.html)
+5. [奇異值分解](html/605-Singular-value-decomposition.html)
+6. [體驗主成份分析](html/606-Understanding-the-principal-component-analysis.html)
+7. [慣性](html/607-Inertia.html)
+8. [正定與半正定矩陣](html/608-Positivity.html)
+9. [瑞利商](html/609-Rayleigh-quotient.html)
+10. [柯西交錯定理](html/610-Cauchy-interlacing-theorem.html)
+11. [等量分割](html/611-Equitable-partition.html)
+12. [共變異數矩陣](html/612-Covariance-matrix.html)
+13. [主成份分析](html/613-Principal-component-analysis.html)
+14. [拉普拉斯矩陣](html/614-Laplacian-matrix.html)
+15. [拉普拉斯嵌入法與譜分群](html/615-Spectral-embedding-and-clustering.html)
 
 ```
 Schur triangulation
