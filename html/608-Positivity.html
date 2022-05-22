@@ -14728,27 +14728,27 @@ Note that an $n\times n$ positive semidefinite matrix $A$ is positive definite i
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Let $A$ be an $n\times n$ positive semidefinite matrix of $\rank(A) = k$.<br>
-One may diagonalize it as $A = Q\trans DQ$ by some orthogonal matrix $Q$ and diagonal matrix $D$.<br>
+One may diagonalize it as $A = QDQ\trans $ by some orthogonal matrix $Q$ and diagonal matrix $D$.<br>
 Let $\lambda_1,\ldots,\lambda_k$ be the nonzero eigenvalues of $A$.<br>
 Then we have</p>
 $$
-    A = Q\trans \begin{bmatrix}
+    A = Q\begin{bmatrix}
      \lambda_1 &amp; ~ &amp; ~ &amp; ~ \\
      ~ &amp; \ddots &amp; ~ &amp; O_{r,n-r} \\
      ~ &amp; ~ &amp; \lambda_r &amp; ~ \\
      ~ &amp; O_{n-r,r} &amp; ~ &amp; O_{n-r,n-r}
-    \end{bmatrix} Q
+    \end{bmatrix} Q\trans
     =
-    Q\trans \begin{bmatrix}
-     \lambda_1 &amp; ~ &amp; ~ \\
+    Q\begin{bmatrix}
+     \sqrt{\lambda_1} &amp; ~ &amp; ~ \\
      ~ &amp; \ddots &amp; ~ \\
-     ~ &amp; ~ &amp; \lambda_r \\
+     ~ &amp; ~ &amp; \sqrt{\lambda_r} \\
      ~ &amp; O_{n-r,r} &amp; ~ 
     \end{bmatrix}\begin{bmatrix}
-     \lambda_1 &amp; ~ &amp; ~ &amp; ~ \\
+     \sqrt{\lambda_1} &amp; ~ &amp; ~ &amp; ~ \\
      ~ &amp; \ddots &amp; ~ &amp; O_{r,n-r} \\
-     ~ &amp; ~ &amp; \lambda_r &amp; ~ \\
-    \end{bmatrix} Q = MM\trans 
+     ~ &amp; ~ &amp; \sqrt{\lambda_r} &amp; ~ \\
+    \end{bmatrix} Q\trans  = MM\trans 
 $$<p>for some $k\times n$ matrix $M$.</p>
 
 </div>
