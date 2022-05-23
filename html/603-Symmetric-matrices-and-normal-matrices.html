@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14852,7 +14858,7 @@ Then there is a real orthogonal matrix $Q$ such that $Q\trans AQ$ is diagonal an
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>將以下矩陣以實對稱矩陣對角化。</p>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>將以下矩陣以實垂直矩陣對角化。</p>
 
 </div>
 </div>
@@ -14995,7 +15001,7 @@ $$
      1 &amp; 1 &amp; 1 \\
      1 &amp; 1 &amp; 1 \\
     \end{bmatrix}
-$$<p>以實對稱矩陣對角化。</p>
+$$<p>以實垂直矩陣對角化。</p>
 
 </div>
 </div>
@@ -15015,7 +15021,7 @@ $$
      1 &amp; 1 &amp; 0 &amp; 0 \\
      1 &amp; 1 &amp; 0 &amp; 0 \\
     \end{bmatrix}
-$$<p>以實對稱矩陣對角化。</p>
+$$<p>以實垂直矩陣對角化。</p>
 
 </div>
 </div>
