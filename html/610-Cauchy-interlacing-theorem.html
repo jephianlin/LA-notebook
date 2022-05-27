@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14892,9 +14898,9 @@ $$<p>則 $B$ 也可以寫成 $B = P\trans AP$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令 $V = \vspan\{\bv_1, \ldots, \bv_{j-1}\} \subseteq \mathbb{R}^n$，<br>
-說明 $PV = \{P\bv: \bv\in V\}$ 的維度至多是 $j-1$。<br>
-因此 $(PV)^\perp$ 的維度至少是 $k - j + 1$。</p>
+<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令 $V = \vspan\{\bv_1, \ldots, \bv_{i-1}\} \subseteq \mathbb{R}^n$，<br>
+說明 $PV = \{P\bv: \bv\in V\}$ 的維度至多是 $i-1$。<br>
+因此 $(PV)^\perp$ 的維度至少是 $k - i + 1$。</p>
 
 </div>
 </div>
@@ -14906,7 +14912,7 @@ $$<p>則 $B$ 也可以寫成 $B = P\trans AP$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>令 $W = \vspan\{\bu_1, \ldots, \bu_{j}\} \subseteq \mathbb{R}^k$。<br>
+<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>令 $W = \vspan\{\bu_1, \ldots, \bu_{i}\} \subseteq \mathbb{R}^k$。<br>
 說明 $W\cap (PV)^\perp$ 必存在非零向量。</p>
 
 </div>
@@ -14924,7 +14930,7 @@ $$<p>則 $B$ 也可以寫成 $B = P\trans AP$。</p>
 （因此 $P\bv = \bw$）。<br>
 說明</p>
 $$
-    \lambda_i \leq  R_A(\bv) = \frac{\bw\trans B\bw}{\bw\trans B\bw} \leq \mu_i.
+    \lambda_i \leq  R_A(\bv) = \frac{\bw\trans B\bw}{\bw\trans\bw} \leq \mu_i.
 $$<p></p>
 <p>（之後只要把 $A$ 取代成 $-A$ 就可以證明另一側的不等式 $\mu_i \leq \lambda_{n - (k - i)}$。）</p>
 
