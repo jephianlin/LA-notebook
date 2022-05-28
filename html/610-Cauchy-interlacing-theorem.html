@@ -14884,8 +14884,8 @@ then we say they have the <strong>interlacing property</strong>.</p>
 我們可以假設 $B$ 取的是 $A$ 的最後 $k$ 個行和最後 $k$ 個列。<br>
 令</p>
 $$
-    P = \begin{bmatrix} O_{n-k,k} \\ I_k \end{bmatrix}.
-$$<p>則 $B$ 也可以寫成 $B = P\trans AP$。</p>
+    P = \begin{bmatrix} O_{k,n-k} &amp; I_k \end{bmatrix}.
+$$<p>則 $B$ 也可以寫成 $B = PAP\trans$。</p>
 <p>固定一個 $i$，依照以下步驟證明柯西交錯定理 $\lambda_i \leq \mu_i \leq \lambda_{n - (k - i)}$。</p>
 
 </div>
