@@ -22,6 +22,23 @@ sed \
     -e 's/\\\\mathbf{u}/\\\\bu/g' \
     -e 's/\\\\mathbf{v}/\\\\bv/g' \
     -e 's/\\\\mathbf{w}/\\\\bw/g' \
+    -e 's/{\\\\bf 0}/\\\\bzero/g' \
+    -e 's/{\\\\bf 1}/\\\\bone/g' \
+    -e 's/{\\\\bf a}/\\\\ba/g' \
+    -e 's/{\\\\bf b}/\\\\bb/g' \
+    -e 's/{\\\\bf c}/\\\\bc/g' \
+    -e 's/{\\\\bf d}/\\\\bd/g' \
+    -e 's/{\\\\bf e}/\\\\be/g' \
+    -e 's/{\\\\bf h}/\\\\bh/g' \
+    -e 's/{\\\\bf p}/\\\\bp/g' \
+    -e 's/{\\\\bf q}/\\\\bq/g' \
+    -e 's/{\\\\bf r}/\\\\br/g' \
+    -e 's/{\\\\bf x}/\\\\bx/g' \
+    -e 's/{\\\\bf y}/\\\\by/g' \
+    -e 's/{\\\\bf z}/\\\\bz/g' \
+    -e 's/{\\\\bf u}/\\\\bu/g' \
+    -e 's/{\\\\bf v}/\\\\bv/g' \
+    -e 's/{\\\\bf w}/\\\\bw/g' \
     -e 's/\\\\operatorname{tr}/\\\\tr/g' \
     -e 's/\\\\operatorname{null}/\\\\nul/g' \
     -e 's/\\\\operatorname{rank}/\\\\rank/g' \
