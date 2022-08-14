@@ -71,6 +71,9 @@ sed \
 
 mv output.ipynb $1
 
+rm temp-head
+rm temp-tail
+
 # $\newcommand{\trans}{^\top}
 # \newcommand{\adj}{^{\rm adj}}
 # \newcommand{\cof}{^{\rm cof}}
