@@ -1,5 +1,17 @@
 #!/bin/bash
 
+MAIN_NUM=$(grep -n '## Main idea' $1 | sed 's/:.*//')
+let "MAIN_PREV = $MAIN_NUM - 1"
+
+GET_HEAD="sed -n '1,$MAIN_PREV p' $1 > HEAD"
+echo $GET_HEAD
+eval $GET_HEAD
+
+GET_TAIL="sed -n '$MAIN_NUM,$ p' $1 > TAIL"
+echo $GET_TAIL
+eval $GET_TAIL
+
+cat HEAD > output.ipynb
 
 sed \
     -e 's/\^\\\\top/\\\\trans/g' \
@@ -55,7 +67,7 @@ sed \
     -e 's/\\\\operatorname{gm}/\\\\gm/g' \
     -e 's/\\\\operatorname{mult}/\\\\mult/g' \
     -e 's/\\\\operatorname{iner}/\\\\iner/g' \
-    $1 > output.ipynb
+    TAIL >> output.ipynb
 
 mv output.ipynb $1
 
