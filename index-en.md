@@ -203,7 +203,7 @@ Topics
 ```
 
 
-### 6. 對稱矩陣論
+### 6. Theory of symmetric matrices
 
 1. [Reduction](html/601-Reduction.html)
 2. [Schur triangulation](html/602-Schur-triangulation.html)
