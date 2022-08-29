@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E9%AB%94%E9%A9%97%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#39636;&#39511;&#22855;&#30064;&#20540;&#20998;&#35299;<a class="anchor-link" href="#%E9%AB%94%E9%A9%97%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#182;</a></h1>
+<h1 id="%E9%AB%94%E9%A9%97%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#39636;&#39511;&#22855;&#30064;&#20540;&#20998;&#35299;<a class="anchor-link" href="#%E9%AB%94%E9%A9%97%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#182;</a></h1><p>Understanding the singular value decomposition</p>
+
 </div>
 </div>
 </div>
@@ -14584,8 +14605,57 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>$\newcommand{\trans}{^\top}
+\newcommand{\adj}{^{\rm adj}}
+\newcommand{\cof}{^{\rm cof}}
+\newcommand{\inp}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\dunion}{\mathbin{\dot\cup}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bone}{\mathbf{1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bp}{\mathbf{p}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\br}{\mathbf{r}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\nul}{\operatorname{null}}
+\newcommand{\rank}{\operatorname{rank}}
+%\newcommand{\ker}{\operatorname{ker}}
+\newcommand{\range}{\operatorname{range}}
+\newcommand{\Col}{\operatorname{Col}}
+\newcommand{\Row}{\operatorname{Row}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14624,8 +14694,8 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $m\times n$ matrix and<br>
-$f_A : \mathbb{R}^n\rightarrow\mathbb{R}^n$ the corresponding linear function defined by $f({\bf v}) = A{\bf v}$. Let $\mathcal{E}_n$ and $\mathcal{E}_m$ be the standard bases of $\mathbb{R}^n$ and $\mathbb{R}^m$, respectively.<br>
+<p>Let $A$ be an $m\times n$ matrix and<br />
+$f_A : \mathbb{R}^n\rightarrow\mathbb{R}^n$ the corresponding linear function defined by $f(\bv) = A\bv$. Let $\mathcal{E}_n$ and $\mathcal{E}_m$ be the standard bases of $\mathbb{R}^n$ and $\mathbb{R}^m$, respectively.<br />
 Then $[f_A] = [f_A]_{\mathcal{E}_n}^{\mathcal{E}_m} = A$.</p>
 
 </div>
@@ -14638,8 +14708,8 @@ Then $[f_A] = [f_A]_{\mathcal{E}_n}^{\mathcal{E}_m} = A$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $\alpha$ be another basis of $\mathbb{R}^n$ and $V = [\operatorname{id}]_\alpha^{\mathcal{E}_n}$.<br>
-Let $\beta$ be another basis of $\mathbb{R}^m$ and $U = [\operatorname{id}]_\beta^{\mathcal{E}_m}$.<br>
+<p>Let $\alpha$ be another basis of $\mathbb{R}^n$ and $V = [\idmap]_\alpha^{\mathcal{E}_n}$.<br />
+Let $\beta$ be another basis of $\mathbb{R}^m$ and $U = [\idmap]_\beta^{\mathcal{E}_m}$.<br />
 Then $[f_A]_\alpha^\beta = U^{-1}AV$ and $A = U[f_A]_\alpha^\beta V^{-1}$.</p>
 
 </div>
@@ -14652,14 +14722,14 @@ Then $[f_A]_\alpha^\beta = U^{-1}AV$ and $A = U[f_A]_\alpha^\beta V^{-1}$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Singular-value-decomposition">Singular value decomposition<a class="anchor-link" href="#Singular-value-decomposition">&#182;</a></h5><p>Let $A$ be an $m\times n$ matrix.<br>
+<h5 id="Singular-value-decomposition">Singular value decomposition<a class="anchor-link" href="#Singular-value-decomposition">&#182;</a></h5><p>Let $A$ be an $m\times n$ matrix.<br />
 Then there are orthonormal bases $\alpha$ and $\beta$ of $\mathbb{R}^n$ and $\mathbb{R}^m$, respectively, such that 
 $$[f_A]_\alpha^\beta = \Sigma = \begin{bmatrix} 
  \operatorname{diag}(\sigma_1, \ldots, \sigma_r) &amp; O_{r,n-r} \\
  O_{m-r,r} &amp; O_{m-r,n-r} 
 \end{bmatrix},$$
 where $\sigma_1\geq\cdots\geq\sigma_r$ and $\operatorname{diag}(\sigma_1,\ldots,\sigma_r)$ is the diagonal matrix with the given diagonal entries.</p>
-<p>That is, there are $m\times m$ and $n\times n$ orthogonal matrices $U$ and $V$ such that $U^\top AV = \Sigma$ and $A = U\Sigma V^\top$.</p>
+<p>That is, there are $m\times m$ and $n\times n$ orthogonal matrices $U$ and $V$ such that $U\trans AV = \Sigma$ and $A = U\Sigma V\trans$.</p>
 
 </div>
 </div>
@@ -14671,10 +14741,10 @@ where $\sigma_1\geq\cdots\geq\sigma_r$ and $\operatorname{diag}(\sigma_1,\ldots,
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $\alpha = \{ {\bf v}_1, \ldots, {\bf v}_n \}$ and $\beta = \{ {\bf u}_1, \ldots, {\bf u}_m \}$ be the bases in the singular value decomposition.<br>
-Then $V$ is the matrix whose columns are vectors in $\alpha$, and<br>
-$U$ is the matrix whose columns are vectors in $\beta$.<br>
-Since $\alpha$ and $\beta$ orthogonal orthonormal, $U$ and $V$ are orthogonal and $U^{-1} = U^\top$ and $V^{-1} = V^\top$.</p>
+<p>Let $\alpha = \{ \bv_1, \ldots, \bv_n \}$ and $\beta = \{ \bu_1, \ldots, \bu_m \}$ be the bases in the singular value decomposition.<br />
+Then $V$ is the matrix whose columns are vectors in $\alpha$, and<br />
+$U$ is the matrix whose columns are vectors in $\beta$.<br />
+Since $\alpha$ and $\beta$ orthogonal orthonormal, $U$ and $V$ are orthogonal and $U^{-1} = U\trans$ and $V^{-1} = V\trans$.</p>
 
 </div>
 </div>
@@ -14686,17 +14756,17 @@ Since $\alpha$ and $\beta$ orthogonal orthonormal, $U$ and $V$ are orthogonal an
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>By examining $AV = U\Sigma$, we have<br>
+<p>By examining $AV = U\Sigma$, we have<br />
 $$AV = 
 A\begin{bmatrix}
  | &amp; ~ &amp; | \\
- {\bf v}_1 &amp; \cdots &amp; {\bf v}_n \\
+ \bv_1 &amp; \cdots &amp; \bv_n \\
  | &amp; ~ &amp; | 
 \end{bmatrix} = 
 U\Sigma = 
 \begin{bmatrix}
  | &amp; ~ &amp; | \\
- {\bf v}_1 &amp; \cdots &amp; {\bf v}_n \\
+ \bv_1 &amp; \cdots &amp; \bv_n \\
  | &amp; ~ &amp; | 
 \end{bmatrix}
 \begin{bmatrix} 
@@ -14705,10 +14775,10 @@ U\Sigma =
 \end{bmatrix} = 
 \begin{bmatrix}
  | &amp; ~ &amp; | \\
- \sigma_1{\bf v}_1 &amp; \cdots &amp; \sigma_r{\bf v}_r &amp; O_{n,n-r} \\
+ \sigma_1\bv_1 &amp; \cdots &amp; \sigma_r\bv_r &amp; O_{n,n-r} \\
  | &amp; ~ &amp; | 
 \end{bmatrix}.$$ 
-Therefore, $A{\bf v}_i = \lambda_i {\bf u}_i$ for $i = 1,\ldots, r$ and $A{\bf v}_i = {\bf 0}$ for $i = r+1,\ldots, n$.</p>
+Therefore, $A\bv_i = \lambda_i \bu_i$ for $i = 1,\ldots, r$ and $A\bv_i = \bzero$ for $i = r+1,\ldots, n$.</p>
 
 </div>
 </div>
@@ -14720,8 +14790,8 @@ Therefore, $A{\bf v}_i = \lambda_i {\bf u}_i$ for $i = 1,\ldots, r$ and $A{\bf v
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The values $\sigma_1,\ldots,\sigma_r$ are called the <strong>sigular values</strong> of $A$.<br>
-Singular values are necessarily positive, and the number of singular values is $r = \operatorname{rank}(A)$.</p>
+<p>The values $\sigma_1,\ldots,\sigma_r$ are called the <strong>sigular values</strong> of $A$.<br />
+Singular values are necessarily positive, and the number of singular values is $r = \rank(A)$.</p>
 
 </div>
 </div>
@@ -14758,10 +14828,13 @@ Singular values are necessarily positive, and the number of singular values is $
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
-令 $f : \mathbb{R}^4 \rightarrow \mathbb{R}^3$ 為一線性函數。<br>
-令 $\alpha = \{{\bf v}_1,\ldots, {\bf v}_4\}$ 及 $\beta = \{{\bf u}_1,\ldots, {\bf u}_3\}$ 分別為 $\mathbb{R}^4$ 和 $\mathbb{R}^3$ 的一組單位長垂直基底。<br>
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br />
+令 $f : \mathbb{R}^4 \rightarrow \mathbb{R}^3$ 為一線性函數。<br />
+令 $\alpha = \{\bv_1,\ldots, \bv_4\}$ 及 $\beta = \{\bu_1,\ldots, \bu_3\}$ 分別為 $\mathbb{R}^4$ 和 $\mathbb{R}^3$ 的一組單位長垂直基底。<br />
 已知 $\Sigma = [f]_\alpha^\beta$。</p>
+<!-- eng start -->
+<p>Run the code below.  Let $f : \mathbb{R}^4 \rightarrow \mathbb{R}^3$ be a linear function.  Let $\alpha = \{\bv_1,\ldots, \bv_4\}$ and $\beta = \{\bu_1,\ldots, \bu_3\}$ be orthonormal bases of $\mathbb{R}^4$ and $\mathbb{R}^3$, respectively.  Suppose $\Sigma = [f]_\alpha^\beta$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14786,19 +14859,19 @@ Singular values are necessarily positive, and the number of singular values is $
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
     <span class="n">Sigma</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sigma =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Sigma ="</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A v</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> u</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">sigs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"A v</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> u</span><span class="si">%s</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">sigs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A v</span><span class="si">%s</span><span class="s2"> = 0&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;range(f_A) = span({ u1, ..., u</span><span class="si">%s</span><span class="s2"> })&quot;</span><span class="o">%</span><span class="k">r</span>)
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ker(f_A) = span({ v</span><span class="si">%s</span><span class="s2">, ..., vn })&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;rank(f_A) =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;null(f_A) =&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"A v</span><span class="si">%s</span><span class="s2"> = 0"</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"range(f_A) = span({ u1, ..., u</span><span class="si">%s</span><span class="s2"> })"</span><span class="o">%</span><span class="k">r</span>)
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"ker(f_A) = span({ v</span><span class="si">%s</span><span class="s2">, ..., vn })"</span><span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"rank(f_A) ="</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"null(f_A) ="</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14814,6 +14887,9 @@ Singular values are necessarily positive, and the number of singular values is $
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>利用 $\Sigma$ 說明 $f_A$ 的作用。</p>
+<!-- eng start -->
+<p>Observe the structure of $\Sigma$ and describe the effect of $f_A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14825,7 +14901,10 @@ Singular values are necessarily positive, and the number of singular values is $
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>找出 $\operatorname{range}(f_A)$、$\operatorname{ker}(f_A)$、$\operatorname{rank}(f_A)$、$\operatorname{null}(f_A)$。</p>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>找出 $\range(f_A)$、$\ker(f_A)$、$\rank(f_A)$、$\nul(f_A)$。</p>
+<!-- eng start -->
+<p>Find $\range(f_A)$, $\ker(f_A)$, $\rank(f_A)$, and $\nul(f_A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14848,16 +14927,27 @@ Singular values are necessarily positive, and the number of singular values is $
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $A$ 為一 $3\times 4$ 矩陣、<br>
-$\alpha = \{ {\bf v}_1,\ldots,{\bf v}_4 \}$ 為 $\mathbb{R}^4$ 的一組基底、<br>
-$\beta = \{ {\bf u}_1,\ldots,{\bf u}_3 \}$ 為 $\mathbb{R}^3$ 的一組基底。<br>
-已知<br>
-$$[f_A]_\beta^\beta = \begin{bmatrix}  
- 3 &amp; 0 &amp; 0 &amp; 0 \\
- 0 &amp; 4 &amp; 0 &amp; 0 \\
- 0 &amp; 0 &amp; 5 &amp; 0 \\
-\end{bmatrix}.$$<br>
-將 $A{\bf v}_1$、$A{\bf v}_2$、$A{\bf v}_3$、及 $A({\bf v}_1 + {\bf v}_2 + {\bf v}_3)$ 分別寫成 $\beta$ 的線性組合。</p>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $A$ 為一 $3\times 4$ 矩陣、<br />
+$\alpha = \{ \bv_1,\ldots,\bv_4 \}$ 為 $\mathbb{R}^4$ 的一組基底、<br />
+$\beta = \{ \bu_1,\ldots,\bu_3 \}$ 為 $\mathbb{R}^3$ 的一組基底。<br />
+已知</p>
+$$
+    [f_A]_\beta^\beta = \begin{bmatrix}  
+     3 &amp; 0 &amp; 0 &amp; 0 \\
+     0 &amp; 4 &amp; 0 &amp; 0 \\
+     0 &amp; 0 &amp; 5 &amp; 0 \\
+    \end{bmatrix}.
+$$<p>將 $A\bv_1$、$A\bv_2$、$A\bv_3$、及 $A(\bv_1 + \bv_2 + \bv_3)$ 分別寫成 $\beta$ 的線性組合。</p>
+<!-- eng start -->
+<p>Let $A$ be a $3\times 4$ matrix, $\alpha = \{ \bv_1,\ldots,\bv_4 \}$ a basis of $\mathbb{R}^4$, and $\beta = \{ \bu_1,\ldots,\bu_3 \}$ a basis of $\mathbb{R}^3$.  Suppose</p>
+$$
+    [f_A]_\beta^\beta = \begin{bmatrix}  
+     3 &amp; 0 &amp; 0 &amp; 0 \\
+     0 &amp; 4 &amp; 0 &amp; 0 \\
+     0 &amp; 0 &amp; 5 &amp; 0 \\
+    \end{bmatrix}.
+$$<p>Write $A\bv_1$, $A\bv_2$, $A\bv_3$, and $A(\bv_1 + \bv_2 + \bv_3)$ as linear combinations of $\beta$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14869,27 +14959,54 @@ $$[f_A]_\beta^\beta = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 
-$$A = \begin{bmatrix}  
- 1 &amp; 1 &amp; 1 &amp; 1 \\
- 1 &amp; 1 &amp; 1 &amp; 1 \\
- 1 &amp; 1 &amp; 1 &amp; 1 \\
-\end{bmatrix},$$ 
-$\beta = \{ {\bf v}_1, \ldots, {\bf v}_4 \}$ 為<br>
-$$\begin{bmatrix}
- \frac{1}{2} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
- \frac{1}{2} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
- \frac{1}{2} &amp; 0 &amp; -\frac{2}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
- \frac{1}{2} &amp; 0 &amp; 0 &amp; -\frac{3}{\sqrt{12}} \\
-\end{bmatrix}$$
-的行向量集合、<br>
-且 $\beta = \{ {\bf u}_1, \ldots, {\bf u}_3 \}$ 為<br>
-$$\begin{bmatrix}
- \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
- \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
- \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
-\end{bmatrix}$$
-的行向量集合。</p>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令</p>
+$$
+    A = \begin{bmatrix}  
+     1 &amp; 1 &amp; 1 &amp; 1 \\
+     1 &amp; 1 &amp; 1 &amp; 1 \\
+     1 &amp; 1 &amp; 1 &amp; 1 \\
+    \end{bmatrix},
+$$<p>$\beta = \{ \bv_1, \ldots, \bv_4 \}$ 為</p>
+$$
+    \begin{bmatrix}
+     \frac{1}{2} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
+     \frac{1}{2} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
+     \frac{1}{2} &amp; 0 &amp; -\frac{2}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
+     \frac{1}{2} &amp; 0 &amp; 0 &amp; -\frac{3}{\sqrt{12}} \\
+    \end{bmatrix}
+$$<p>的行向量集合、<br />
+且 $\beta = \{ \bu_1, \ldots, \bu_3 \}$ 為</p>
+$$
+    \begin{bmatrix}
+     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+    \end{bmatrix}
+$$<p>的行向量集合。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}  
+     1 &amp; 1 &amp; 1 &amp; 1 \\
+     1 &amp; 1 &amp; 1 &amp; 1 \\
+     1 &amp; 1 &amp; 1 &amp; 1 \\
+    \end{bmatrix},
+$$<p>$\alpha = \{ \bv_1, \ldots, \bv_4 \}$ the columns of</p>
+$$
+    \begin{bmatrix}
+     \frac{1}{2} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
+     \frac{1}{2} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
+     \frac{1}{2} &amp; 0 &amp; -\frac{2}{\sqrt{6}} &amp; \frac{1}{\sqrt{12}} \\
+     \frac{1}{2} &amp; 0 &amp; 0 &amp; -\frac{3}{\sqrt{12}} \\
+    \end{bmatrix},
+$$<p>and $\beta = \{ \bu_1, \ldots, \bu_3 \}$ the columns of</p>
+$$
+    \begin{bmatrix}
+     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -14902,6 +15019,9 @@ $$\begin{bmatrix}
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>寫出 $[f_A]_\alpha^\beta$ 並說明 $f_A$ 的作用。</p>
+<!-- eng start -->
+<p>Find $[f_A]_\alpha^\beta$ and describe the effect of $f_A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14913,8 +15033,11 @@ $$\begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>找出兩個垂直矩陣 $U$ 和 $V$<br>
-以及一個只有在 $i,i$-項有值的矩陣 $\Sigma$ 使得 $A = U\Sigma V^\top$。</p>
+<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>找出兩個垂直矩陣 $U$ 和 $V$<br />
+以及一個只有在 $i,i$-項有值的矩陣 $\Sigma$ 使得 $A = U\Sigma V\trans$。</p>
+<!-- eng start -->
+<p>Find orthogonal matrices $U$ and $V$, and a matrix $\Sigma$ whose nonzero entries only occurs on the $i,i$-entries, such that $A = U\Sigma V\trans$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14926,10 +15049,13 @@ $$\begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h6 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h6><p>令 $A$ 為 $m\times n$ 矩陣且 $\operatorname{rank}(A) = r$。<br>
-令 $A = U\Sigma V^\top$ 為其奇異值分解﹐其中 $\sigma_1\geq \cdots \geq \sigma_r &gt; 0$ 為其奇異值。<br>
-令 ${\bf u}_1,\ldots,{\bf u}_{m}$ 為 $U$ 的各行向量、<br>
-${\bf v}_0, \ldots, {\bf v}_{n-1}$ 為 $V$ 的各行向量。</p>
+<h6 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h6><p>令 $A$ 為 $m\times n$ 矩陣且 $\rank(A) = r$。<br />
+令 $A = U\Sigma V\trans$ 為其奇異值分解﹐其中 $\sigma_1\geq \cdots \geq \sigma_r &gt; 0$ 為其奇異值。<br />
+令 $\bu_1,\ldots,\bu_{m}$ 為 $U$ 的各行向量、<br />
+$\bv_0, \ldots, \bv_{n-1}$ 為 $V$ 的各行向量。</p>
+<!-- eng start -->
+<p>Let $A$ be an $m\times n$ matrix and $\rank(A) = r$.  Let $A = U\Sigma V\trans$ be the singular value decomposition, where $\sigma_1\geq \cdots \geq \sigma_r &gt; 0$ are the singular values.  Let $\bu_1,\ldots,\bu_{m}$ be the columns of $U$ and $\bv_0, \ldots, \bv_{n-1}$ the columns of $V$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14941,8 +15067,14 @@ ${\bf v}_0, \ldots, {\bf v}_{n-1}$ 為 $V$ 的各行向量。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>說明
-$$A = \sum_{i=1}^{r} \sigma_i{\bf u}_i{\bf v}_i^\top.$$</p>
+<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>說明</p>
+$$
+    A = \sum_{i=1}^{r} \sigma_i\bu_i\bv_i\trans.
+$$<!-- eng start -->
+<p>Verify and give intuition to</p>
+$$
+    A = \sum_{i=1}^{r} \sigma_i\bu_i\bv_i\trans.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -14954,8 +15086,11 @@ $$A = \sum_{i=1}^{r} \sigma_i{\bf u}_i{\bf v}_i^\top.$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>定義 $\|M\| = \sqrt{\operatorname{M^\top M}}$ 為矩陣的長度。<br>
+<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>定義 $\|M\| = \sqrt{M\trans M}$ 為矩陣的長度。<br />
 說明 $\|M\|^2$ 就是 $M$ 的各項平方和。</p>
+<!-- eng start -->
+<p>Define $\|M\| = \sqrt{M\trans M}$ as the norm of a matirx.  Verify that $\|M\|^2$ is indeed the square sum of the entries of $M$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14967,9 +15102,13 @@ $$A = \sum_{i=1}^{r} \sigma_i{\bf u}_i{\bf v}_i^\top.$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>說明對任何 $i = 1,\ldots, r$ 都有 $\|{\bf u}_i{\bf v}_i\| = 1$。</p>
-<p>因此我們可以令 $A' = \sum_{i=1}^{k} \sigma_i{\bf u}_i{\bf v}_i^\top$ 當作 $A$ 的逼近﹐而且有 $\|A - A'\| \leq \sum_{k+1}^r \sigma_i$。<br>
-（矩陣長度也符何三角不等式。）</p>
+<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>說明對任何 $i = 1,\ldots, r$ 都有 $\|\bu_i\bv_i\| = 1$。</p>
+<p>因此我們可以令 $A' = \sum_{i=1}^{k} \sigma_i\bu_i\bv_i\trans$ 當作 $A$ 的逼近﹐而且有 $\|A - A'\| \leq \sum_{k+1}^r \sigma_i$。<br />
+（矩陣長度也符合三角不等式。）</p>
+<!-- eng start -->
+<p>Show that $\|\bu_i\bv_i\| = 1$ for each $i = 1,\ldots, r$.</p>
+<p>Therefore, we may consider $A' = \sum_{i=1}^{k} \sigma_i\bu_i\bv_i\trans$ as an approximation of $A$ with $\|A - A'\| \leq \sum_{k+1}^r \sigma_i$.  (Note that the norm of matrices also satisfies the triangle inequality.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14981,11 +15120,14 @@ $$A = \sum_{i=1}^{r} \sigma_i{\bf u}_i{\bf v}_i^\top.$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>每張圖片的亮度都可視為一個矩陣。<br>
-令 $A$ 為原圖﹐則我們可以用 $A'$ 來降低原圖的大小。<br>
-執行以下程式碼。<br>
-試試看選用各個 $k$ 的差異。<br>
+<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>每張圖片的亮度都可視為一個矩陣。<br />
+令 $A$ 為原圖﹐則我們可以用 $A'$ 來降低原圖的大小。<br />
+執行以下程式碼。<br />
+試試看選用各個 $k$ 的差異。<br />
 算一下把 $A'$ 儲存起來要幾個數字。</p>
+<!-- eng start -->
+<p>Each picture can be viewed as a matrix, where each entry records the brightness of each pixel.  Let $A$ be the original picture.  Then $A'$ is the compressed data.  Run the code below.  Try to apply different $k$.  Then calculate the number of entries required to store $A'$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15002,8 +15144,8 @@ $$A = \sum_{i=1}^{r} \sigma_i{\bf u}_i{\bf v}_i^\top.$$</p>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
 
-<span class="n">arr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;incrediville-side.jpg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys_r&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">'incrediville-side.jpg'</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'Greys_r'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
 
 <span class="n">U</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">Vh</span> <span class="o">=</span> <span class="n">LA</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="c1">### might take long</span>
 </pre></div>
@@ -15023,7 +15165,7 @@ $$A = \sum_{i=1}^{r} \sigma_i{\bf u}_i{\bf v}_i^\top.$$</p>
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1">### between 1 to 3120</span>
 <span class="n">arr_new</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,:</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="n">k</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Vh</span><span class="p">[:</span><span class="n">k</span><span class="p">,:])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">arr_new</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys_r&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">arr_new</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'Greys_r'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
 </pre></div>
 
      </div>

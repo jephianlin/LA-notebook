@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E9%AB%94%E9%A9%97%E8%AD%9C%E5%88%86%E8%A7%A3">&#39636;&#39511;&#35676;&#20998;&#35299;<a class="anchor-link" href="#%E9%AB%94%E9%A9%97%E8%AD%9C%E5%88%86%E8%A7%A3">&#182;</a></h1>
+<h1 id="%E9%AB%94%E9%A9%97%E8%AD%9C%E5%88%86%E8%A7%A3">&#39636;&#39511;&#35676;&#20998;&#35299;<a class="anchor-link" href="#%E9%AB%94%E9%A9%97%E8%AD%9C%E5%88%86%E8%A7%A3">&#182;</a></h1><p>Understanding the spectral decomposition</p>
+
 </div>
 </div>
 </div>
@@ -14584,8 +14605,57 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>$\newcommand{\trans}{^\top}
+\newcommand{\adj}{^{\rm adj}}
+\newcommand{\cof}{^{\rm cof}}
+\newcommand{\inp}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\dunion}{\mathbin{\dot\cup}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bone}{\mathbf{1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bp}{\mathbf{p}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\br}{\mathbf{r}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\nul}{\operatorname{null}}
+\newcommand{\rank}{\operatorname{rank}}
+%\newcommand{\ker}{\operatorname{ker}}
+\newcommand{\range}{\operatorname{range}}
+\newcommand{\Col}{\operatorname{Col}}
+\newcommand{\Row}{\operatorname{Row}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14624,8 +14694,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix and<br>
-$f_A : \mathbb{R}^n\rightarrow\mathbb{R}^n$ the corresponding linear function defined by $f({\bf v}) = A{\bf v}$. Let $\mathcal{E}_n$ be the standard basis of $\mathbb{R}^n$.<br>
+<p>Let $A$ be an $n\times n$ matrix and<br />
+$f_A : \mathbb{R}^n\rightarrow\mathbb{R}^n$ the corresponding linear function defined by $f(\bv) = A\bv$.<br />
+Let $\mathcal{E}_n$ be the standard basis of $\mathbb{R}^n$.<br />
 Then $[f_A] = [f_A]_{\mathcal{E}_n}^{\mathcal{E}_n} = A$.</p>
 
 </div>
@@ -14638,7 +14709,7 @@ Then $[f_A] = [f_A]_{\mathcal{E}_n}^{\mathcal{E}_n} = A$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $\beta$ be another basis of $\mathcal{R}^n$ and $Q = [\operatorname{id}]_\beta^{\mathcal{E}_n}$.<br>
+<p>Let $\beta$ be another basis of $\mathcal{R}^n$ and $Q = [\idmap]_\beta^{\mathcal{E}_n}$.<br />
 Then $[f_A]_\beta^\beta = Q^{-1}AQ$.</p>
 
 </div>
@@ -14651,9 +14722,9 @@ Then $[f_A]_\beta^\beta = Q^{-1}AQ$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Spectral-theorem-(vector-version)">Spectral theorem (vector version)<a class="anchor-link" href="#Spectral-theorem-(vector-version)">&#182;</a></h5><p>Let $A$ be an $n\times n$ symmetric matrix.<br>
-Then there is an orthonormal basis $\beta$ of $\mathbb{R}^n$ such that $[f_A]_\beta^\beta = D$ is a diagonal matrix.<br>
-That is, there is an orthogonal matrix $Q$ such that $Q^\top AQ = D$ is a diagonal matrix.</p>
+<h5 id="Spectral-theorem-(vector-version)">Spectral theorem (vector version)<a class="anchor-link" href="#Spectral-theorem-(vector-version)">&#182;</a></h5><p>Let $A$ be an $n\times n$ symmetric matrix.<br />
+Then there is an orthonormal basis $\beta$ of $\mathbb{R}^n$ such that $[f_A]_\beta^\beta = D$ is a diagonal matrix.<br />
+That is, there is an orthogonal matrix $Q$ such that $Q\trans AQ = D$ is a diagonal matrix.</p>
 
 </div>
 </div>
@@ -14665,9 +14736,9 @@ That is, there is an orthogonal matrix $Q$ such that $Q^\top AQ = D$ is a diagon
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $\beta = \{ {\bf v}_1, \ldots, {\bf v}_n \}$ be the basis in the spectral theorem.<br>
-Then $Q$ is the matrix whose columns are vectors in $\beta$.<br>
-Since $\beta$ is orthonormal, $Q$ is orthogonal and $Q^{-1} = Q^\top$.</p>
+<p>Let $\beta = \{ \bv_1, \ldots, \bv_n \}$ be the basis in the spectral theorem.<br />
+Then $Q$ is the matrix whose columns are vectors in $\beta$.<br />
+Since $\beta$ is orthonormal, $Q$ is orthogonal and $Q^{-1} = Q\trans$.</p>
 
 </div>
 </div>
@@ -14684,18 +14755,18 @@ $$\begin{bmatrix}
  \lambda_1 &amp; ~ &amp; ~ \\ 
  ~ &amp; \ddots &amp; ~ \\ 
  ~ &amp; ~ &amp; \lambda_n \\ 
-\end{bmatrix}.$$<br>
-By examining $AQ = QD$, we have<br>
+\end{bmatrix}.$$<br />
+By examining $AQ = QD$, we have<br />
 $$AQ = 
 A\begin{bmatrix}
  | &amp; ~ &amp; | \\
- {\bf v}_1 &amp; \cdots &amp; {\bf v}_n \\
+ \bv_1 &amp; \cdots &amp; \bv_n \\
  | &amp; ~ &amp; | 
 \end{bmatrix} = 
 QD = 
 \begin{bmatrix}
  | &amp; ~ &amp; | \\
- {\bf v}_1 &amp; \cdots &amp; {\bf v}_n \\
+ \bv_1 &amp; \cdots &amp; \bv_n \\
  | &amp; ~ &amp; | 
 \end{bmatrix}
 \begin{bmatrix}
@@ -14705,10 +14776,10 @@ QD =
 \end{bmatrix} =
 \begin{bmatrix}
  | &amp; ~ &amp; | \\
- \lambda_1{\bf v}_1 &amp; \cdots &amp; \lambda_n{\bf v}_n \\
+ \lambda_1\bv_1 &amp; \cdots &amp; \lambda_n\bv_n \\
  | &amp; ~ &amp; | 
 \end{bmatrix}.$$ 
-Therefore, $A{\bf v}_i = \lambda_i {\bf v}_i$ for $i = 1,\ldots, n$.</p>
+Therefore, $A\bv_i = \lambda_i \bv_i$ for $i = 1,\ldots, n$.</p>
 
 </div>
 </div>
@@ -14720,7 +14791,7 @@ Therefore, $A{\bf v}_i = \lambda_i {\bf v}_i$ for $i = 1,\ldots, n$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If a nonzero vector ${\bf v}$ satisfies $A{\bf v} = \lambda{\bf v}$ for some scalar $\lambda$, then ${\bf v}$ is called an <strong>eigenvector</strong> of $A$ and $\lambda$ is called an <strong>eigenvalue</strong> of $A$.</p>
+<p>If a nonzero vector $\bv$ satisfies $A\bv = \lambda\bv$ for some scalar $\lambda$, then $\bv$ is called an <strong>eigenvector</strong> of $A$ and $\lambda$ is called an <strong>eigenvalue</strong> of $A$.</p>
 
 </div>
 </div>
@@ -14732,12 +14803,12 @@ Therefore, $A{\bf v}_i = \lambda_i {\bf v}_i$ for $i = 1,\ldots, n$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>On the other hand, we may write $A = QDQ^\top$.<br>
-Thus,<br>
-$$A = QDQ^\top = 
+<p>On the other hand, we may write $A = QDQ\trans$.<br />
+Thus,<br />
+$$A = QDQ\trans = 
 \begin{bmatrix}
  | &amp; ~ &amp; | \\
- {\bf v}_1 &amp; \cdots &amp; {\bf v}_n \\
+ \bv_1 &amp; \cdots &amp; \bv_n \\
  | &amp; ~ &amp; | 
 \end{bmatrix}
 \begin{bmatrix}  
@@ -14747,12 +14818,14 @@ $$A = QDQ^\top =
 \end{bmatrix}
 \begin{bmatrix}</p>
 <ul>
-<li>&amp; {\bf v}_1^\top &amp; - \
-~ &amp; \vdots &amp; ~\</li>
-<li>&amp; {\bf v}<em>n^\top &amp; - 
-\end{bmatrix} = 
-\sum</em>{i = 1}^n \lambda_i {\bf v}_i{\bf v}_i^\top.$$</li>
+<li>&amp; \bv_1\trans &amp; - \</li>
 </ul>
+<p>~ &amp; \vdots &amp; ~\</p>
+<ul>
+<li>&amp; \bv_n\trans &amp; -</li>
+</ul>
+<p>\end{bmatrix} = 
+\sum_{i = 1}^n \lambda_i \bv_i\bv_i\trans.$$</p>
 
 </div>
 </div>
@@ -14764,8 +14837,8 @@ $$A = QDQ^\top =
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Suppose $\{\lambda_1,\ldots,\lambda_n\}$ only has $q$ distinct values $\{\mu_1,\ldots, \mu_q\}$.<br>
-For each $j = 1,\ldots, q$, we may let $\displaystyle P_j = \sum_{\lambda_i = \mu_j} {\bf v}_i{\bf v}_i^\top$.<br>
+<p>Suppose $\{\lambda_1,\ldots,\lambda_n\}$ only has $q$ distinct values $\{\mu_1,\ldots, \mu_q\}$.<br />
+For each $j = 1,\ldots, q$, we may let $\displaystyle P_j = \sum_{\lambda_i = \mu_j} \bv_i\bv_i\trans$.<br />
 Thus, we have the following.</p>
 
 </div>
@@ -14778,12 +14851,12 @@ Thus, we have the following.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Spectral-theorem-(projection-version)">Spectral theorem (projection version)<a class="anchor-link" href="#Spectral-theorem-(projection-version)">&#182;</a></h5><p>Let $A$ be an $n\times n$ symmetric matrix.<br>
+<h5 id="Spectral-theorem-(projection-version)">Spectral theorem (projection version)<a class="anchor-link" href="#Spectral-theorem-(projection-version)">&#182;</a></h5><p>Let $A$ be an $n\times n$ symmetric matrix.<br />
 Then there are $q$ distinct values $\mu_1,\ldots, \mu_q$ and $q$ projection matrices $P_1,\ldots, P_q$ such that</p>
 <ul>
-<li>$A = \sum_{j=1}^q \mu_j P_j$,  </li>
-<li>$P_i^2 = P_i$ for any $i$, </li>
-<li>$P_iP_j = O$ for any $i$ and $j$, and </li>
+<li>$A = \sum_{j=1}^q \mu_j P_j$,</li>
+<li>$P_i^2 = P_i$ for any $i$,</li>
+<li>$P_iP_j = O$ for any $i$ and $j$, and</li>
 <li>$\sum_{j=1}^q P_j = I_n$.</li>
 </ul>
 
@@ -14825,6 +14898,9 @@ Then there are $q$ distinct values $\mu_1,\ldots, \mu_q$ and $q$ projection matr
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14852,19 +14928,19 @@ Then there are $q$ distinct values $\mu_1,\ldots, \mu_q$ and $q$ projection matr
 
 <span class="n">cs</span> <span class="o">=</span> <span class="n">random_int_list</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"A ="</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;v</span><span class="si">%s</span><span class="s2"> =&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b = &quot;</span> <span class="o">+</span> <span class="s2">&quot; + &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">cs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"v</span><span class="si">%s</span><span class="s2"> ="</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b = "</span> <span class="o">+</span> <span class="s2">" + "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">cs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span> 
 
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A v</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A b = &quot;</span> <span class="o">+</span> <span class="s2">&quot; + &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">cs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q =&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"A v</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"A b = "</span> <span class="o">+</span> <span class="s2">" + "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">cs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Q ="</span><span class="p">)</span>
     <span class="n">show</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;D =&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"D ="</span><span class="p">)</span>
     <span class="n">show</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
 </pre></div>
 
@@ -14880,7 +14956,10 @@ Then there are $q$ distinct values $\mu_1,\ldots, \mu_q$ and $q$ projection matr
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>驗證 ${\bf v}_1, \ldots, {\bf v}_3$ 是 $A$ 的特徵向量﹐並找出相對應的特徵值。</p>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>驗證 $\bv_1, \ldots, \bv_3$ 是 $A$ 的特徵向量﹐並找出相對應的特徵值。</p>
+<!-- eng start -->
+<p>Verify that $\bv_1, \ldots, \bv_3$ are eigenvectors of $A$ and find the corresponding eigenvalues.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14892,7 +14971,10 @@ Then there are $q$ distinct values $\mu_1,\ldots, \mu_q$ and $q$ projection matr
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>把 $A{\bf b}$ 寫成 $\{{\bf v}_1, \ldots, {\bf v}_3\}$的線性組合。</p>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>把 $A\bb$ 寫成 $\{\bv_1, \ldots, \bv_3\}$ 的線性組合。</p>
+<!-- eng start -->
+<p>Write $A\bb$ as a linear combination of $\{\bv_1, \ldots, \bv_3\}$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14904,7 +14986,10 @@ Then there are $q$ distinct values $\mu_1,\ldots, \mu_q$ and $q$ projection matr
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>找出一個垂直矩陣 $Q$ 和一個對角矩陣 $D$ 使得 $D = Q^\top AQ$。</p>
+<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>找出一個垂直矩陣 $Q$ 和一個對角矩陣 $D$ 使得 $D = Q\trans AQ$。</p>
+<!-- eng start -->
+<p>Find an orthogonal matrix $Q$ and a diagonal matrix $D$ such that $D = Q\trans AQ$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14927,15 +15012,26 @@ Then there are $q$ distinct values $\mu_1,\ldots, \mu_q$ and $q$ projection matr
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $A$ 為一 $3\times 3$ 矩陣而<br>
-$\beta = \{ {\bf v}_1,\ldots,{\bf v}_3 \}$ 為 $\mathbb{R}^3$ 的一組基底。<br>
-已知<br>
-$$[f_A]_\beta^\beta = \begin{bmatrix}  
- 3 &amp; 0 &amp; 0 \\
- 0 &amp; 4 &amp; 0 \\
- 0 &amp; 0 &amp; 5 \\
-\end{bmatrix}.$$<br>
-將 $A{\bf v}_1$、$A{\bf v}_2$、$A{\bf v}_3$、及 $A({\bf v}_1 + {\bf v}_2 + {\bf v}_3)$ 分別寫成 $\beta$ 的線性組合。</p>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $A$ 為一 $3\times 3$ 矩陣而<br />
+$\beta = \{ \bv_1,\ldots,\bv_3 \}$ 為 $\mathbb{R}^3$ 的一組基底。<br />
+已知</p>
+$$
+    [f_A]_\beta^\beta = \begin{bmatrix}  
+     3 &amp; 0 &amp; 0 \\
+     0 &amp; 4 &amp; 0 \\
+     0 &amp; 0 &amp; 5 \\
+    \end{bmatrix}.
+$$<p>將 $A\bv_1$、$A\bv_2$、$A\bv_3$、及 $A(\bv_1 + \bv_2 + \bv_3)$ 分別寫成 $\beta$ 的線性組合。</p>
+<!-- eng start -->
+<p>Let $A$ be a $3\times 3$ matrix and $\beta = \{ \bv_1,\ldots,\bv_3 \}$ a basis of $\mathbb{R}^3$.  Suppose</p>
+$$
+    [f_A]_\beta^\beta = \begin{bmatrix}  
+     3 &amp; 0 &amp; 0 \\
+     0 &amp; 4 &amp; 0 \\
+     0 &amp; 0 &amp; 5 \\
+    \end{bmatrix}.
+$$<p>Write $A\bv_1$, $A\bv_2$, $A\bv_3$, and $A(\bv_1 + \bv_2 + \bv_3)$ as linear combinations of $\beta$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14947,19 +15043,37 @@ $$[f_A]_\beta^\beta = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 
-$$A = \begin{bmatrix}  
- 0 &amp; 1 &amp; 1 \\
- 1 &amp; 0 &amp; 1 \\
- 1 &amp; 1 &amp; 0 \\
-\end{bmatrix}$$ 
-且 $\beta = \{ {\bf v}_1, \ldots, {\bf v}_3 \}$ 為<br>
-$$\begin{bmatrix}
- \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
- \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
- \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
-\end{bmatrix}$$
-的行向量集合。</p>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令</p>
+$$
+    A = \begin{bmatrix}  
+     0 &amp; 1 &amp; 1 \\
+     1 &amp; 0 &amp; 1 \\
+     1 &amp; 1 &amp; 0 \\
+    \end{bmatrix}
+$$<p>且 $\beta = \{ \bv_1, \ldots, \bv_3 \}$ 為</p>
+$$
+    \begin{bmatrix}
+     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+    \end{bmatrix}
+$$<p>的行向量集合。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}  
+     0 &amp; 1 &amp; 1 \\
+     1 &amp; 0 &amp; 1 \\
+     1 &amp; 1 &amp; 0 \\
+    \end{bmatrix}
+$$<p>and $\beta = \{ \bv_1, \ldots, \bv_3 \}$ the columns of</p>
+$$
+    \begin{bmatrix}
+     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -14972,6 +15086,9 @@ $$\begin{bmatrix}
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>寫出 $[f_A]_\beta^\beta$ 並說明 $f_A$ 的作用。</p>
+<!-- eng start -->
+<p>Find $[f_A]_\beta^\beta$ and describe the effect of $f_A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14983,7 +15100,10 @@ $$\begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>找出一個垂直矩陣 $Q$ 和一個對角矩陣 $D$ 使得 $D = Q^\top AQ$。</p>
+<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>找出一個垂直矩陣 $Q$ 和一個對角矩陣 $D$ 使得 $D = Q\trans AQ$。</p>
+<!-- eng start -->
+<p>Find an orthogonal matrix $Q$ and a diagonal matrix $D$ such that $D = Q\trans AQ$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14995,9 +15115,12 @@ $$\begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>令 $P_1$ 為投影到 $\operatorname{span}(\{{\bf v}_1\})$ 的投影矩陣、<br>
-$P_2$ 為投影到 $\operatorname{span}(\{{\bf v}_2, {\bf v}_3\})$ 的投影矩陣。<br>
-說明 $P_1 = {\bf v}_1{\bf v}_1^\top$ 且 $P_2 = {\bf v}_2{\bf v}_2^\top + {\bf v}_3{\bf v}_3^\top$。</p>
+<h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>令 $P_1$ 為投影到 $\vspan(\{\bv_1\})$ 的投影矩陣、<br />
+$P_2$ 為投影到 $\vspan(\{\bv_2, \bv_3\})$ 的投影矩陣。<br />
+說明 $P_1 = \bv_1\bv_1\trans$ 且 $P_2 = \bv_2\bv_2\trans + \bv_3\bv_3\trans$。</p>
+<!-- eng start -->
+<p>Let $P_1$ be the projection matrix onto $\vspan(\{\bv_1\})$ and $P_2$ the projection matrix onto $\vspan(\{\bv_2, \bv_3\})$.  Show that $P_1 = \bv_1\bv_1\trans$ and $P_2 = \bv_2\bv_2\trans + \bv_3\bv_3\trans$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15010,6 +15133,9 @@ $P_2$ 為投影到 $\operatorname{span}(\{{\bf v}_2, {\bf v}_3\})$ 的投影矩�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(d)">Exercise 3(d)<a class="anchor-link" href="#Exercise-3(d)">&#182;</a></h5><p>將 $A$ 寫成一些投影矩陣的線性組合﹐並再次說明 $f_A$ 的作用﹐看看是否和第一小題一致。</p>
+<!-- eng start -->
+<p>Write $A$ as a linear combination of some projection matrices.  Use this representation to describe again the effect of $f_A$.  Is it the same as 3(a)?</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15021,11 +15147,20 @@ $P_2$ 為投影到 $\operatorname{span}(\{{\bf v}_2, {\bf v}_3\})$ 的投影矩�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令<br>
-$$A = \begin{bmatrix} 
- 1 &amp; 2 \\
- 2 &amp; 4 \\
-\end{bmatrix}.$$</p>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令</p>
+$$
+    A = \begin{bmatrix} 
+     1 &amp; 2 \\
+     2 &amp; 4 \\
+    \end{bmatrix}.
+$$<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix} 
+     1 &amp; 2 \\
+     2 &amp; 4 \\
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15037,8 +15172,11 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>說明要找一個非零向量 ${\bf v}$ 使得 $A{\bf v} = \lambda{\bf v}$﹐<br>
-等同於在 $(A - \lambda I){\bf v} = {\bf 0}$ 中找非零解。</p>
+<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>說明要找一個非零向量 $\bv$ 使得 $A\bv = \lambda\bv$﹐<br />
+等同於在 $(A - \lambda I)\bv = \bzero$ 中找非零解。</p>
+<!-- eng start -->
+<p>Let $\lambda$ be a given number.  Show that finding a nonzero vector $\bv$ with $A\bv = \lambda\bv$ is equivalent to finding a nonzero solution to $(A - \lambda I)\bv = \bzero$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15050,8 +15188,11 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>方程式 $(A - \lambda I){\bf v} = {\bf 0}$ 有非零解只會發生在 $\det(A - \lambda I) = 0$ 的時候。<br>
+<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>方程式 $(A - \lambda I)\bv = \bzero$ 有非零解只會發生在 $\det(A - \lambda I) = 0$ 的時候。<br />
 利用這個性質找出所有可能的 $\lambda$。</p>
+<!-- eng start -->
+<p>The equation $(A - \lambda I)\bv = \bzero$ has a nonzero solution only when $\det(A - \lambda I) = 0$.  Use this fact to find all possible $\lambda$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15063,8 +15204,11 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>對每一個 $\lambda$ 解出相對應的 ${\bf v}$。<br>
-向量 ${\bf v}$ 的選擇可能很多﹐把它的長度縮為 $1$。</p>
+<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>對每一個 $\lambda$ 解出相對應的 $\bv$。<br />
+向量 $\bv$ 的選擇可能很多﹐把它的長度縮為 $1$。</p>
+<!-- eng start -->
+<p>For a given number $\lambda$, there might be many choices of $\bv$.  Find one with length $1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15076,7 +15220,10 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>找出一個垂直矩陣 $Q$ 和一個對角矩陣 $D$ 使得 $D = Q^\top AQ$。</p>
+<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>找出一個垂直矩陣 $Q$ 和一個對角矩陣 $D$ 使得 $D = Q\trans AQ$。</p>
+<!-- eng start -->
+<p>Find an orthogonal matrix $Q$ and a diagonal matrix $D$ such that $D = Q\trans AQ$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15088,19 +15235,36 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令<br>
-$$A = \begin{bmatrix} 
- 1 &amp; 2 \\ 
- 2 &amp; 1 \\
-\end{bmatrix}, 
-Q = \begin{bmatrix}
- \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
- \frac{1}{\sqrt{2}} &amp; - \frac{1}{\sqrt{2}} \\
-\end{bmatrix}, 
-D = \begin{bmatrix} 
- 3 &amp; 0 \\
- 0 &amp; -1 \\
-\end{bmatrix}.$$</p>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令</p>
+$$
+    A = \begin{bmatrix} 
+     1 &amp; 2 \\ 
+     2 &amp; 1 \\
+    \end{bmatrix}, 
+    Q = \begin{bmatrix}
+     \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+     \frac{1}{\sqrt{2}} &amp; - \frac{1}{\sqrt{2}} \\
+    \end{bmatrix}, 
+    D = \begin{bmatrix} 
+     3 &amp; 0 \\
+     0 &amp; -1 \\
+    \end{bmatrix}.
+$$<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix} 
+     1 &amp; 2 \\ 
+     2 &amp; 1 \\
+    \end{bmatrix}, 
+    Q = \begin{bmatrix}
+     \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+     \frac{1}{\sqrt{2}} &amp; - \frac{1}{\sqrt{2}} \\
+    \end{bmatrix}, 
+    D = \begin{bmatrix} 
+     3 &amp; 0 \\
+     0 &amp; -1 \\
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15112,7 +15276,10 @@ D = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>驗證 $Q^\top AQ = D$。</p>
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>驗證 $Q\trans AQ = D$。</p>
+<!-- eng start -->
+<p>Verify that $Q\trans AQ = D$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15124,12 +15291,15 @@ D = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>令 $p(x,y) = x^2 + 4xy + y^2$。<br>
-找一些係數 $a,b,c,d$ 並令<br>
-$\hat{x} = a x + b y$、<br>
-$\hat{y} = c x + D y$﹐<br>
-使得 $p(x,y) = 3\hat{x}^2 - \hat{y}^2$。<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>令 $p(x,y) = x^2 + 4xy + y^2$。<br />
+找一些係數 $a,b,c,d$ 並令<br />
+$\hat{x} = a x + b y$、<br />
+$\hat{y} = c x + D y$﹐<br />
+使得 $p(x,y) = 3\hat{x}^2 - \hat{y}^2$。<br />
 藉此說明 $p(x,y) = 1$ 的圖形是雙曲線。</p>
+<!-- eng start -->
+<p>Let $p(x,y) = x^2 + 4xy + y^2$.  Find some coefficients $a, b, c, d$ and define $\hat{x} = a x + b y$ and $\hat{y} = c x + D y$ such that $p(x,y) = 3\hat{x}^2 - \hat{y}^2$.  Use this fact to show that $p(x,y) = 1$ is a hyperbola.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15141,22 +15311,40 @@ $\hat{y} = c x + D y$﹐<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>令 $x(t), y(t)$ 為以 $t$ 為變數的函數。<br>
-令 $x'(t), y'(t)$ 為其對 $t$ 的微分。<br>
-考慮微分方程<br>
-$x' = x + 2y$、<br>
-$y' = 2x + y$。<br>
-找一些係數 $a,b,c,d$ 並令<br>
-$\hat{x} = a x + b y$、<br>
-$\hat{y} = c x + D y$﹐<br>
-使得原方程可以改寫為<br>
-$\hat{x}' = 3\hat{x}$、<br>
-$\hat{y}' = -\hat{y}$。<br>
-（此方程的解為<br>
-$\hat{x} = C_1e^{3t}$、<br>
-$\hat{y} = C_2e^{-t}$﹐<br>
-其中 $C_1$ 和 $C_2$ 是任意常數。）<br>
+<h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>令 $x(t), y(t)$ 為以 $t$ 為變數的函數。<br />
+令 $x'(t), y'(t)$ 為其對 $t$ 的微分。<br />
+考慮微分方程</p>
+$$
+    \begin{aligned}
+    x' &amp;= x + 2y, \\
+    y' &amp;= 2x + y.
+    \end{aligned}
+$$<p>找一些係數 $a,b,c,d$ 並令<br />
+$\hat{x} = a x + b y$、<br />
+$\hat{y} = c x + D y$﹐<br />
+使得原方程可以改寫為<br />
+$\hat{x}' = 3\hat{x}$、<br />
+$\hat{y}' = -\hat{y}$。<br />
+（此方程的解為<br />
+$\hat{x} = C_1e^{3t}$、<br />
+$\hat{y} = C_2e^{-t}$﹐<br />
+其中 $C_1$ 和 $C_2$ 是任意常數。）<br />
 解原方程。</p>
+<!-- eng start -->
+<p>Let $x(t)$ and $y(t)$ be functions on variable $t$.  Let $x'(t)$ and $y'(t)$ their derivative with respect to $t$.  Consider the system of differential equations</p>
+$$
+    \begin{aligned}
+    x' &amp;= x + 2y, \\
+    y' &amp;= 2x + y.
+    \end{aligned}
+$$<p>Find some coefficients $a, b, c, d$ and define $\hat{x} = a x + b y$ and $\hat{y} = c x + D y$ so that the original system becomes</p>
+$$
+    \begin{aligned}
+    \hat{x}' &amp;= 3\hat{x}, \\
+    \hat{y}' &amp;= -\hat{y}.
+    \end{aligned}
+$$<p>Note that the solutions to this system is $\hat{x} = C_1e^{3t}$ and $\hat{y} = C_2e^{-t}$, where $C_1$ and $C_2$ can be any constants.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15168,14 +15356,24 @@ $\hat{y} = C_2e^{-t}$﹐<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>以下例題說明並非對稱矩陣才能表示成對角矩陣。<br>
-然而其所用的基底不再是垂直的。<br>
-（也有可能這樣的基底找不到。）<br>
-令<br>
-$$A = \begin{bmatrix} 
- 1 &amp; 2 \\
- 1 &amp; 2 \\
-\end{bmatrix}.$$</p>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>以下例題說明並非對稱矩陣才能表示成對角矩陣。<br />
+然而其所用的基底不再是垂直的。<br />
+（也有可能這樣的基底找不到。）<br />
+令</p>
+$$
+    A = \begin{bmatrix} 
+     1 &amp; 2 \\
+     1 &amp; 2 \\
+    \end{bmatrix}.
+$$<!-- eng start -->
+<p>The following examples indicate that not only the symmetric matrices can be transformed into a diagonal matrices by using a different basis.  However, the basis might not be orthogonal.  (It is also possible that such a basis does not exist.)</p>
+<p>Let</p>
+$$
+    A = \begin{bmatrix} 
+     1 &amp; 2 \\
+     1 &amp; 2 \\
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15187,8 +15385,11 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>說明要找一個非零向量 ${\bf v}$ 使得 $A{\bf v} = \lambda{\bf v}$﹐<br>
-等同於在 $(A - \lambda I){\bf v} = {\bf 0}$ 中找非零解。</p>
+<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>說明要找一個非零向量 $\bv$ 使得 $A\bv = \lambda\bv$﹐<br />
+等同於在 $(A - \lambda I)\bv = \bzero$ 中找非零解。</p>
+<!-- eng start -->
+<p>Let $\lambda$ be a given number.  Show that finding a nonzero vector $\bv$ with $A\bv = \lambda\bv$ is equivalent to finding a nonzero solution to $(A - \lambda I)\bv = \bzero$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15200,8 +15401,11 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>方程式 $(A - \lambda I){\bf v} = {\bf 0}$ 有非零解只會發生在 $\det(A - \lambda I) = 0$ 的時候。<br>
+<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>方程式 $(A - \lambda I)\bv = \bzero$ 有非零解只會發生在 $\det(A - \lambda I) = 0$ 的時候。<br />
 利用這個性質找出所有可能的 $\lambda$。</p>
+<!-- eng start -->
+<p>The equation $(A - \lambda I)\bv = \bzero$ has a nonzero solution only when $\det(A - \lambda I) = 0$.  Use this fact to find all possible $\lambda$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15213,8 +15417,11 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(c)">Exercise 6(c)<a class="anchor-link" href="#Exercise-6(c)">&#182;</a></h5><p>對每一個 $\lambda$ 解出相對應的 ${\bf v}$。<br>
-向量 ${\bf v}$ 的選擇可能很多﹐把它的長度縮為 $1$。</p>
+<h5 id="Exercise-6(c)">Exercise 6(c)<a class="anchor-link" href="#Exercise-6(c)">&#182;</a></h5><p>對每一個 $\lambda$ 解出相對應的 $\bv$。<br />
+向量 $\bv$ 的選擇可能很多﹐把它的長度縮為 $1$。</p>
+<!-- eng start -->
+<p>For a given number $\lambda$, there might be many choices of $\bv$.  Find one with length $1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15226,7 +15433,10 @@ $$A = \begin{bmatrix}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(d)">Exercise 6(d)<a class="anchor-link" href="#Exercise-6(d)">&#182;</a></h5><p>找出一個垂直矩陣 $A$ 和一個對角矩陣使得 $D = Q^{-1} AQ$。</p>
+<h5 id="Exercise-6(d)">Exercise 6(d)<a class="anchor-link" href="#Exercise-6(d)">&#182;</a></h5><p>找出一個可逆矩陣 $Q$ 和一個對角矩陣使得 $D = Q^{-1} AQ$。</p>
+<!-- eng start -->
+<p>Find an invertibile matrix $Q$ and a diagonal matrix $D$ such that $D = Q^{-1} AQ$.</p>
+<!-- eng end -->
 
 </div>
 </div>

@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14464,10 +14465,6 @@ a.anchor-link {
   display: none;
 }
 
-.highlight  {
-  margin: 0.4em;
-}
-
 /* Input area styling */
 .jp-InputArea {
   overflow: hidden;
@@ -14477,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14590,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14679,14 +14693,14 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>A <strong>vector</strong> over $\mathbb{R}$ of dimension $n$ is a sequence $\bx = (x_1, \ldots, x_n)$ of numbers in $\mathbb{R}$.<br>
+<p>A <strong>vector</strong> over $\mathbb{R}$ of dimension $n$ is a sequence $\bx = (x_1, \ldots, x_n)$ of numbers in $\mathbb{R}$.<br />
 (In contrast, we often call a number in $\mathbb{R}$ a <strong>scalar</strong>.)</p>
-<p>The collection of all vectors over $\mathbb{R}$ of dimension $n$ is denoted by $\mathbb{R}^n$.<br>
+<p>The collection of all vectors over $\mathbb{R}$ of dimension $n$ is denoted by $\mathbb{R}^n$.<br />
 We often use $\bzero$ and $\bone$ to refer to $(0,\ldots,0)$ and $(1,\ldots,1)$ of appropriate dimensions, respectively.</p>
 <p>The <strong>length</strong> of a vector $\bx = (x_1,\ldots, x_n)$ is defined as</p>
 $$
     \|\bx\| = \sqrt{x_1^2 + \cdots + x_n^2}.
-$$<p>The <strong>inner product</strong> of two vectors $\bx = (x_1, \ldots, x_n)$ and $\by = (y_1, \ldots, y_n)$ is defined as<br>
+$$<p>The <strong>inner product</strong> of two vectors $\bx = (x_1, \ldots, x_n)$ and $\by = (y_1, \ldots, y_n)$ is defined as<br />
 $$
     \inp{\bx}{\by} = x_1y_1 + \cdots + x_ny_n.
 $$</p>
@@ -14710,7 +14724,7 @@ $$</p>
 <li>$\inp{\bx_1 + \bx_2}{\by} = \inp{\bx_1}{\by} + \inp{\bx_2}{\by}$.</li>
 <li>$\inp{k\bx}{\by} = k\inp{\bx}{\by}$.</li>
 <li>$\inp{\bx}{\by} = \inp{\by}{\bx}$.</li>
-<li>$|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ (Cauchy–Schwarz inequality).  </li>
+<li>$|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ (Cauchy–Schwarz inequality).</li>
 </ol>
 
 </div>
@@ -14723,7 +14737,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Thanks to the Cauchy–Schwarz inequality, we define the <strong>angle</strong> between two vectors $\bx$ and $\by$ as the angle $\theta$ such that $\cos\theta = \frac{\inp{\bx}{\by}}{\|\bx\|\|\by\|}$.<br>
+<p>Thanks to the Cauchy–Schwarz inequality, we define the <strong>angle</strong> between two vectors $\bx$ and $\by$ as the angle $\theta$ such that $\cos\theta = \frac{\inp{\bx}{\by}}{\|\bx\|\|\by\|}$.<br />
 We say $\bx$ and $\by$ are <strong>orthogonal</strong> if $\inp{\bx}{\by} = 0$.</p>
 
 </div>
@@ -14763,17 +14777,15 @@ We say $\bx$ and $\by$ are <strong>orthogonal</strong> if $\inp{\bx}{\by} = 0$.<
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行下方程式碼。<br>
-令 $O$ 為原點、<br>
-$A$ 和 $B$ 分別為 <code>x</code>, <code>y</code> 的向量終點。<br>
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行下方程式碼。<br />
+令 $O$ 為原點、<br />
+$A$ 和 $B$ 分別為 <code>x</code>, <code>y</code> 的向量終點。<br />
 （可以選用自己喜好的 <code>ramdom_seed</code>）</p>
-<details>
-<summary>
-Eng
-</summary>
-<p>Run the code below.  Let $A$ and $B$ be the head of <code>x</code> and <code>y</code>, respectively.</p>
+<!-- eng start -->
+<p>Run the code below.  Let $A$ and $B$ be the head of <code>x</code> and <code>y</code> , respectively.</p>
 <p>(You may choose <code>ramdom_seed</code> as any integer.)</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14790,23 +14802,23 @@ Eng
 <span class="n">print_ans</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">random_int_vec</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">random_int_vec</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x =&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y =&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x ="</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"y ="</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">pic</span> <span class="o">=</span> <span class="n">draw_two_vec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">pic</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">pic</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OA =&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OB =&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AB =&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"OA ="</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"OB ="</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"AB ="</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
     <span class="n">cos_cos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
     <span class="n">cos_inner</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">inner_product</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cos by cos law =&quot;</span><span class="p">,</span> 
-          <span class="n">cos_cos</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"cos by cos law ="</span><span class="p">,</span> 
+          <span class="n">cos_cos</span><span class="p">,</span> <span class="s2">"="</span><span class="p">,</span> 
           <span class="n">N</span><span class="p">(</span><span class="n">cos_cos</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cos by inner product =&quot;</span><span class="p">,</span> 
-          <span class="n">cos_inner</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"cos by inner product ="</span><span class="p">,</span> 
+          <span class="n">cos_inner</span><span class="p">,</span> <span class="s2">"="</span><span class="p">,</span> 
           <span class="n">N</span><span class="p">(</span><span class="n">cos_inner</span><span class="p">))</span>
 </pre></div>
 
@@ -14822,14 +14834,12 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>計算 $\overline{OA}$、$\overline{OB}$、和 $\overline{AB}$ 的長度，<br>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>計算 $\overline{OA}$、$\overline{OB}$、和 $\overline{AB}$ 的長度，<br />
 並利用<strong>餘絃定理</strong>來計算 $\cos\angle AOB$。</p>
-<details>
-<summary>
-Eng
-</summary>
-<p>Find the length of $\overline{OA}$, $\overline{OB}$, and $\overline{AB}$.  Then find $\cos\angle AOB$ by the <strong>cosine law</strong>.</p>
-</details>
+<!-- eng start -->
+<p>Find the length of $\overline{OA}$, $\overline{OB}$, and $\overline{AB}$.  Then find $\cos\angle AOB$ by the cosine law.</p>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14840,14 +14850,12 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>令 $\theta$ 為 <code>x</code>, <code>y</code> 之間用內積定出來的夾角﹐<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>令 $\theta$ 為 <code>x</code>, <code>y</code> 之間用內積定出來的夾角﹐<br />
 求 $\cos\theta$。</p>
-<details>
-<summary>
-Eng
-</summary>
-<p>Let $\theta$ be the angle between <code>x</code> and <code>y</code>.  Find $\cos\theta$.</p>
-</details>
+<!-- eng start -->
+<p>Let $\theta$ be the angle between <code>x</code> and <code>y</code> .  Find $\cos\theta$.</p>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14858,14 +14866,12 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>前兩題算出來總是一樣嗎？<br>
+<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>前兩題算出來總是一樣嗎？<br />
 請用代數的方法證明。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Are the results from the previous two problems the same?  Do some algebra to prove it.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14876,11 +14882,11 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Sample:<br>
-It is known that $\overline{OA} = \|\bx\|$, $\overline{OB} = \|\by\|$, and $\overline{AB} = \|\bx - \by\|$.<br>
-Thus,<br>
-$\frac{\overline{OA}^2 + \overline{OB}^2 - \overline{AB}^2}{2\overline{OA}\cdot \overline{OB}}$<br>
-$ = \cdots $<br>
+<p>Sample:<br />
+It is known that $\overline{OA} = \|\bx\|$, $\overline{OB} = \|\by\|$, and $\overline{AB} = \|\bx - \by\|$.<br />
+Thus,<br />
+$\frac{\overline{OA}^2 + \overline{OB}^2 - \overline{AB}^2}{2\overline{OA}\cdot \overline{OB}}$<br />
+$ = \cdots $<br />
 $\frac{\inp{\bx}{\by}}{\|\bx\|\|\by\|}$.</p>
 
 </div>
@@ -14904,17 +14910,15 @@ $\frac{\inp{\bx}{\by}}{\|\bx\|\|\by\|}$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>將每個向量都展開<br>
-（像是 $\bx = (x_1,\ldots, x_n)$）﹐<br>
-把每個長度和內積的定義也都展開。<br>
-證明 Main idea 中最後列出來的那些性質<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>將每個向量都展開<br />
+（像是 $\bx = (x_1,\ldots, x_n)$）﹐<br />
+把每個長度和內積的定義也都展開。<br />
+證明 Main idea 中最後列出來的那些性質<br />
 （除了三角不等式和柯西不等式以外）。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Write down each vector by its entries, such as $\bx = (x_1, \ldots, x_n)$.  Also, write down the formula of the lengths and the inner product of vectors by their entries.  Prove the properties listed in Main idea (except for the triangle inequality and the Cauchy–Schwarz inequality.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14926,12 +14930,10 @@ Eng
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>證明 $\|\bx \pm \by\|^2 = \|\bx\|^2 \pm 2\inp{\bx}{\by} + \|\by\|^2$。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Prove $\|\bx \pm \by\|^2 = \|\bx\|^2 \pm 2\inp{\bx}{\by} + \|\by\|^2$.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14942,17 +14944,15 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>給定兩個向量 $\bx,\by$。<br>
-若 $\by$ 可以寫成兩個分量相加 $\by = \bh + \bw$﹐<br>
-其中 $\bh$ 和 $\bx$ 垂直（所以 $\inp{\bh}{\bx} = 0$）、<br>
-而 $\bw$ 和 $\bx$ 平行（所以 $\bw = k\bx$)﹐<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>給定兩個向量 $\bx,\by$。<br />
+若 $\by$ 可以寫成兩個分量相加 $\by = \bh + \bw$﹐<br />
+其中 $\bh$ 和 $\bx$ 垂直（所以 $\inp{\bh}{\bx} = 0$）、<br />
+而 $\bw$ 和 $\bx$ 平行（所以 $\bw = k\bx$)﹐<br />
 求 $\bh$ 和 $\bw$（用 $\bx$ 和 $\by$ 表示出來）。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Let $\bx$ and $\by$ be two vectors.  Suppose $\by$ can be written as $\by = \bh + \bw$ such that $\bh$ is orthogonal to $\bx$ (i.e., $\inp{\bh}{\bx} = 0$), and $\bw$ is parallel to $\bx$.  Find $\bh$ and $\bw$ as a formula of $\bx$ and $\by$.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14964,22 +14964,20 @@ Eng
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>依照以下步驟證明三角不等式和柯西不等式等價。</p>
-<p><strong>三角不等式</strong><br>
-對任意兩個向量 $\bx,\by\in\mathbb{R}^n$<br>
+<p><strong>三角不等式</strong><br />
+對任意兩個向量 $\bx,\by\in\mathbb{R}^n$<br />
 不等式 $\|\bx\| + \|\by\| \geq \|\bx - \by\|$ 皆成立。</p>
-<p><strong>柯西不等式</strong><br>
-對任意兩個向量 $\bx,\by\in\mathbb{R}^n$<br>
+<p><strong>柯西不等式</strong><br />
+對任意兩個向量 $\bx,\by\in\mathbb{R}^n$<br />
 不等式 $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ 皆成立。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Following the steps below to prove the triangle inequality and the Cauchy–Schwarz inequality.</p>
-<p><strong>Triangle inequality</strong></br>
+<p><strong>Triangle inequality</strong><br />
 The inequality $\|\bx\| + \|\by\| \geq \|\bx - \by\|$ holds for any vectors $\bx,\by\in\mathbb{R}^n$.</p>
-<p><strong>Cauchy–Schwarz inequality</strong></br>
+<p><strong>Cauchy–Schwarz inequality</strong>
 The inequality $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ holds for any vectors $\bx,\by\in\mathbb{R}^n$.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14991,12 +14989,10 @@ The inequality $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ holds for any vector
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>證明若三角不等式成立則柯西不等式成立。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Prove that the triangle inequality implies the Cauchy–Schwarz inequality.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15007,12 +15003,12 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Sample:<br>
-Let $\bx$ and $\by$ be any given vectors in $\mathbb{R}^n$.<br>
-By the triangle inequality, $\|\bx\| + \|\by\| \geq \|\bx - \by\|$.<br>
-...<br>
-Therefore, $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$.<br>
-Since $\bx$ and $\by$ are arbitrary, the Cauchy--Schwarz inequality holds for any vectors $\bx$ and $\by$.</p>
+<p>Sample:<br />
+Let $\bx$ and $\by$ be any given vectors in $\mathbb{R}^n$.<br />
+By the triangle inequality, $\|\bx\| + \|\by\| \geq \|\bx - \by\|$.<br />
+...<br />
+Therefore, $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$.<br />
+Since $\bx$ and $\by$ are arbitrary, the Cauchy–Schwarz inequality holds for any vectors $\bx$ and $\by$.</p>
 
 </div>
 </div>
@@ -15025,12 +15021,10 @@ Since $\bx$ and $\by$ are arbitrary, the Cauchy--Schwarz inequality holds for an
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>證明若柯西不等式成立則三角不等式成立。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Prove that the Cauchy–Schwarz inequality implies the triangle inequality.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15041,11 +15035,11 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Sample:<br>
-Let $\bx$ and $\by$ be any given vectors in $\mathbb{R}^n$.<br>
-By the Cauchy--Schwarz inequality, $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$.<br>
-...<br>
-Therefore, $\|\bx\| + \|\by\| \geq \|\bx - \by\|$.<br>
+<p>Sample:<br />
+Let $\bx$ and $\by$ be any given vectors in $\mathbb{R}^n$.<br />
+By the Cauchy–Schwarz inequality, $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$.<br />
+...<br />
+Therefore, $\|\bx\| + \|\by\| \geq \|\bx - \by\|$.<br />
 Since $\bx$ and $\by$ are arbitrary, the triangle inequality holds for any vectors $\bx$ and $\by$.</p>
 
 </div>
@@ -15059,12 +15053,10 @@ Since $\bx$ and $\by$ are arbitrary, the triangle inequality holds for any vecto
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>依照以下步驟證明柯西不等式。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Prove the Cauchy–Schwarz inequality by the following steps.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15076,12 +15068,10 @@ Eng
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>證明當 $\|\bx\| = \|\by\| = 1$ 時柯西不等式成立。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Prove that the Cauchy–Schwarz inequality is true when $\|\bx\| = \|\by\| = 1$.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15092,12 +15082,12 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Sample:<br>
-Let $\bx$ and $\by$ be two vectors of length $1$.<br>
-Since $\|\bx - \by\|^2 \geq 0$, we have<br>
-...<br>
-Since $\|\bx + \by\|^2 \geq 0$, we have<br>
-...<br>
+<p>Sample:<br />
+Let $\bx$ and $\by$ be two vectors of length $1$.<br />
+Since $\|\bx - \by\|^2 \geq 0$, we have<br />
+...<br />
+Since $\|\bx + \by\|^2 \geq 0$, we have<br />
+...<br />
 Therefore, $|\inp{\bx}{\by}| \leq 1$ whenever $\|\bx\| = \|\by\| = 1$.</p>
 
 </div>
@@ -15111,12 +15101,10 @@ Therefore, $|\inp{\bx}{\by}| \leq 1$ whenever $\|\bx\| = \|\by\| = 1$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>證明對任何非零向量 $\bx,\by\in\mathbb{R}^n$ 柯西不等式皆成立。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Prove that the Cauchy–Schwarz inequality is true for any nonzero $\bx,\by\in\mathbb{R}^n$.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15127,12 +15115,12 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Sample:<br>
-Now suppose $\bx$ and $\by$ be arbitrary nonzero vectors in $\mathbb{R}^n$.<br>
-Let $\bx' = \bx/\|\bx\|$ and $\by' = \by/\|\by\|$.<br>
-Thus, $\|\bx'\| = \|\by'\| = 1$.<br>
-By the previous claim, ...<br>
-...<br>
+<p>Sample:<br />
+Now suppose $\bx$ and $\by$ be arbitrary nonzero vectors in $\mathbb{R}^n$.<br />
+Let $\bx' = \bx/\|\bx\|$ and $\by' = \by/\|\by\|$.<br />
+Thus, $\|\bx'\| = \|\by'\| = 1$.<br />
+By the previous claim, ...<br />
+...<br />
 Therefore, $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ for any nonzero vectors $\bx$ and $\by$.</p>
 
 </div>
@@ -15146,12 +15134,10 @@ Therefore, $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ for any nonzero vectors 
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(c)">Exercise 6(c)<a class="anchor-link" href="#Exercise-6(c)">&#182;</a></h5><p>考慮剩餘的可能性並完成柯西不等式的證明。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Finish the remaining cases and prove the Cauchy–Schwarz inequality.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15162,17 +15148,15 @@ Eng
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>複數向量的集合記作 $\mathbb{C}^n$。<br>
-若 $\bx = (x_1,\ldots,x_n)$ 為複數向量﹐<br>
-其<strong>長度</strong>定義為 $\|\bx\| = \sqrt{|x_1|^2 + \cdots |x_n|^2}$。<br>
-若 $\bx = (x_1,\ldots,x_n)$ 及 $\by = (y_1,\ldots,y_n)$ 為兩複數向量﹐<br>
+<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>複數向量的集合記作 $\mathbb{C}^n$。<br />
+若 $\bx = (x_1,\ldots,x_n)$ 為複數向量﹐<br />
+其<strong>長度</strong>定義為 $\|\bx\| = \sqrt{|x_1|^2 + \cdots |x_n|^2}$。<br />
+若 $\bx = (x_1,\ldots,x_n)$ 及 $\by = (y_1,\ldots,y_n)$ 為兩複數向量﹐<br />
 其<strong>內積</strong>定義為 $\inp{\bx}{\by} = x_1\overline{y_1} + \cdots + x_n\overline{y_n}$。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>The set of all $n$-dimensional vectors over $\mathbb{C}$ is denoted by $\mathbb{C}^n$.  Let $\bx = (x_1,\ldots,x_n)$ and $\by = (y_1,\ldots,y_n)$ be vectors in $\mathbb{C}^n$.  The <strong>length</strong> of $\bx$ is $\|\bx\| = \sqrt{|x_1|^2 + \cdots |x_n|^2}$, while the <strong>inner product</strong> of $\bx$ and $\by$ is defined by $\inp{\bx}{\by} = x_1\overline{y_1} + \cdots + x_n\overline{y_n}$.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15192,30 +15176,28 @@ Eng
 <li>$\inp{\bx_1 + \bx_2}{\by} = \inp{\bx_1}{\by} + \inp{\bx_2}{\by}$.</li>
 <li>$\inp{k\bx}{\by} = k\inp{\bx}{\by}$ and $\inp{\bx}{k\by} = \overline{k}\inp{\bx}{\by}$.</li>
 <li>$\inp{\bx}{\by} = \overline{\inp{\by}{\bx}}$.</li>
-<li>$|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ (Cauchy--Schwarz inequality).  </li>
+<li>$|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ (Cauchy–Schwarz inequality).</li>
 </ol>
-<p>提示：<br>
-可以先證明 $\|\bx\pm\by\|^2 = \|\bx\|^2 \pm 2\operatorname{Re}\inp{\bx}{\by} + \|\by\|^2$。<br>
-我們總是可以找到一個好的 $e^{i\theta}$<br>
+<p>提示：<br />
+可以先證明 $\|\bx\pm\by\|^2 = \|\bx\|^2 \pm 2\operatorname{Re}\inp{\bx}{\by} + \|\by\|^2$。<br />
+我們總是可以找到一個好的 $e^{i\theta}$<br />
 使得 $\operatorname{Re}\inp{e^{i\theta}\bx}{\by} = |\inp{\bx}{\by}|$。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Prove the properties above for vectors over $\mathbb{C}$.</p>
-
-1. $\|\bx\| \geq 0$ and the equality holds if and only if $\bx = \bzero$.
-2. $\|k\bx\| = |k|\cdot\|\bx\|$.
-3. $\|\bx\| + \|\by\| \geq \|\bx - \by\|$ (triangle inequality).
-4. $\|\bx\|^2 = \inp{\bx}{\bx}$.
-5. $\inp{\bx_1 + \bx_2}{\by} = \inp{\bx_1}{\by} + \inp{\bx_2}{\by}$.
-6. $\inp{k\bx}{\by} = k\inp{\bx}{\by}$ and $\inp{\bx}{k\by} = \overline{k}\inp{\bx}{\by}$.
-7. $\inp{\bx}{\by} = \overline{\inp{\by}{\bx}}$.
-8. $|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ (Cauchy--Schwarz inequality).  
-
-<p>Hint:</br>
+<ol>
+<li>$\|\bx\| \geq 0$ and the equality holds if and only if $\bx = \bzero$.</li>
+<li>$\|k\bx\| = |k|\cdot\|\bx\|$.</li>
+<li>$\|\bx\| + \|\by\| \geq \|\bx - \by\|$ (triangle inequality).</li>
+<li>$\|\bx\|^2 = \inp{\bx}{\bx}$.</li>
+<li>$\inp{\bx_1 + \bx_2}{\by} = \inp{\bx_1}{\by} + \inp{\bx_2}{\by}$.</li>
+<li>$\inp{k\bx}{\by} = k\inp{\bx}{\by}$ and $\inp{\bx}{k\by} = \overline{k}\inp{\bx}{\by}$.</li>
+<li>$\inp{\bx}{\by} = \overline{\inp{\by}{\bx}}$.</li>
+<li>$|\inp{\bx}{\by}| \leq \|\bx\|\cdot \|\by\|$ (Cauchy–Schwarz inequality).</li>
+</ol>
+<p>Hint:<br />
 First show that $\|\bx\pm\by\|^2 = \|\bx\|^2 \pm 2\operatorname{Re}\inp{\bx}{\by} + \|\by\|^2$.  Then find a $\theta$ such that $\operatorname{Re}\inp{e^{i\theta}\bx}{\by} = |\inp{\bx}{\by}|$.</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15226,25 +15208,20 @@ First show that $\|\bx\pm\by\|^2 = \|\bx\|^2 \pm 2\operatorname{Re}\inp{\bx}{\by
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>若 $\bx,\by\in\mathbb{C}^n$。<br>
-證明<br>
+<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>若 $\bx,\by\in\mathbb{C}^n$。<br />
+證明<br />
 $$\frac{\operatorname{Re}\inp{\bx}{\by}}{\|\bx\|\|\by\|} = 
-\frac{\|\bx\|^2 + \|\by\|^2 - \|\bx - \by\|^2}{2\|\bx\|\|\by\|}.$$<br>
-因此我們可以把兩複數向量的<strong>夾角</strong>定義為 $\theta$﹐<br>
+\frac{\|\bx\|^2 + \|\by\|^2 - \|\bx - \by\|^2}{2\|\bx\|\|\by\|}.$$<br />
+因此我們可以把兩複數向量的<strong>夾角</strong>定義為 $\theta$﹐<br />
 而這個 $\theta$ 要滿足 $\cos\theta = \frac{\operatorname{Re}\inp{\bx}{\by}}{\|\bx\|\|\by\|}$。</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Let $\bx,\by\in\mathbb{C}^n$.  Prove that</p>
-
 $$
     \frac{\operatorname{Re}\inp{\bx}{\by}}{\|\bx\|\|\by\|} = 
     \frac{\|\bx\|^2 + \|\by\|^2 - \|\bx - \by\|^2}{2\|\bx\|\|\by\|}.
-$$  
+$$<p>Therefore, we may define the <strong>angle</strong> between the two vectors as the $\theta$ satisfying $\cos\theta = \frac{\operatorname{Re}\inp{\bx}{\by}}{\|\bx\|\|\by\|}$.</p>
+<!-- eng end -->
 
-<p>Therefore, we may define the <strong>angle</strong> between the two vectors as the $\theta$ satisfying $\cos\theta = \frac{\operatorname{Re}\inp{\bx}{\by}}{\|\bx\|\|\by\|}$.</p>
-</details>
 </div>
 </div>
 </div>
@@ -15255,16 +15232,14 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(c)">Exercise 7(c)<a class="anchor-link" href="#Exercise-7(c)">&#182;</a></h5><p>若 $\bx,\by\in\mathbb{C}^n$。<br>
+<h5 id="Exercise-7(c)">Exercise 7(c)<a class="anchor-link" href="#Exercise-7(c)">&#182;</a></h5><p>若 $\bx,\by\in\mathbb{C}^n$。<br />
 求 $\by$ 在 $\bx$ 上的投影。</p>
 <p>注意 $\inp{\bx}{\by}$ 和 $\inp{\by}{\bx}$ 不一樣喔！</p>
-<details>
-<summary>
-Eng
-</summary>
+<!-- eng start -->
 <p>Let $\bx,\by\in\mathbb{C}^n$.  Find the projection of $\by$ onto the direction of $\bx$.</p>
 <p>Notice $\inp{\bx}{\by}$ and $\inp{\by}{\bx}$ are different for vectors over $\mathbb{C}$!</p>
-</details>
+<!-- eng end -->
+
 </div>
 </div>
 </div>
