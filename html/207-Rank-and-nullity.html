@@ -14740,7 +14740,7 @@ while $m - r$ is usually referred to as the <strong>left nullity</strong> of $A$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Dimension-theorem-(matrix-form)">Dimension theorem (matrix form)<a class="anchor-link" href="#Dimension-theorem-(matrix-form)">&#182;</a></h5><p>Let $A$ be an $m\times n$ matrix.<br />
-Then $\rank(A) + \operatorname{nullity}(A) = n$, the number of columns.</p>
+Then $\rank(A) + \nul(A) = n$, the number of columns.</p>
 
 </div>
 </div>
@@ -14802,13 +14802,13 @@ Then $\rank(A) + \operatorname{nullity}(A) = n$, the number of columns.</p>
 <span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">r</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">r</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">random_good_matrix</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"A ="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"rank ="</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"nullity ="</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"left nullity ="</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;rank =&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;nullity =&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;left nullity =&quot;</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span>
 </pre></div>
 
      </div>
