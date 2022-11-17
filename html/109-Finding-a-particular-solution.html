@@ -36,7 +36,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
-.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14465,6 +14464,10 @@ a.anchor-link {
   display: none;
 }
 
+.highlight  {
+  margin: 0.4em;
+}
+
 /* Input area styling */
 .jp-InputArea {
   overflow: hidden;
@@ -14474,26 +14477,9 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror.cm-s-jupyter .highlight pre {
-/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
-  padding: var(--jp-code-padding) 4px;
+.CodeMirror pre {
   margin: 0;
-
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-
-}
-
-.jp-OutputArea-output pre {
-  line-height: inherit;
-  font-family: inherit;
-}
-
-.jp-RenderedText pre {
-  color: var(--jp-content-font-color1);
-  font-size: var(--jp-code-font-size);
+  padding: 0;
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14605,7 +14591,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14694,9 +14680,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $m\times n$ matrix and $\bb$ a vector in $\mathbb{R}^n$.<br />
-Recall that the augmented matrix of $A\bx = \bb$ is the $m\times (n+1)$ matrix $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$.<br />
-We may perform row operations on $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$ to get its reduced echelon form $\left[\begin{array}{c|c}R&amp;\br\end{array}\right]$.<br />
+<p>Let $A$ be an $m\times n$ matrix and $\bb$ a vector in $\mathbb{R}^n$.<br>
+Recall that the augmented matrix of $A\bx = \bb$ is the $m\times (n+1)$ matrix $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$.<br>
+We may perform row operations on $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$ to get its reduced echelon form $\left[\begin{array}{c|c}R&amp;\br\end{array}\right]$.<br>
 The equation $R\bx = \br$ has a solution if and only if the $i$-th entry of $\br$ is zero whenever the $i$-th row of $R$ is zero.</p>
 
 </div>
@@ -14709,11 +14695,11 @@ The equation $R\bx = \br$ has a solution if and only if the $i$-th entry of $\br
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $\bx = (x_1, \ldots, x_n)$.<br />
-The variables $x_i$ correponding to a pivot $i$ of $R$ are called <strong>leading variables</strong>.<br />
-The other variables are called <strong>free variables</strong>.<br />
-Suppose the $i$-th entry of $\br$ is zero whenever the $i$-th row of $R$ is zero.<br />
-One may set each free variable as an arbitrary number (e.g., all zeros).<br />
+<p>Let $\bx = (x_1, \ldots, x_n)$.<br>
+The variables $x_i$ correponding to a pivot $i$ of $R$ are called <strong>leading variables</strong>.<br>
+The other variables are called <strong>free variables</strong>.<br>
+Suppose the $i$-th entry of $\br$ is zero whenever the $i$-th row of $R$ is zero.<br>
+One may set each free variable as an arbitrary number (e.g., all zeros).<br>
 Then there is a solution $\bx$ satisfying the setting.</p>
 
 </div>
@@ -14728,9 +14714,9 @@ Then there is a solution $\bx$ satisfying the setting.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Therefore, the following are equivalent:</p>
 <ol>
-<li>$A\bx = \bb$ has a solution.</li>
+<li>$A\bx = \bb$ has a solution.  </li>
 <li>The reduced echelon form of $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$ does not contain a row where the last entry is nonzero but the other entries are zero.</li>
-<li>$\bb \in \Col(A)$.</li>
+<li>$\bb \in \Col(A)$.  </li>
 </ol>
 
 </div>
@@ -14743,11 +14729,11 @@ Then there is a solution $\bx$ satisfying the setting.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>On the other hand, if $R$ has no zero row, then $R\bx = \br$ has a solution regardless the choice of $\br$.<br />
+<p>On the other hand, if $R$ has no zero row, then $R\bx = \br$ has a solution regardless the choice of $\br$.<br>
 Therefore, the following are equivalent:</p>
 <ol>
-<li>$A\bx = \bb$ has a solution for any $\bb\in\mathbb{R}^m$.</li>
-<li>The reduced echelon form of $A$ contains no zero row.</li>
+<li>$A\bx = \bb$ has a solution for any $\bb\in\mathbb{R}^m$.  </li>
+<li>The reduced echelon form of $A$ contains no zero row.  </li>
 <li>The reduced echelon form of $A$ has $m$ pivots.</li>
 <li>$\Col(A) = \mathbb{R}^m$.</li>
 </ol>
@@ -14788,13 +14774,12 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行下方程式碼。<br />
-矩陣 $\left[\begin{array}{c|c}R&amp;\br\end{array}\right]$ 是 $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$ 的最簡階梯形式矩陣。<br />
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行下方程式碼。<br>
+矩陣 $\left[\begin{array}{c|c}R&amp;\br\end{array}\right]$ 是 $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$ 的最簡階梯形式矩陣。<br>
 考慮方程組 $A\bx = \bb$ 且 $\bx = (x_1,\ldots,x_5)$。</p>
 <!-- eng start -->
-<p>Run the code below.  The matrix $\left[\begin{array}{c|c}R&amp;\br\end{array}\right]$ is the reduced echelon form of $\left[\begin{array}{c|c}A&amp;\bb\end{array}\right]$.  Consider the system of linear equations $A\bx = \bb$ with $\bx = (x_1,\ldots,x_5)$.</p>
+Run the code below.  The matrix $\left[\begin{array}{c|c}R&\br\end{array}\right]$ is the reduced echelon form of $\left[\begin{array}{c|c}A&\bb\end{array}\right]$.  Consider the system of linear equations $A\bx = \bb$ with $\bx = (x_1,\ldots,x_5)$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14815,23 +14800,23 @@ Therefore, the following are equivalent:</p>
 <span class="n">Ab</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">augment</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">subdivide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">Rr</span> <span class="o">=</span> <span class="n">Ab</span><span class="o">.</span><span class="n">rref</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"[ A | b ] ="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ A | b ] =&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">Ab</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"[ R | r ] ="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ R | r ] =&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">Rr</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
     <span class="n">has_sol</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="mi">5</span> <span class="ow">in</span> <span class="n">pivots</span> <span class="k">else</span> <span class="kc">True</span>
     <span class="n">leading</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pivots</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">]</span>
     <span class="n">free</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">leading</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Has a solution?"</span><span class="p">,</span> <span class="n">has_sol</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Leading variables are xi with i ="</span><span class="p">,</span> <span class="n">leading</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Free variables are xi with i ="</span><span class="p">,</span> <span class="n">free</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Has a solution?&quot;</span><span class="p">,</span> <span class="n">has_sol</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Leading variables are xi with i =&quot;</span><span class="p">,</span> <span class="n">leading</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Free variables are xi with i =&quot;</span><span class="p">,</span> <span class="n">free</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">has_sol</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">vector</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
             <span class="n">x</span><span class="p">[</span><span class="n">pivots</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Rr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"By setting free variables as zeros, x ="</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;By setting free variables as zeros, x =&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14846,13 +14831,12 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>在 $x_1,\ldots,x_5$ 中，<br />
-哪些是領導變數、<br />
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>在 $x_1,\ldots,x_5$ 中，<br>
+哪些是領導變數、<br>
 哪些是自由變數？</p>
 <!-- eng start -->
-<p>Among $x_1,\ldots,x_5$, which are the leading variables, and which are the free variables?</p>
+Among $x_1,\ldots,x_5$, which are the leading variables, and which are the free variables?
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14863,13 +14847,12 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>方程式是否有解？<br />
-若有解﹐繼續前往下一題。<br />
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>方程式是否有解？<br>
+若有解﹐繼續前往下一題。<br>
 若無解﹐忽略以下題目。</p>
 <!-- eng start -->
-<p>Is there a solution to the system of linear equations?  If yes, go to the next problem.  If not, ignore the following problems.</p>
+Is there a solution to the system of linear equations?  If yes, go to the next problem.  If not, ignore the following problems. 
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14882,9 +14865,8 @@ Therefore, the following are equivalent:</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>將所有自由變數設成 $0$ 求解。</p>
 <!-- eng start -->
-<p>Find a solution by setting every free variable as $0$.</p>
+Find a solution by setting every free variable as $0$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14897,9 +14879,8 @@ Therefore, the following are equivalent:</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(d)">Exercise 1(d)<a class="anchor-link" href="#Exercise-1(d)">&#182;</a></h5><p>隨意將自由變數設成任意數字求解。</p>
 <!-- eng start -->
-<p>Find a solution by setting the free variables as any numbers you like.</p>
+Find a solution by setting the free variables as any numbers you like.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14923,9 +14904,8 @@ Therefore, the following are equivalent:</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>以下類型的問題通稱為反問題，可以加深對數學概念的理解。</p>
 <!-- eng start -->
-<p>The following problems are examples of inverse problems.  They help us to understand a mathematical notion better.</p>
+The following problems are examples of inverse problems.  They help us to understand a mathematical notion better.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14936,11 +14916,10 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>找一個 $5\times 3$ 的最簡階梯形式矩陣，它的軸落在 $1,3,5$ 的位置。</p>
+<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>找一個 $3\times 5$ 的最簡階梯形式矩陣，它的軸落在 $1,3,5$ 的位置。</p>
 <!-- eng start -->
-<p>Find a $5\times 3$ matrix such that it is in the reduced echelon form and its pivots are at $1$, $3$, and $5$.</p>
+Find a $3\times 5$ matrix such that it is in the reduced echelon form and its pivots are at $1$, $3$, and $5$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14951,13 +14930,12 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>找一個 $5\times 3$ 的矩陣﹐<br />
-它的所有項皆不是零﹐<br />
+<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>找一個 $3\times 5$ 的矩陣﹐<br>
+它的所有項皆不是零﹐<br>
 且它的最簡階梯形式的軸落在 $1,3,5$ 的位置。</p>
 <!-- eng start -->
-<p>Find a $5\times 3$ matrix whose entries are all nonzero such that the pivots of its reduced echelon form are at $1$, $3$, and $5$.</p>
+Find a $3\times 5$ matrix whose entries are all nonzero such that the pivots of its reduced echelon form are at $1$, $3$, and $5$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14968,12 +14946,11 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>給定一個矩陣 $A$，<br />
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>給定一個矩陣 $A$，<br>
 依照以下步驟求出 $\bb\in\Col(A)$ 的等價條件。</p>
 <!-- eng start -->
-<p>Let $A$ be a matrix.  Use the given instruction to find some equivalent conditions for $\bb\in\Col(A)$.</p>
+Let $A$ be a matrix.  Use the given instruction to find some equivalent conditions for $\bb\in\Col(A)$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14984,17 +14961,17 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>執行下以程式碼。<br />
-令 $\bb = (b_1,b_2,b_3,b_4)$。<br />
+<h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>執行下以程式碼。<br>
+令 $\bb = (b_1,b_2,b_3,b_4)$。<br>
 令 $A'$ 為 $A\bx = \bb$ 的增廣矩陣。</p>
-<p>把 $\bb$ 的各項當作變數處理，經過列運算把 $A'$ 中的 $A$ 消成階梯形式矩陣。<br />
-如果左側有一列零向量，則右側對應到的項必須要是零才有解。<br />
+<p>把 $\bb$ 的各項當作變數處理，經過列運算把 $A'$ 中的 $A$ 消成階梯形式矩陣。<br>
+如果左側有一列零向量，則右側對應到的項必須要是零才有解。<br>
 利用這個性質給出 $\bb\in\Col(A)$ 的等價條件。</p>
 <!-- eng start -->
-<p>Run the code below.  Let $\bb = (b_1,b_2,b_3,b_4)$.  Let $A'$ be the augmented matrix of $A\bx = \bb$.</p>
-<p>Write a variable for each entry of $\bb$.  Then apply some row operations to $A'$ so that the part of $A$ is in its reduced echelon form.  If there is a zero row on the left hand side, the the value of the same row on the right hand side must be zero.  Use this fact to give an equivalent condition for $\bb\in\Col(A)$.</p>
-<!-- eng end -->
+Run the code below.  Let $\bb = (b_1,b_2,b_3,b_4)$.  Let $A'$ be the augmented matrix of $A\bx = \bb$.  
 
+Write a variable for each entry of $\bb$.  Then apply some row operations to $A'$ so that the part of $A$ is in its reduced echelon form.  If there is a zero row on the left hand side, the the value of the same row on the right hand side must be zero.  Use this fact to give an equivalent condition for $\bb\in\Col(A)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15009,11 +14986,11 @@ Therefore, the following are equivalent:</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### code</span>
 <span class="n">set_random_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">random_good_matrix</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">var</span><span class="p">(</span><span class="s1">'b1 b2 b3 b4'</span><span class="p">)</span>
+<span class="n">var</span><span class="p">(</span><span class="s1">&#39;b1 b2 b3 b4&#39;</span><span class="p">)</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">vector</span><span class="p">([</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b3</span><span class="p">,</span> <span class="n">b4</span><span class="p">])</span>
 
 <span class="n">Ab</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">change_ring</span><span class="p">(</span><span class="n">SR</span><span class="p">)</span><span class="o">.</span><span class="n">augment</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">subdivide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"A' ="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A&#39; =&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">Ab</span><span class="p">)</span>
 
 <span class="c1">### do something here to get the echelon form on the A side</span>
@@ -15021,7 +14998,7 @@ Therefore, the following are equivalent:</p>
 <span class="c1"># Ab.rescale_row(...)</span>
 <span class="c1"># Ab.add_multiple_of_row(...)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"After reduction:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;After reduction:&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">Ab</span><span class="p">)</span>
 </pre></div>
 
@@ -15037,23 +15014,21 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>上題找到的條件應該都是一些線性方程，<br />
-而每個線性方程式都對應到一個法向量，<br />
-找到一些向量 $\{\bu_1,\ldots,\bu_k\}$<br />
+<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>上題找到的條件應該都是一些線性方程，<br>
+而每個線性方程式都對應到一個法向量，<br>
+找到一些向量 $\{\bu_1,\ldots,\bu_k\}$<br>
 （以這題的設定 $k = 2$ 就足夠）
 使得以下敘述等價：</p>
 <ol>
-<li>$\inp{\bu_i}{\bb} = 0$ if $i = 1,\ldots,k$.</li>
-<li>$\bb\in\Col(A)$.</li>
+<li>$\inp{\bu_i}{\bb} = 0$ if $i = 1,\ldots,k$.  </li>
+<li>$\bb\in\Col(A)$.  </li>
 </ol>
 <!-- eng start -->
-<p>All the conditions we found in the previous problem are linear equation, while we know each linear equation correspond to a hyperplane defined by its normal vector.  Find some vectors $\{\bu_1, \ldots,\bu_k\}$ so that the following are equivalent:  (Under the settings in the code, $k = 2$ is enough in our case.)</p>
-<ol>
-<li>$\inp{\bu_i}{\bb} = 0$ if $i = 1,\ldots,k$.</li>
-<li>$\bb\in\Col(A)$.</li>
-</ol>
-<!-- eng end -->
+All the conditions we found in the previous problem are linear equation, while we know each linear equation correspond to a hyperplane defined by its normal vector.  Find some vectors $\{\bu_1, \ldots,\bu_k\}$ so that the following are equivalent:  (Under the settings in the code, $k = 2$ is enough in our case.)
 
+1. $\inp{\bu_i}{\bb} = 0$ if $i = 1,\ldots,k$.  
+2. $\bb\in\Col(A)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15064,12 +15039,11 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>執行以下程式碼。<br />
+<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>執行以下程式碼。<br>
 說明 $\Col(A) = \mathbb{R}^3$。</p>
 <!-- eng start -->
-<p>Run the code below.  Explain why $\Col(A) = \mathbb{R}^3$.</p>
+Run the code below.  Explain why $\Col(A) = \mathbb{R}^3$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15084,7 +15058,7 @@ Therefore, the following are equivalent:</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### code</span>
 <span class="n">set_random_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">random_good_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"A ="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 </pre></div>
 
@@ -15100,15 +15074,14 @@ Therefore, the following are equivalent:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>若 $f(x) = c_0 + c_1 x + c_2 x^2$。<br />
-若 $f(1) = b_1$、<br />
-$f(2) = b_2$、<br />
-$f(3) = b_3$。<br />
+<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>若 $f(x) = c_0 + c_1 x + c_2 x^2$。<br>
+若 $f(1) = b_1$、<br>
+$f(2) = b_2$、<br>
+$f(3) = b_3$。<br>
 說明不論 $b_1$、$b_2$、$b_3$ 給的是多少﹐$c_0$、$c_1$、$c_2$ 都有解。</p>
 <!-- eng start -->
-<p>Suppose $f(x) = c_0 + c_1 x + c_2 x^2$, $f(1) = b_1$, $f(2) = b_2$, and $f(3) = b_3$.  Show that there is a solution of﹐$c_0$、$c_1$、$c_2$ regardless the choice of $b_1$, $b_2$, and $b_3$.</p>
+Suppose $f(x) = c_0 + c_1 x + c_2 x^2$, $f(1) = b_1$, $f(2) = b_2$, and $f(3) = b_3$.  Show that there is a solution of﹐$c_0$、$c_1$、$c_2$ regardless the choice of $b_1$, $b_2$, and $b_3$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15119,16 +15092,15 @@ $f(3) = b_3$。<br />
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>若 $f(x) = c_0 + c_1 x + c_2 x^2$。<br />
-若 $x_1$、$x_2$、$x_3$ 為三相異實數且<br />
-$f(x_1) = b_1$、<br />
-$f(x_2) = b_2$、<br />
-$f(x_3) = b_3$。<br />
+<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>若 $f(x) = c_0 + c_1 x + c_2 x^2$。<br>
+若 $x_1$、$x_2$、$x_3$ 為三相異實數且<br>
+$f(x_1) = b_1$、<br>
+$f(x_2) = b_2$、<br>
+$f(x_3) = b_3$。<br>
 說明不論 $b_1$、$b_2$、$b_3$ 給的是多少﹐$c_0$、$c_1$、$c_2$ 都有解。</p>
 <!-- eng start -->
-<p>Suppose $f(x) = c_0 + c_1 x + c_2 x^2$.  Suppose for some distinct real numbers $x_1$, $x_2$, and $x_3$, we know $f(1) = b_1$, $f(2) = b_2$, and $f(3) = b_3$.  Show that there is a solution of﹐$c_0$、$c_1$、$c_2$ regardless the choice of $b_1$, $b_2$, and $b_3$.</p>
+Suppose $f(x) = c_0 + c_1 x + c_2 x^2$.  Suppose for some distinct real numbers $x_1$, $x_2$, and $x_3$, we know $f(1) = b_1$, $f(2) = b_2$, and $f(3) = b_3$.  Show that there is a solution of﹐$c_0$、$c_1$、$c_2$ regardless the choice of $b_1$, $b_2$, and $b_3$.
 <!-- eng end -->
-
 </div>
 </div>
 </div>
