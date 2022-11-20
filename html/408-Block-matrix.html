@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14628,7 +14648,13 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
 \newcommand{\vspan}{\operatorname{span}}
-\newcommand{\Vol}{\operatorname{Vol}}$</p>
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14667,10 +14693,10 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>For different purposes, we often partition a matrix into several blocks.<br>
+<p>For different purposes, we often partition a matrix into several blocks.<br />
 The dimensions of each block should be clear through the context.</p>
-<p>The multiplication of two block matrices can be just as expected.<br>
-Let<br>
+<p>The multiplication of two block matrices can be just as expected.<br />
+Let</p>
 $$
     A = \begin{bmatrix}
      A_{11} &amp; \cdots &amp; A_{1n} \\
@@ -14683,13 +14709,11 @@ $$
      \vdots &amp; ~ &amp; \vdots \\
      B_{n1} &amp; \cdots &amp; B_{n\ell}
     \end{bmatrix}
-$$
-such that the width of $A_{1k}$ is the same as the height of $B_{k1}$ for $k = 1,\ldots, n$.<br>
-Then $AB$ can be written as a block matrix such that its $ij$-block is 
+$$<p>such that the width of $A_{1k}$ is the same as the height of $B_{k1}$ for $k = 1,\ldots, n$.<br />
+Then $AB$ can be written as a block matrix such that its $ij$-block is</p>
 $$
     \sum_{k = 1}^n A_{ik} B_{kj}.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14702,13 +14726,13 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>For block matrices, one may perform the <strong>block row operations</strong>.</p>
 <ol>
-<li>swapping: swap the $i$-th and the $j$-th block rows.<br>
-Its block elementary matrix $E$ has $\det(E) = (-1)^{m_im_j}$, where $m_i$ and $m_j$ are the number of rows in these two block rows, respectively. </li>
-<li>rescaling: multiply the $i$-th block row by an invertible matrix $K$.<br>
-Its block elementary matrix $E$ has $\det(E) = \det(K)$.</li>
-<li>row combination: multiply the $j$-th block row by a matrix $K$ and add the result to the $i$-th block row.<br>
-Its block elementary matrix $E$ has $\det(E) = 1$.</li>
+<li>swapping: swap the $i$-th and the $j$-th block rows.</li>
 </ol>
+<p>Its block elementary matrix $E$ has $\det(E) = (-1)^{m_im_j}$, where $m_i$ and $m_j$ are the number of rows in these two block rows, respectively. 
+2. rescaling: multiply the $i$-th block row by an invertible matrix $K$.<br />
+Its block elementary matrix $E$ has $\det(E) = \det(K)$.
+3. row combination: multiply the $j$-th block row by a matrix $K$ and add the result to the $i$-th block row.<br />
+Its block elementary matrix $E$ has $\det(E) = 1$.</p>
 <p>Similar <strong>block column operations</strong> also apply.</p>
 
 </div>
@@ -14721,15 +14745,14 @@ Its block elementary matrix $E$ has $\det(E) = 1$.</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Consider the matrix<br>
+<p>Consider the matrix</p>
 $$
     M = 
     \begin{bmatrix}
      A &amp; B \\
      O &amp; D
     \end{bmatrix}.
-$$
-If both $A$ and $D$ are invertible (sqaure) matrice, one may rescale the first block row and the second block column and get</p>
+$$<p>If both $A$ and $D$ are invertible (sqaure) matrice, one may rescale the first block row and the second block column and get</p>
 $$
     \begin{bmatrix}
      A &amp; B \\
@@ -14762,12 +14785,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If $A$ or $D$ is not invertible, then M is also not invertible.<br>
-Therefore, the same equality still holds.<br>
+<p>If $A$ or $D$ is not invertible, then M is also not invertible.<br />
+Therefore, the same equality still holds.</p>
 $$
     \det(M) = \det(A)\det(D) = 0.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14778,15 +14800,14 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Consider the other matrix<br>
+<p>Consider the other matrix</p>
 $$
     M = \begin{bmatrix}
      A &amp; B \\
      C &amp; D
     \end{bmatrix}
-$$
-such that $A$ is invertible.<br>
-One may take the first block row, pre-multiply by $-CA^{-1}$, and add it to the second block row.<br>
+$$<p>such that $A$ is invertible.<br />
+One may take the first block row, pre-multiply by $-CA^{-1}$, and add it to the second block row.<br />
 Thus,</p>
 $$
     \begin{bmatrix}
@@ -14802,8 +14823,7 @@ $$
      A &amp; B \\
      O &amp; D - CA^{-1}B
     \end{bmatrix}.
-$$<p></p>
-<p>Therefore,</p>
+$$<p>Therefore,</p>
 $$
     \det(M) = \det(A)\det(D - CA^{-1}B).
 $$
@@ -14817,7 +14837,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The matrix $D - CA^{-1}B$ is called the <strong>Schur complement</strong> of $A$ in $M$, denoted as $M / A$.<br>
+<p>The matrix $D - CA^{-1}B$ is called the <strong>Schur complement</strong> of $A$ in $M$, denoted as $M / A$.<br />
 The notation is justified by $\det(M/A) = \det(M) / \det(A)$.</p>
 
 </div>
@@ -14856,6 +14876,9 @@ The notation is justified by $\det(M/A) = \det(M) / \det(A)$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14921,8 +14944,11 @@ The notation is justified by $\det(M/A) = \det(M) / \det(A)$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>觀察如何從 $M$ 經過區塊列運算得到 $W$，<br>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>觀察如何從 $M$ 經過區塊列運算得到 $W$，<br />
 並寫出相對應的區塊基本矩陣 $E$。</p>
+<!-- eng start -->
+<p>Find out how to obtain $W$ from $M$ by some block row operation.  Then find the corresponding block elementary matrix $E$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14935,6 +14961,9 @@ The notation is justified by $\det(M/A) = \det(M) / \det(A)$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求 $\det(E)$。</p>
+<!-- eng start -->
+<p>Find $\det(E)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14958,6 +14987,9 @@ The notation is justified by $\det(M/A) = \det(M) / \det(A)$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>計算以下矩陣的行列式值。</p>
+<!-- eng start -->
+<p>Find the determinant of each of the following matrices.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15038,6 +15070,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>計算以下矩陣的行列式值。</p>
+<!-- eng start -->
+<p>Find the determinant of each of the following matrices.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15103,7 +15138,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>若矩陣 $A$ 可寫成<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>若矩陣 $A$ 可寫成</p>
 $$
     A = \begin{bmatrix}
      A_{11} &amp; A_{12} &amp; \cdots &amp; A_{1n} \\
@@ -15111,10 +15146,20 @@ $$
      \vdots &amp; \ddots &amp; \ddots &amp; A_{n-1,n} \\
      O &amp; \cdots &amp; O &amp; A_{nn}
     \end{bmatrix}  
-$$
-使得 $A_{11},\ldots,A_{nn}$ 皆是方陣<br>
-（可能不同大小），<br>
+$$<p>使得 $A_{11},\ldots,A_{nn}$ 皆是方陣<br />
+（可能不同大小），<br />
 說明 $\det(A) = \det(A_{11})\cdots \det(A_{nn})$。</p>
+<!-- eng start -->
+<p>Suppose $A$ can be written as</p>
+$$
+    A = \begin{bmatrix}
+     A_{11} &amp; A_{12} &amp; \cdots &amp; A_{1n} \\
+     O &amp; A_{22} &amp; \ddots &amp; \vdots  \\
+     \vdots &amp; \ddots &amp; \ddots &amp; A_{n-1,n} \\
+     O &amp; \cdots &amp; O &amp; A_{nn}
+    \end{bmatrix}  
+$$<p>such that each of $A_{11},\ldots,A_{nn}$ are square matrices (probably of different sizes).  Explain why $\det(A) = \det(A_{11})\cdots \det(A_{nn})$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15126,8 +15171,8 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>若 $A$ 為 $m\times n$ 矩陣、<br>
-而 $B$ 為 $n\times m$ 矩陣，<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>若 $A$ 為 $m\times n$ 矩陣、<br />
+而 $B$ 為 $n\times m$ 矩陣，<br />
 證明</p>
 $$
     \det\begin{bmatrix}
@@ -15138,7 +15183,19 @@ $$
     \det(I_m - AB) 
      = 
     \det(I_n - BA).
+$$<!-- eng start -->
+<p>Suppose $A$ is an $m\times n$ matrix while $B$ is an $n\times m$ matrix.  Show that</p>
 $$
+    \det\begin{bmatrix}
+     I_n &amp; B \\
+     A &amp; I_m 
+    \end{bmatrix} 
+     = 
+    \det(I_m - AB) 
+     = 
+    \det(I_n - BA).
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>

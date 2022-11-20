@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14628,7 +14648,13 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
 \newcommand{\vspan}{\operatorname{span}}
-\newcommand{\Vol}{\operatorname{Vol}}$</p>
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14667,12 +14693,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Each $n\times n$ matrix can be viewed as a list of row vectors $\{\br_1,\ldots, \br_n\}$.<br>
-We define the <strong>row parallelotope</strong> of $A$ as the polytope<br>
+<p>Each $n\times n$ matrix can be viewed as a list of row vectors $\{\br_1,\ldots, \br_n\}$.<br />
+We define the <strong>row parallelotope</strong> of $A$ as the polytope</p>
 $$
     \{c_1\br_1 + \cdots + c_n\br_n : c_i\in [0,1] \text{ for all }i = 1,\ldots, n\}
-$$
-spanned by the rows $\{\br_1,\ldots, \br_n\}$ of $A$.<br>
+$$<p>spanned by the rows $\{\br_1,\ldots, \br_n\}$ of $A$.<br />
 Let $\Vol_R(A)$ be the <strong>signed volume</strong> of the row parallelotope.</p>
 
 </div>
@@ -14688,14 +14713,18 @@ Let $\Vol_R(A)$ be the <strong>signed volume</strong> of the row parallelotope.<
 <p>Then $\Vol_R(A)$ can be defined through the following rules.</p>
 <ul>
 <li>$\Vol_R(I_n) = 1$.</li>
-<li>If $E$ is the elementary matrix of $\rho_i\leftrightarrow\rho_j$, then $E$ <strong>swaps</strong> the $i$-th and $j$-th rows of $A$.<br>
-Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</li>
-<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $E$ <strong>rescales</strong> the $i$-th row of $A$.<br>
-Thus, $\Vol_R(EA) = k\Vol_R(A)$ and we define $\Vol_R(E) = k$.<br>
-(Note that this statement still holds even when $k = 0$.)</li>
-<li>If $E$ is the elementary matrix of $\rho_i:+k\rho_j$, then $E$ <strong>slants</strong> the $i$-th row of $A$ to the direction of $j$-th row.<br>
-Thus, $\Vol_R(EA) = \Vol_R(A)$ and we define $\Vol_R(E) = 1$.  </li>
+<li>If $E$ is the elementary matrix of $\rho_i\leftrightarrow\rho_j$, then $E$ <strong>swaps</strong> the $i$-th and $j$-th rows of $A$.</li>
 </ul>
+<p>Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</p>
+<ul>
+<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $E$ <strong>rescales</strong> the $i$-th row of $A$.</li>
+</ul>
+<p>Thus, $\Vol_R(EA) = k\Vol_R(A)$ and we define $\Vol_R(E) = k$.<br />
+(Note that this statement still holds even when $k = 0$.)</p>
+<ul>
+<li>If $E$ is the elementary matrix of $\rho_i:+k\rho_j$, then $E$ <strong>slants</strong> the $i$-th row of $A$ to the direction of $j$-th row.</li>
+</ul>
+<p>Thus, $\Vol_R(EA) = \Vol_R(A)$ and we define $\Vol_R(E) = 1$.</p>
 
 </div>
 </div>
@@ -14707,8 +14736,8 @@ Thus, $\Vol_R(EA) = \Vol_R(A)$ and we define $\Vol_R(E) = 1$.  </li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>As a consequence, if a matrix $A$ is invertible and<br>
-can be written as the product a sequence of elementary matrices $F_1\cdots F_k$,<br>
+<p>As a consequence, if a matrix $A$ is invertible and<br />
+can be written as the product a sequence of elementary matrices $F_1\cdots F_k$,<br />
 then $\Vol_R(A) = \Vol_R(F_1)\cdots\Vol_R(F_k)\Vol_R(I_n) = \Vol_R(F_1)\cdots\Vol_R(F_k)$.</p>
 
 </div>
@@ -14721,7 +14750,7 @@ then $\Vol_R(A) = \Vol_R(F_1)\cdots\Vol_R(F_k)\Vol_R(I_n) = \Vol_R(F_1)\cdots\Vo
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In contrast, if $A$ is not invertible,<br>
+<p>In contrast, if $A$ is not invertible,<br />
 then row parallelotope collapses and is flat $\Vol_R(A) = 0$.</p>
 
 </div>
@@ -14734,9 +14763,9 @@ then row parallelotope collapses and is flat $\Vol_R(A) = 0$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>From this point of view,<br>
-the value of $\Vol_R(A)$ can be both<br>
-the signed volume and<br>
+<p>From this point of view,<br />
+the value of $\Vol_R(A)$ can be both<br />
+the signed volume and<br />
 the <strong>scaling factor</strong> changing $\Vol_R(B)$ to $\Vol_R(AB)$ for any $B$.</p>
 
 </div>
@@ -14774,8 +14803,11 @@ the <strong>scaling factor</strong> changing $\Vol_R(B)$ to $\Vol_R(AB)$ for any
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br />
 已知 $A = F_1\cdots F_k$ 是一群單位矩陣的乘積。</p>
+<!-- eng start -->
+<p>Run the code below.  Suppose we know $A = F_1\cdots F_k$ is the product of some elementary matrices.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14839,8 +14871,11 @@ the <strong>scaling factor</strong> changing $\Vol_R(B)$ to $\Vol_R(AB)$ for any
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>令 $V_0$ 為單位矩陣的列超平行體。<br>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>令 $V_0$ 為單位矩陣的列超平行體。<br />
 說明如何從 $V_0$ 得到 $V_1$ 並求出 $V_1$ 的面積。</p>
+<!-- eng start -->
+<p>Let $V_0$ be the row parallelotope for the identity matrix.  Explain how to obtain $V_1$ from $V_0$ and find the volume of $V_1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14852,8 +14887,11 @@ the <strong>scaling factor</strong> changing $\Vol_R(B)$ to $\Vol_R(AB)$ for any
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>依序說明如何從 $V_i$ 得到 $V_{i+1}$，<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>依序說明如何從 $V_i$ 得到 $V_{i+1}$，<br />
 並求出 $V_2,\ldots, V_k$ 的面積。</p>
+<!-- eng start -->
+<p>Explain how to obtain $V_{i+1}$ from $V_i$ and find the volume of $V_{i+1}$ for each $i$.  Then find the volume for each of $V_2,\ldots, V_k$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14876,8 +14914,11 @@ the <strong>scaling factor</strong> changing $\Vol_R(B)$ to $\Vol_R(AB)$ for any
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>對以下矩陣 $A$，<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>對以下矩陣 $A$，<br />
 用文字描述它的列平行體，並用求出它的有向體積。</p>
+<!-- eng start -->
+<p>For each of the following matrices $A$, use a few sentences to decribe its row parallelotope.  Then find its signed volumn.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14976,17 +15017,25 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>在 $\Vol_R$ 的定義中，假設我們已經接受了</p>
 <ul>
-<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $E$ <strong>rescales</strong> the $i$-th row of $A$.<br>
-Thus, $\Vol_R(EA) = k\Vol_R(A)$ and we define $\Vol_R(E) = k$.</li>
-<li>If $E$ is the elementary matrix of $\rho_i:+k\rho_j\times$, then $E$ <strong>slants</strong> the $i$-th row of $A$ to the direction of $j$-th row.<br>
-Thus, $\Vol_R(EA) = \Vol_R(A)$ and we define $\Vol_R(E) = 1$.  </li>
+<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $E$ <strong>rescales</strong> the $i$-th row of $A$.</li>
+<li>If $E$ is the elementary matrix of $\rho_i:+k\rho_j\times$, then $E$ <strong>slants</strong> the $i$-th row of $A$ to the direction of $j$-th row.</li>
 </ul>
 <p>說明為什麼</p>
 <ul>
-<li>If $E$ is the elementary matrix of $\rho_i\leftrightarrow\rho_j$, then $E$ <strong>swaps</strong> the $i$-th and $j$-th rows of $A$.<br>
-Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</li>
+<li>If $E$ is the elementary matrix of $\rho_i\leftrightarrow\rho_j$, then $E$ <strong>swaps</strong> the $i$-th and $j$-th rows of $A$.</li>
 </ul>
 <p>中的 $-1$ 是合理的。</p>
+<!-- eng start -->
+<p>In the definition of $\Vol_R$, suppose we already accept the following rules.</p>
+<ul>
+<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $E$ <strong>rescales</strong> the $i$-th row of $A$.</li>
+<li>If $E$ is the elementary matrix of $\rho_i:+k\rho_j\times$, then $E$ <strong>slants</strong> the $i$-th row of $A$ to the direction of $j$-th row.</li>
+</ul>
+<p>Explain the $-1$ in the rule below is reasonable.</p>
+<ul>
+<li>If $E$ is the elementary matrix of $\rho_i\leftrightarrow\rho_j$, then $E$ <strong>swaps</strong> the $i$-th and $j$-th rows of $A$.</li>
+</ul>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14999,6 +15048,9 @@ Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>利用 $\Vol_R$ 定義中的四條準則，說明以下性質。</p>
+<!-- eng start -->
+<p>Use the four rules in the definition of $\Vol_R$ to expalin the following properties.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15011,6 +15063,9 @@ Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>若 $A$ 中有一列為零向量，說明 $\Vol_R(A) = 0$。</p>
+<!-- eng start -->
+<p>If $A$ has a zero row, then $\Vol_R(A) = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15023,6 +15078,9 @@ Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>若 $A$ 中有兩列向量相等，說明 $\Vol_R(A) = 0$。</p>
+<!-- eng start -->
+<p>If $A$ has two rows in common, then $\Vol_R(A) = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15035,6 +15093,9 @@ Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>若 $A$ 中的列向量集合線性相依，說明 $\Vol_R(A) = 0$。</p>
+<!-- eng start -->
+<p>If some rows of $A$ form a linearly dependent set, then $\Vol_R(A) = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15046,14 +15107,22 @@ Thus, $\Vol_R(EA) = -\Vol_R(A)$ and we define $\Vol_R(E) = -1$.</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}}\\
     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}}\\
     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}\\
     \end{bmatrix}.
-$$</p>
+$$<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}}\\
+    \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}}\\
+    \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}\\
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15065,10 +15134,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>已知 $A$ 的列向量彼此互相垂直<br>
-且長度皆為 $1$。<br>
-以直觀的方式猜測 $\Vol_R(A)$。<br>
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>已知 $A$ 的列向量彼此互相垂直<br />
+且長度皆為 $1$。<br />
+以直觀的方式猜測 $\Vol_R(A)$。<br />
 真的計算看看你的猜測是否正確。</p>
+<!-- eng start -->
+<p>We know the rows of $A$ are mutually orthogonal and of length $1$.  Guess what is $\Vol_R(A)$ by intuition.  Then check if your intuition is correct by definition.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15080,13 +15152,16 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>將 $A$ 矩陣的<br>
-第一個列向量伸縮為原來的 $3$ 倍，<br>
-第二個列向量伸縮為原來的 $4$ 倍，<br>
-第三個列向量伸縮為原來的 $5$ 倍，<br>
-並得到 $B$ 矩陣。<br>
-以直觀的方式猜測 $\Vol_R(B)$。<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>將 $A$ 矩陣的<br />
+第一個列向量伸縮為原來的 $3$ 倍，<br />
+第二個列向量伸縮為原來的 $4$ 倍，<br />
+第三個列向量伸縮為原來的 $5$ 倍，<br />
+並得到 $B$ 矩陣。<br />
+以直觀的方式猜測 $\Vol_R(B)$。<br />
 真的計算看看你的猜測是否正確。</p>
+<!-- eng start -->
+<p>Construct a new matrix $B$ from $A$ by rescaling the first row by $3$, the second row by $4$, and the third row by $5$.  Guess what is $\Vol_R(A)$ by intuition.  Then check if your intuition is correct by definition.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15098,10 +15173,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $\bx$、$\by$、及 $\bz$ 為 $\mathbb{R}^3$ 中的向量。<br>
-令 $V_1$ 為 $\bx, \by, \bz$ 所張出來的平行六面體，<br>
-而 $V_2$ 為 $\bx + \by, \by + \bz, \bz + \bx$ 所張出來的平行六面體。<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $\bx$、$\by$、及 $\bz$ 為 $\mathbb{R}^3$ 中的向量。<br />
+令 $V_1$ 為 $\bx, \by, \bz$ 所張出來的平行六面體，<br />
+而 $V_2$ 為 $\bx + \by, \by + \bz, \bz + \bx$ 所張出來的平行六面體。<br />
 問 $V_2$ 的有向體積是 $V_1$ 的有向體積的幾倍？</p>
+<!-- eng start -->
+<p>Let $\bx$, $\by$, and $\bz$ be vectors in $\mathbb{R}^3$.  Let $V_1$ be the parallelotope spanned by $\bx, \by, \bz$.  Let $V_2$ be the parallelotope spanned by $\bx + \by, \by + \bz, \bz + \bx$.  What is the ratio between the volumn of $V_2$ and the volumn of $V_1$?</p>
+<!-- eng end -->
 
 </div>
 </div>

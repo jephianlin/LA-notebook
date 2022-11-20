@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14628,7 +14648,13 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
 \newcommand{\vspan}{\operatorname{span}}
-\newcommand{\Vol}{\operatorname{Vol}}$</p>
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14671,9 +14697,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 <ul>
 <li>$\det(I_n) = 1$.</li>
 <li>If $E$ is the elementary matrix of $\rho_i\leftrightarrow\rho_j$, then $\det(EA) = -\det(A)$ and we define $\det(E) = -1$.</li>
-<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $\det(EA) = k\det(A)$ and we define $\Vol_R(E) = k$.<br>
-(Note that this statement still holds even when $k = 0$.)</li>
-<li>If $E$ is the elementary matrix of $\rho_i:+k\rho_j$, then $\det(EA) = \det(A)$ and we define $\det(E) = 1$.  </li>
+<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $\det(EA) = k\det(A)$ and we define $\Vol_R(E) = k$.</li>
+</ul>
+<p>(Note that this statement still holds even when $k = 0$.)</p>
+<ul>
+<li>If $E$ is the elementary matrix of $\rho_i:+k\rho_j$, then $\det(EA) = \det(A)$ and we define $\det(E) = 1$.</li>
 </ul>
 
 </div>
@@ -14698,8 +14726,8 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>As a consequence, if a matrix $A$ is invertible and<br>
-can be written as the product a sequence of elementary matrices $F_1\cdots F_k$,<br>
+<p>As a consequence, if a matrix $A$ is invertible and<br />
+can be written as the product a sequence of elementary matrices $F_1\cdots F_k$,<br />
 then $\det(A) = \det(F_1)\cdots\det(F_k)\det(I_n) = \det(F_1)\cdots\det(F_k)$.</p>
 
 </div>
@@ -14712,11 +14740,11 @@ then $\det(A) = \det(F_1)\cdots\det(F_k)\det(I_n) = \det(F_1)\cdots\det(F_k)$.</
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In contrast, if $A$ is not invertible,<br>
+<p>In contrast, if $A$ is not invertible,<br />
 then $\det(A) = 0$.</p>
 <p>In particular, this happens when</p>
 <ul>
-<li>$A$ has a zero row, or  </li>
+<li>$A$ has a zero row, or</li>
 <li>$A$ has repeated rows.</li>
 </ul>
 
@@ -14742,16 +14770,15 @@ then $\det(A) = 0$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>Thanks to row operations, the definition of $\det(A)$ assigns at least a value to $\det(A)$.<br>
-However, <em>maybe</em> the rules assigns more than one values to it.<br>
+<h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>Thanks to row operations, the definition of $\det(A)$ assigns at least a value to $\det(A)$.<br />
+However, <em>maybe</em> the rules assigns more than one values to it.<br />
 That is, the function might not be <em>well-defined</em>.</p>
-<p>A matrix $A$ can be written as the product of different sequences of elementary matrices.<br>
-For example, one may write<br>
+<p>A matrix $A$ can be written as the product of different sequences of elementary matrices.<br />
+For example, one may write</p>
 $$
     A = F_1 \cdots F_k = E_1 \cdots E_h
-$$
-for elementary matrices $F_1,\ldots, F_k$ and $E_1,\ldots, E_h$.<br>
-However, it is not yet clear by the definition<br>
+$$<p>for elementary matrices $F_1,\ldots, F_k$ and $E_1,\ldots, E_h$.<br />
+However, it is not yet clear by the definition<br />
 that $\det(F_1) \cdots \det(F_k) = \det(E_1) \cdots \det(E_h)$.</p>
 <p>We will deal with this issue at the end of this chapter.</p>
 
@@ -14792,6 +14819,9 @@ that $\det(F_1) \cdots \det(F_k) = \det(E_1) \cdots \det(E_h)$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14833,8 +14863,11 @@ that $\det(F_1) \cdots \det(F_k) = \det(E_1) \cdots \det(E_h)$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>將 $A$ 消成最簡階梯形式、<br>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>將 $A$ 消成最簡階梯形式、<br />
 並記錄下每一步的列運算。</p>
+<!-- eng start -->
+<p>Find the reduced echelon form of $A$ and record each step of the row operation.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14847,6 +14880,9 @@ that $\det(F_1) \cdots \det(F_k) = \det(E_1) \cdots \det(E_h)$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求出 $\det(A)$。</p>
+<!-- eng start -->
+<p>Find $\det(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14869,8 +14905,11 @@ that $\det(F_1) \cdots \det(F_k) = \det(E_1) \cdots \det(E_h)$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>對以下矩陣 $A$，<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>對以下矩陣 $A$，<br />
 求出 $\det(A)$。</p>
+<!-- eng start -->
+<p>For the following matrices $A$, find $\det(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14972,8 +15011,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>對以下矩陣 $A$，<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>對以下矩陣 $A$，<br />
 求出 $\det(A)$。</p>
+<!-- eng start -->
+<p>For the following matrices $A$, find $\det(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15021,8 +15063,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>對以下矩陣 $A$，<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>對以下矩陣 $A$，<br />
 求出 $\det(A)$。</p>
+<!-- eng start -->
+<p>For the following matrices $A$, find $\det(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15071,9 +15116,13 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>對以下矩陣 $A$，<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>對以下矩陣 $A$，<br />
 求出 $\det(A)$。</p>
 <p>提示：把所有列加到第一列。</p>
+<!-- eng start -->
+<p>For the following matrices $A$, find $\det(A)$.</p>
+<p>Hint: Add each row to the first row.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15103,7 +15152,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣</p>
 $$
     \begin{bmatrix}
      n &amp; -1 &amp; \cdots &amp; -1 \\
@@ -15111,7 +15160,16 @@ $$
      \vdots &amp; \ddots &amp; \ddots &amp; -1 \\
      -1 &amp; \cdots &amp; -1 &amp; n 
     \end{bmatrix}.
-$$</p>
+$$<!-- eng start -->
+<p>Let $A$ be the $n\times n$ matrix</p>
+$$
+    \begin{bmatrix}
+     n &amp; -1 &amp; \cdots &amp; -1 \\
+     -1 &amp; n &amp; \ddots &amp; \vdots \\
+     \vdots &amp; \ddots &amp; \ddots &amp; -1 \\
+     -1 &amp; \cdots &amp; -1 &amp; n 
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15124,6 +15182,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>利用 $\det$ 定義中的四條準則，說明以下性質。</p>
+<!-- eng start -->
+<p>Use the four rules in the definition of the determinant to explain the following properties.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15136,6 +15197,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>若 $A$ 中有一列為零向量，說明 $\det(A) = 0$。</p>
+<!-- eng start -->
+<p>If $A$ has a zero row, then $\det(A) = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15148,6 +15212,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>若 $A$ 中有兩列向量相等，說明 $\det(A) = 0$。</p>
+<!-- eng start -->
+<p>If $A$ has two rows in common, then $\det(A) = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15160,6 +15227,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(c)">Exercise 6(c)<a class="anchor-link" href="#Exercise-6(c)">&#182;</a></h5><p>若 $A$ 中的列向量集合線性相依，說明 $\det(A) = 0$。</p>
+<!-- eng start -->
+<p>If some rows of $A$ form a linearly dependent set, then $\det(A) = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>

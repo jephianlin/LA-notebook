@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14628,7 +14648,13 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
 \newcommand{\vspan}{\operatorname{span}}
-\newcommand{\Vol}{\operatorname{Vol}}$</p>
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14667,7 +14693,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In this section, we emphasize the relation between the determinant and the invertibility of a matrix.<br>
+<p>In this section, we emphasize the relation between the determinant and the invertibility of a matrix.<br />
 For any $n\times n$ matrix $A$, the matrix $A$ is invertible if and only if $\det(A) \neq 0$.</p>
 
 </div>
@@ -14680,15 +14706,15 @@ For any $n\times n$ matrix $A$, the matrix $A$ is invertible if and only if $\de
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Here we summarize some equivalent conditions.<br>
-Let $A$ be an $n\times n$ matrix.<br>
+<p>Here we summarize some equivalent conditions.<br />
+Let $A$ be an $n\times n$ matrix.<br />
 Then the following are equivalent.</p>
 <ul>
 <li>$A$ is invertible.</li>
-<li>$\Col(A) = \mathbb{R}^n$.  </li>
-<li>$\ker(A) = \{\bzero\}$.  </li>
-<li>$\rank(A) = n$.  </li>
-<li>$\nul(A) = 0$.  </li>
+<li>$\Col(A) = \mathbb{R}^n$.</li>
+<li>$\ker(A) = \{\bzero\}$.</li>
+<li>$\rank(A) = n$.</li>
+<li>$\nul(A) = 0$.</li>
 <li>$\det(A) \neq 0$.</li>
 </ul>
 
@@ -14730,6 +14756,9 @@ Then the following are equivalent.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14779,9 +14808,12 @@ Then the following are equivalent.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>嘗試不同的 <code>seed</code> ，<br>
-找出一個可逆矩陣 $A$、<br>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>嘗試不同的 <code>seed</code> ，<br />
+找出一個可逆矩陣 $A$、<br />
 並求出 $A^{-1}$。</p>
+<!-- eng start -->
+<p>Run the code with different <code>seed</code> and find an invertible $A$.  Then find its inverse $A^{-1}$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14793,9 +14825,12 @@ Then the following are equivalent.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>嘗試不同的 <code>seed</code> ，<br>
-找出一個不可逆矩陣 $A$、<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>嘗試不同的 <code>seed</code> ，<br />
+找出一個不可逆矩陣 $A$、<br />
 並求出一個 $\ker(A)$ 中的非零向量。</p>
+<!-- eng start -->
+<p>Run the code with different <code>seed</code> and find an invertible $A$.  Then find a nonzero vector in $\ker(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14819,6 +14854,9 @@ Then the following are equivalent.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>對以下矩陣，求出所有讓 $A$ 不可逆的 $x$。</p>
+<!-- eng start -->
+<p>For each of following matrices, find all possible $x$ such that $A$ is singular.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14896,8 +14934,8 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>給定相異實數 $\lambda_0, \ldots, \lambda_d$，<br>
-其所對應的凡德孟矩陣為<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>給定相異實數 $\lambda_0, \ldots, \lambda_d$，<br />
+其所對應的凡德孟矩陣為</p>
 $$
     A = \begin{bmatrix} 
      1 &amp; \lambda_0 &amp; \cdots &amp; \lambda_0^d \\
@@ -14905,17 +14943,32 @@ $$
      \vdots &amp; \vdots &amp; ~ &amp; \vdots \\
      1 &amp; \lambda_d &amp; \cdots &amp; \lambda_d^d
     \end{bmatrix}.
-$$
-（相關性質請見 311。）<br>
-已知<br>
+$$<p>（相關性質請見 311。）<br />
+已知</p>
 $$
     \det(A) = \prod_{j &gt; i} (\lambda_j - \lambda_i).
-$$
-所以當 $\lambda_0, \ldots, \lambda_d$ 相異時其凡德孟矩陣的行列式值一定非零。</p>
-<p>利用這個性質證明：<br>
-給定 $d+1$ 個相異實數 $\lambda_0, \ldots, \lambda_d$、<br>
-並給定 $d+1$ 個實數 $y_0, \ldots, y_d$，<br>
+$$<p>所以當 $\lambda_0, \ldots, \lambda_d$ 相異時其凡德孟矩陣的行列式值一定非零。</p>
+<p>利用這個性質證明：<br />
+給定 $d+1$ 個相異實數 $\lambda_0, \ldots, \lambda_d$、<br />
+並給定 $d+1$ 個實數 $y_0, \ldots, y_d$，<br />
 則必存在唯一一個 $d$ 次以下的多項式 $p$ 使得 $p(\lambda_0) = y_0, \ldots, p(\lambda_d) = y_d$。</p>
+<!-- eng start -->
+<p>Given distinct real numbers $\lambda_0, \ldots, \lambda_d$, the associated Vandermonde matrix is</p>
+$$
+    A = \begin{bmatrix} 
+     1 &amp; \lambda_0 &amp; \cdots &amp; \lambda_0^d \\
+     1 &amp; \lambda_1 &amp; \cdots &amp; \lambda_1^d \\
+     \vdots &amp; \vdots &amp; ~ &amp; \vdots \\
+     1 &amp; \lambda_d &amp; \cdots &amp; \lambda_d^d
+    \end{bmatrix}.
+$$<p>(See 311 for more details.)</p>
+<p>We knew that</p>
+$$
+    \det(A) = \prod_{j &gt; i} (\lambda_j - \lambda_i).
+$$<p>Therefore, the determinant of $A$ is nonzero whenever $\lambda_0, \ldots, \lambda_d$ are distinct.</p>
+<p>Use this property to show:<br />
+Given any $d + 1$ distinct real numbers $\lambda_0, \ldots, \lambda_d$ and any $d+1$ real numbers $y_0, \ldots, y_d$, there must be a unique polynomial $p$ of degree at most $d$ such that $p(\lambda_0) = y_0, \ldots, p(\lambda_d) = y_d$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14928,6 +14981,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>參考 312 中西爾維斯特矩陣的定義及性質。</p>
+<!-- eng start -->
+<p>See 312 for the definition and the properties of a Sylvester matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14939,10 +14995,13 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>給定兩多項式<br>
-$p = 2 - 3x + x^2$、<br>
-$q = 6 + 11x + 6x^2 + x^3$。<br>
+<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>給定兩多項式<br />
+$p = 2 - 3x + x^2$、<br />
+$q = 6 + 11x + 6x^2 + x^3$。<br />
 判斷 $p$ 和 $q$ 是否互質。</p>
+<!-- eng start -->
+<p>Let $p = 2 - 3x + x^2$ and $q = 6 + 11x + 6x^2 + x^3$.  Determine if $\gcd(p,q) = 1$ or not.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14954,10 +15013,13 @@ $q = 6 + 11x + 6x^2 + x^3$。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>給定兩多項式<br>
-$p = 2 - 3x + x^2$、<br>
-$q = -6 + x + 4x^2 + x^3$。<br>
+<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>給定兩多項式<br />
+$p = 2 - 3x + x^2$、<br />
+$q = -6 + x + 4x^2 + x^3$。<br />
 判斷 $p$ 和 $q$ 是否互質。</p>
+<!-- eng start -->
+<p>Let $p = 2 - 3x + x^2$ and $q = -6 + x + 4x^2 + x^3$.  Determine if $\gcd(p,q) = 1$ or not.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14971,10 +15033,18 @@ $q = -6 + x + 4x^2 + x^3$。<br>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>已知以下兩敘述等價。</p>
 <ul>
-<li>多項式 $p$ 有重根。  </li>
+<li>多項式 $p$ 有重根。</li>
 <li>$p$ 和 $p'$ 有共同根。</li>
 </ul>
 <p>利用這個性質判斷 $p = 3 - 5x + x^2 + x^3$ 是否有重根。</p>
+<!-- eng start -->
+<p>Suppose we know the following are equivalent.</p>
+<ul>
+<li>The polynomial $p$ has a multiple root.</li>
+<li>$p$ and $p'$ have a common root.</li>
+</ul>
+<p>Use this fact to determine whetehr $p = 3 - 5x + x^2 + x^3$ has a multiple root.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14986,8 +15056,11 @@ $q = -6 + x + 4x^2 + x^3$。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>令 $p = c + bx + ax^2$ 為一二次多項式（$a\neq 0$）。<br>
+<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>令 $p = c + bx + ax^2$ 為一二次多項式（$a\neq 0$）。<br />
 求 $a,b,c$ 在什麼條件下會有重根。</p>
+<!-- eng start -->
+<p>Let $p = c + bx + ax^2$ be a polynomial of degree $2$ with $a\neq 0$.  Find a criterion on $a,b,c$ for $p$ having a multiple root.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14999,8 +15072,11 @@ $q = -6 + x + 4x^2 + x^3$。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(e)">Exercise 4(e)<a class="anchor-link" href="#Exercise-4(e)">&#182;</a></h5><p>令 $p = d + cx + bx^2 + ax^3$ 為一三次多項式（$a\neq 0$）。<br>
+<h5 id="Exercise-4(e)">Exercise 4(e)<a class="anchor-link" href="#Exercise-4(e)">&#182;</a></h5><p>令 $p = d + cx + bx^2 + ax^3$ 為一三次多項式（$a\neq 0$）。<br />
 求 $a,b,c,d$ 在什麼條件下會有重根。</p>
+<!-- eng start -->
+<p>Let $p = d + cx + bx^2 + ax^3$ be a polynomial of degree $2$ with $a\neq 0$.  Find a criterion on $a,b,c,d$ for $p$ having a multiple root.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15012,9 +15088,9 @@ $q = -6 + x + 4x^2 + x^3$。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>已知對任意矩陣 $\ker(A) = \ker(A\trans A)$。<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>已知對任意矩陣 $\ker(A) = \ker(A\trans A)$。<br />
 （參考 105-2。）</p>
-<p>令<br>
+<p>令</p>
 $$
     A = \begin{bmatrix}
      1 &amp; 1 &amp; 1 \\
@@ -15022,7 +15098,17 @@ $$
      1 &amp; -1 &amp; 1 \\
      1 &amp; 1 &amp; -1
     \end{bmatrix}.
-$$</p>
+$$<!-- eng start -->
+<p>Suppose we know $\ker(A) = \ker(A\trans A)$.  (See 105-2.)</p>
+<p>Let</p>
+$$
+    A = \begin{bmatrix}
+     1 &amp; 1 &amp; 1 \\
+     -1 &amp; 1 &amp; 1 \\
+     1 &amp; -1 &amp; 1 \\
+     1 &amp; 1 &amp; -1
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15035,6 +15121,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>求 $\det(A\trans A)$。</p>
+<!-- eng start -->
+<p>Find $\det(A\trans A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15047,6 +15136,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>利用 $\det(A\trans A)$ 判斷 $A$ 的行向量集是否線性獨立。</p>
+<!-- eng start -->
+<p>Use $\det(A\trans A)$ to determine if the columns of $A$ form an independent set.</p>
+<!-- eng end -->
 
 </div>
 </div>

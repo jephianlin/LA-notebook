@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14627,7 +14647,14 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Col}{\operatorname{Col}}
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
-\newcommand{\vspan}{\operatorname{span}}$</p>
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14666,35 +14693,31 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In this section we explore some basic properties of the determinant of a $2\times 2$ or a $3\times 3$ matrix.<br>
-Let<br>
+<p>In this section we explore some basic properties of the determinant of a $2\times 2$ or a $3\times 3$ matrix.<br />
+Let</p>
 $$
     A = \begin{bmatrix}
      a &amp; b \\
      c &amp; d 
     \end{bmatrix}
-$$
-be a $2\times 2$ matrix.<br>
-Then its <strong>determinant</strong> is defined as<br>
+$$<p>be a $2\times 2$ matrix.<br />
+Then its <strong>determinant</strong> is defined as</p>
 $$
     \det(A) = ad - bc.
-$$
-When<br>
+$$<p>When</p>
 $$
     A = \begin{bmatrix}
      a &amp; b &amp; c \\
      d &amp; e &amp; f \\
      g &amp; h &amp; i
     \end{bmatrix}
-$$
-is a $3\times 3$ matrix, the <strong>determinant</strong> is<br>
+$$<p>is a $3\times 3$ matrix, the <strong>determinant</strong> is</p>
 $$
     \begin{aligned}
     \det(A) &amp;= aei - afh - bdi + bfg + cdh - ceg \\
      &amp;= a(ei - fh) - b(di -fg) + c(dh - eg).
     \end{aligned}
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14705,8 +14728,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $n = 2,3$ and $A$ an $n\times n$ matrix.<br>
-Then the determinant functions have the following basic properties.<br>
+<p>Let $n = 2,3$ and $A$ an $n\times n$ matrix.<br />
+Then the determinant functions have the following basic properties.<br />
 (See Section 108 for the notations of row operations.)</p>
 <ul>
 <li>$\det(I_n) = 1$.</li>
@@ -14725,9 +14748,9 @@ Then the determinant functions have the following basic properties.<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>When $A$ is a $2\times 2$ matrix, one may construct a <em>parallelogram</em> spanned by its row vectors.<br>
+<p>When $A$ is a $2\times 2$ matrix, one may construct a <em>parallelogram</em> spanned by its row vectors.<br />
 It is known that $\det(A)$ is the <em>signed area</em> of this parallelogram.</p>
-<p>When $A$ is a $3\times 3$ matrix, one may construct a <em>parallelepiped</em> spanned by its row vectors.<br>
+<p>When $A$ is a $3\times 3$ matrix, one may construct a <em>parallelepiped</em> spanned by its row vectors.<br />
 It is known that $\det(A)$ is the <em>signed volume</em> of this parallelepiped.</p>
 <p>The same statement holds when the row vectors are replaced with the column vectors.</p>
 
@@ -14753,7 +14776,7 @@ It is known that $\det(A)$ is the <em>signed volume</em> of this parallelepiped.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>For any sqaure matrices $A$ and $B$ of the same size,<br>
+<p>For any sqaure matrices $A$ and $B$ of the same size,<br />
 the determinant function also has the following properties.</p>
 <ul>
 <li>$\det(A) = \det(A\trans)$.</li>
@@ -14796,6 +14819,9 @@ the determinant function also has the following properties.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14854,6 +14880,9 @@ the determinant function also has the following properties.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>用定義計算 $\det(A_1)$。</p>
+<!-- eng start -->
+<p>Find $\det(A_1)$ by definition.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14865,9 +14894,12 @@ the determinant function also has the following properties.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>用定義計算 $\det(A_2)$。<br>
-已知 $A_2$ 可以由 $A_1$ 經過列運算得出，<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>用定義計算 $\det(A_2)$。<br />
+已知 $A_2$ 可以由 $A_1$ 經過列運算得出，<br />
 利用 $\det(A_1)$ 再次計算 $\det(A_2)$ 來驗證答案。</p>
+<!-- eng start -->
+<p>Find $\det(A_2)$ by definition.  Suppose we know that $A_2$ can be obtained from $A_1$ by some row operation.  Use $\det(A_1)$ to find $\det(A_2)$ again to verify your previous answer.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14879,9 +14911,12 @@ the determinant function also has the following properties.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>用定義計算 $\det(A_3)$。<br>
-已知 $A_3$ 可以由 $A_2$ 經過列運算得出，<br>
+<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>用定義計算 $\det(A_3)$。<br />
+已知 $A_3$ 可以由 $A_2$ 經過列運算得出，<br />
 利用 $\det(A_2)$ 再次計算 $\det(A_3)$ 來驗證答案。</p>
+<!-- eng start -->
+<p>Find $\det(A_3)$ by definition.  Suppose we know that $A_3$ can be obtained from $A_2$ by some row operation.  Use $\det(A_2)$ to find $\det(A_3)$ again to verify your previous answer.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14893,9 +14928,12 @@ the determinant function also has the following properties.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(d)">Exercise 1(d)<a class="anchor-link" href="#Exercise-1(d)">&#182;</a></h5><p>用定義計算 $\det(A_4)$。<br>
-已知 $A_4$ 可以由 $A_3$ 經過列運算得出，<br>
+<h5 id="Exercise-1(d)">Exercise 1(d)<a class="anchor-link" href="#Exercise-1(d)">&#182;</a></h5><p>用定義計算 $\det(A_4)$。<br />
+已知 $A_4$ 可以由 $A_3$ 經過列運算得出，<br />
 利用 $\det(A_3)$ 再次計算 $\det(A_4)$ 來驗證答案。</p>
+<!-- eng start -->
+<p>Find $\det(A_4)$ by definition.  Suppose we know that $A_4$ can be obtained from $A_3$ by some row operation.  Use $\det(A_3)$ to find $\det(A_4)$ again to verify your previous answer.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14919,6 +14957,9 @@ the determinant function also has the following properties.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>以下練習驗證行列式值和矩陣是否可逆的關係。</p>
+<!-- eng start -->
+<p>Through the following exercises, explore the relation between the determinant and the invertibility of a matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14930,10 +14971,13 @@ the determinant function also has the following properties.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>寫出一個行列式值為 $0$<br>
-且矩陣中每項皆不為 $0$<br>
-的 $3\times 3$ 矩陣。<br>
+<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>寫出一個行列式值為 $0$<br />
+且矩陣中每項皆不為 $0$<br />
+的 $3\times 3$ 矩陣。<br />
 用列運算判斷其是否可逆。</p>
+<!-- eng start -->
+<p>Find a $3\times 3$ matrix with zero determinant such that all its entries are nonzero.  Determine if it is invertible by row operations.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14945,10 +14989,13 @@ the determinant function also has the following properties.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>寫出一個行列式值不為 $0$<br>
-且矩陣中每項皆不為 $0$<br>
-的 $3\times 3$ 矩陣。<br>
+<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>寫出一個行列式值不為 $0$<br />
+且矩陣中每項皆不為 $0$<br />
+的 $3\times 3$ 矩陣。<br />
 用列運算判斷其是否可逆。</p>
+<!-- eng start -->
+<p>Find a $3\times 3$ matrix with nonzero determinant such that all its entries are nonzero.  Determine if it is invertible by row operations.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14960,15 +15007,23 @@ the determinant function also has the following properties.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>令</p>
 $$
     A_x = \begin{bmatrix}
      2 - x &amp; 3 \\
      3 &amp; 2 - x
     \end{bmatrix}.
-$$
-找出所有會讓 $A_x$ 奇異（不可逆）的 $x$。<br>
+$$<p>找出所有會讓 $A_x$ 奇異（不可逆）的 $x$。<br />
 對每個這樣的 $x$，求出一個非零向量 $\bv_x$ 使得 $A_x\bv_x = \bzero$。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A_x = \begin{bmatrix}
+     2 - x &amp; 3 \\
+     3 &amp; 2 - x
+    \end{bmatrix}.
+$$<p>Find all possible $x$ such that $A_x$ is singular (not invertible).  For each of such $x$, find a nonzero vector $\bx_v$ such that $A_x\bv_x = \bzero$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14980,16 +15035,25 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(d)">Exercise 2(d)<a class="anchor-link" href="#Exercise-2(d)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-2(d)">Exercise 2(d)<a class="anchor-link" href="#Exercise-2(d)">&#182;</a></h5><p>令</p>
 $$
     A_x = \begin{bmatrix}
      0 - x &amp; 1 &amp; 1 \\
      1 &amp; 0 - x &amp; 0 \\
      1 &amp; 0 &amp; 0 - x \\
     \end{bmatrix}.
-$$
-找出所有會讓 $A_x$ 奇異（不可逆）的 $x$。<br>
+$$<p>找出所有會讓 $A_x$ 奇異（不可逆）的 $x$。<br />
 對每個這樣的 $x$，求出一個非零向量 $\bv_x$ 使得 $A_x\bv_x = \bzero$。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A_x = \begin{bmatrix}
+     0 - x &amp; 1 &amp; 1 \\
+     1 &amp; 0 - x &amp; 0 \\
+     1 &amp; 0 &amp; 0 - x \\
+    \end{bmatrix}.
+$$<p>Find all possible $x$ such that $A_x$ is singular (not invertible).  For each of such $x$, find a nonzero vector $\bx_v$ such that $A_x\bv_x = \bzero$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15001,7 +15065,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $n = 2,3$、且 $A$ 為一 $n\times n$ 的矩陣。<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $n = 2,3$、且 $A$ 為一 $n\times n$ 的矩陣。<br />
 利用定義證明以下性質：</p>
 <ul>
 <li>$\det(I_n) = 1$.</li>
@@ -15009,6 +15073,15 @@ $$
 <li>If $B$ is obtained from $A$ by performing the row operation $\rho_i:\times k$, then $\det(B) = k\det(A)$.</li>
 <li>If $B$ is obtained from $A$ by performing the row operation $\rho_i:+k\rho_j\times$, then $\det(B) = \det(A)$.</li>
 </ul>
+<!-- eng start -->
+<p>Let $n = 2,3$ and $A$ an $n\times n$ matrix.  Prove the following properties by definition:</p>
+<ul>
+<li>$\det(I_n) = 1$.</li>
+<li>If $B$ is obtained from $A$ by performing the row operation $\rho_i\leftrightarrow\rho_j$, then $\det(B) = -\det(A)$.</li>
+<li>If $B$ is obtained from $A$ by performing the row operation $\rho_i:\times k$, then $\det(B) = k\det(A)$.</li>
+<li>If $B$ is obtained from $A$ by performing the row operation $\rho_i:+k\rho_j\times$, then $\det(B) = \det(A)$.</li>
+</ul>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15020,12 +15093,19 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $n = 2,3$、且 $A$ 為一 $n\times n$ 的矩陣。<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $n = 2,3$、且 $A$ 為一 $n\times n$ 的矩陣。<br />
 利用定義證明以下性質：</p>
 <ul>
 <li>$\det(A) = \det(A\trans)$.</li>
 <li>$\det(AB) = \det(A)\det(B)$.</li>
 </ul>
+<!-- eng start -->
+<p>Let $n = 2,3$ and $A$ an $n\times n$ matrix.  Prove the following properties by definition:</p>
+<ul>
+<li>$\det(A) = \det(A\trans)$.</li>
+<li>$\det(AB) = \det(A)\det(B)$.</li>
+</ul>
+<!-- eng end -->
 
 </div>
 </div>

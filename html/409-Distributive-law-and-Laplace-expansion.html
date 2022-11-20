@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14628,7 +14648,13 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
 \newcommand{\vspan}{\operatorname{span}}
-\newcommand{\Vol}{\operatorname{Vol}}$</p>
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14667,7 +14693,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The determinant function satisfies the <strong>distributive law</strong> on each row.<br>
+<p>The determinant function satisfies the <strong>distributive law</strong> on each row.<br />
 That is,</p>
 $$
     \det\begin{bmatrix}
@@ -14702,16 +14728,15 @@ $$<p>Since one may swap two rows or take the transpose without chaning the deter
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If we think of the determinant $\det(A)$ as a function on $n$ row vectors $f(\br_1,\ldots,\br_n)$,<br>
-then $f$ is linear on each vector individually.<br>
-That is,<br>
+<p>If we think of the determinant $\det(A)$ as a function on $n$ row vectors $f(\br_1,\ldots,\br_n)$,<br />
+then $f$ is linear on each vector individually.<br />
+That is,</p>
 $$
     \begin{aligned}
     f( \ldots, \ba + \bb, \ldots ) &amp;= f( \ldots, \ba, \ldots ) + f( \ldots, \bb, \ldots ), \\
     f( \ldots, k\ba, \ldots ) &amp;= k f( \ldots, \ba, \ldots ).
     \end{aligned}
-$$
-A function with this property is said to be <strong>multilinear</strong>.</p>
+$$<p>A function with this property is said to be <strong>multilinear</strong>.</p>
 
 </div>
 </div>
@@ -14723,8 +14748,8 @@ A function with this property is said to be <strong>multilinear</strong>.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A = \begin{bmatrix} a_{ij} \end{bmatrix}$ be an $n\times n$ matrix.<br>
-Let $\br_1, \ldots, \br_n$ be the rows of $A$.<br>
+<p>Let $A = \begin{bmatrix} a_{ij} \end{bmatrix}$ be an $n\times n$ matrix.<br />
+Let $\br_1, \ldots, \br_n$ be the rows of $A$.<br />
 Define $A(i,j)$ as the submatrix obtained from $A$ by removing the $i$-th row and the $j$-th column.</p>
 
 </div>
@@ -14782,12 +14807,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Again, this formula works for any row and column.<br>
-We may expand the $i$-th row and get<br>
+<p>Again, this formula works for any row and column.<br />
+We may expand the $i$-th row and get</p>
 $$
     \det(A) = \sum_{j=1}^n (-1)^{i + j} a_{ij} \det A(i,j).
-$$
-The formula for expanding a column is similar.<br>
+$$<p>The formula for expanding a column is similar.<br />
 This identity is called the <strong>Laplace expansion</strong>.</p>
 
 </div>
@@ -14827,6 +14851,9 @@ This identity is called the <strong>Laplace expansion</strong>.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14878,8 +14905,11 @@ This identity is called the <strong>Laplace expansion</strong>.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>對每一個 $j = 1, ..., n$，<br>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>對每一個 $j = 1, ..., n$，<br />
 計算 $\det A(1,j)$。</p>
+<!-- eng start -->
+<p>For each $j = 1, ..., n$, find $\det A(1,j)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14891,8 +14921,11 @@ This identity is called the <strong>Laplace expansion</strong>.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>計算題目給的等式中的每一個行列式值、<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>計算題目給的等式中的每一個行列式值、<br />
 並驗證等式成立。</p>
+<!-- eng start -->
+<p>Calculate each term in the equality and verify the equality holds.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14916,6 +14949,9 @@ This identity is called the <strong>Laplace expansion</strong>.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>以下題目探討矩陣中單一一項對行列式值的影響。</p>
+<!-- eng start -->
+<p>The following problem studies how an entry of a matrix changees the determinant.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14927,15 +14963,24 @@ This identity is called the <strong>Laplace expansion</strong>.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
      1 + x &amp; 2 &amp; 3 \\
      4 &amp; 5 &amp; 6 \\
      7 &amp; 8 &amp; 9
     \end{bmatrix}.
+$$<p>求 $\det(A)$。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-求 $\det(A)$。</p>
+    A = \begin{bmatrix}
+     1 + x &amp; 2 &amp; 3 \\
+     4 &amp; 5 &amp; 6 \\
+     7 &amp; 8 &amp; 9
+    \end{bmatrix}.
+$$<p>Find $\det(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14947,13 +14992,18 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>觀察到 
+<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>觀察到</p>
 $$
     (1+x,2,3) = (1,2,3) + (x,0,0).
-$$
-利用這個性質，<br>
-將 $\det(A)$ 的常數項寫成一個 $3\times 3$ 矩陣的行列式值、<br>
+$$<p>利用這個性質，<br />
+將 $\det(A)$ 的常數項寫成一個 $3\times 3$ 矩陣的行列式值、<br />
 並將其一次項寫成一個 $2\times 2$ 矩陣的行列式值。</p>
+<!-- eng start -->
+<p>Use the fact that</p>
+$$
+    (1+x,2,3) = (1,2,3) + (x,0,0)
+$$<p>to write $\det(A)$ as a polynomial of degree $2$ such that its constant term is the determinant of a $3\times 3$ matrix while its linear term is the determinant of a $2\times 2$ matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14966,9 +15016,13 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>把 $\det(A)$ 看成 $x$ 的函數，求 $\frac{d\det(A)}{dx}$。</p>
-<p>搭配上一題，<br>
-這說明當一個矩陣 $A$ 的 $i,j$-項增加 $x$ 的時候，<br>
+<p>搭配上一題，<br />
+這說明當一個矩陣 $A$ 的 $i,j$-項增加 $x$ 的時候，<br />
 其行列式值會增加 $x\cdot (-1)^{i+j}\det A(i,j)$。</p>
+<!-- eng start -->
+<p>Consider $\det(A)$ as a function of $x$.  Find $\frac{d\det(A)}{dx}$.</p>
+<p>Use the result of the previous problem, explain the determinant of $A$ increases by $x\cdot (-1)^{i+j}\det A(i,j)$ when its $i,j$-entry increases by $x$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14980,11 +15034,15 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>對以下 $n\times n$ 矩陣，<br>
-將每列寫成兩個向量相加，<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>對以下 $n\times n$ 矩陣，<br />
+將每列寫成兩個向量相加，<br />
 其中一個向量只有常數，另一個向量只有 $x$。</p>
-<p>如此可以將 $\det(A)$ 寫成 $2^n$ 個行列式值相加。<br>
+<p>如此可以將 $\det(A)$ 寫成 $2^n$ 個行列式值相加。<br />
 計算這些行列式值並計算 $\det(A)$。</p>
+<!-- eng start -->
+<p>For each of the following $n\times n$ matrix, write each row as the sum of two vectors, where one is composed of constants only, while the other is composed of linear terms.</p>
+<p>Thus, we may write $\det(A)$ as the sum of $2^n$ determinants.  Calculate each of them to find $\det(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15029,7 +15087,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令<br />
 $$
     A = \begin{bmatrix}
      a &amp; b &amp; c &amp; d \\
@@ -15050,7 +15108,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>給定向量 $\ba$、$\bb$、以及 $\br_2,\ldots,\br_n$。<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>給定向量 $\ba$、$\bb$、以及 $\br_2,\ldots,\br_n$。<br />
 令</p>
 $$
     M = \begin{bmatrix}
@@ -15074,6 +15132,32 @@ $$
      - &amp; \br_n\trans &amp; -
     \end{bmatrix}.
 $$<p>依照以下步驟證明行列式值的分配律 $\det(M) = \det(A) + \det(B)$。</p>
+<!-- eng start -->
+<p>Let $\ba$, $\bb$, and $\br_2, \ldots, \br_n$ be some vectors.<br />
+Let</p>
+$$
+    M = \begin{bmatrix}
+     - &amp; \ba\trans + \bb\trans &amp; - \\
+     - &amp; \br_2\trans &amp; - \\
+     ~ &amp; \vdots &amp; ~ \\
+     - &amp; \br_n\trans &amp; -
+    \end{bmatrix}
+    ,\quad 
+    A = \begin{bmatrix}
+     - &amp; \ba\trans &amp; - \\
+     - &amp; \br_2\trans &amp; - \\
+     ~ &amp; \vdots &amp; ~ \\
+     - &amp; \br_n\trans &amp; -
+    \end{bmatrix}
+    ,\text{ and}\quad
+    B = \begin{bmatrix}
+     - &amp; \bb\trans &amp; - \\
+     - &amp; \br_2\trans &amp; - \\
+     ~ &amp; \vdots &amp; ~ \\
+     - &amp; \br_n\trans &amp; -
+    \end{bmatrix}.
+$$<p>Follow the steps below to show the distributive law of the determinant, that is, $\det(M) = \det(A) + \det(B)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15085,8 +15169,11 @@ $$<p>依照以下步驟證明行列式值的分配律 $\det(M) = \det(A) + \det(
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>證明當 $\{\br_2,\ldots,\br_n\}$ 線性相依的時候，$\det(M) = \det(A) = \det(B) = 0$。<br>
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>證明當 $\{\br_2,\ldots,\br_n\}$ 線性相依的時候，$\det(M) = \det(A) = \det(B) = 0$。<br />
 因此等式成立。</p>
+<!-- eng start -->
+<p>Show that $\det(M) = \det(A) = \det(B) = 0$ when $\{\br_2,\ldots,\br_n\}$ is linearly dependent, so the equality holds.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15098,16 +15185,24 @@ $$<p>依照以下步驟證明行列式值的分配律 $\det(M) = \det(A) + \det(
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>假設 $\{\br_2,\ldots,\br_n\}$ 線性獨立。<br>
-找一個向量 $\br_1$ 使得 $\beta = \{\br_1,\br_2,\ldots,\br_n\}$ 是 $\mathbb{R}^n$ 的一組基底。<br>
-因此可以將 $\ba$ 和 $\bb$ 寫成 $\beta$ 的線性組合：<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>假設 $\{\br_2,\ldots,\br_n\}$ 線性獨立。<br />
+找一個向量 $\br_1$ 使得 $\beta = \{\br_1,\br_2,\ldots,\br_n\}$ 是 $\mathbb{R}^n$ 的一組基底。<br />
+因此可以將 $\ba$ 和 $\bb$ 寫成 $\beta$ 的線性組合：</p>
 $$
     \begin{aligned}
     \ba &amp;= a_1\br_1 + \cdots + a_n\br_n \\
     \bb &amp;= b_1\br_1 + \cdots + b_n\br_n
     \end{aligned}
+$$<p>藉由列運算說明行列式值的分配律成立。</p>
+<!-- eng start -->
+<p>Suppose $\{\br_2,\ldots,\br_n\}$ is linearly independent.  Find a vector $\br_1$ such that $\beta = \{\br_1,\br_2,\ldots,\br_n\}$ is a basis of $\mathbb{R}^n$.  Thus, both $\ba$ and $\bb$ can be written as linear combinations of $\beta$:</p>
 $$
-藉由列運算說明行列式值的分配律成立。</p>
+    \begin{aligned}
+    \ba &amp;= a_1\br_1 + \cdots + a_n\br_n \\
+    \bb &amp;= b_1\br_1 + \cdots + b_n\br_n
+    \end{aligned}
+$$<p>Use row operations to show the distributive law in this case.</p>
+<!-- eng end -->
 
 </div>
 </div>

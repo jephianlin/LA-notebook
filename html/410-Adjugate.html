@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14628,7 +14648,13 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
 \newcommand{\vspan}{\operatorname{span}}
-\newcommand{\Vol}{\operatorname{Vol}}$</p>
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14667,9 +14693,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix.<br>
-The <strong>$ij$-minor</strong> of $A$ is $\det A(i,j)$, while<br>
-the <strong>$ij$-cofactor</strong> of $A$ is $(-1)^{i + j} \det A(i,j)$.<br>
+<p>Let $A$ be an $n\times n$ matrix.<br />
+The <strong>$ij$-minor</strong> of $A$ is $\det A(i,j)$, while<br />
+the <strong>$ij$-cofactor</strong> of $A$ is $(-1)^{i + j} \det A(i,j)$.<br />
 The <strong>cofactor matrix</strong> of $A$ is an $n\times n$ matrix $A\cof$ whose $ij$-entry is the $ij$-cofactor of $A$.</p>
 
 </div>
@@ -14682,13 +14708,12 @@ The <strong>cofactor matrix</strong> of $A$ is an $n\times n$ matrix $A\cof$ who
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $\br_1,\ldots,\br_n$ be the rows of $A$.<br>
-Let $\bc_1,\ldots,\bc_n$ be the rows of $A\cof$.<br>
-Thus, the Laplace expansion can be written as<br>
+<p>Let $\br_1,\ldots,\br_n$ be the rows of $A$.<br />
+Let $\bc_1,\ldots,\bc_n$ be the rows of $A\cof$.<br />
+Thus, the Laplace expansion can be written as</p>
 $$
     \inp{\br_i}{\bc_i} = \det(A)
-$$
-for any $i = 1,\ldots, n$.</p>
+$$<p>for any $i = 1,\ldots, n$.</p>
 
 </div>
 </div>
@@ -14700,15 +14725,14 @@ for any $i = 1,\ldots, n$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Suppose $i$ and $j$ are two different indices in $\{1,\ldots,n\}$.<br>
-Consider the matrix $B$ obtained from $A$ by replacing its $j$-th row with $\br_i$.<br>
-Since $B$ has repeated rows, $\det(B) = 0$.<br>
-Meanwhile, the $jk$-cofactor of $B$ is the same as the $jk$-cofactor of $A$ for any $k = 1,\ldots, n$.<br>
-This means<br>
+<p>Suppose $i$ and $j$ are two different indices in $\{1,\ldots,n\}$.<br />
+Consider the matrix $B$ obtained from $A$ by replacing its $j$-th row with $\br_i$.<br />
+Since $B$ has repeated rows, $\det(B) = 0$.<br />
+Meanwhile, the $jk$-cofactor of $B$ is the same as the $jk$-cofactor of $A$ for any $k = 1,\ldots, n$.<br />
+This means</p>
 $$
     \inp{\br_i}{\bc_j} = \det(B) = 0.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14719,15 +14743,14 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In summary,<br>
+<p>In summary,</p>
 $$
     \inp{\br_i}{\bc_j} = 
     \begin{cases}
     \det(A) &amp; \text{if }i = j, \\
     0 &amp; \text{if }i \neq j.
     \end{cases}
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14738,12 +14761,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Define the <strong>adjugate</strong> of $A$ as $A\adj = (A\cof)\trans$.<br>
-Thus, the above summary leads to the identity<br>
+<p>Define the <strong>adjugate</strong> of $A$ as $A\adj = (A\cof)\trans$.<br />
+Thus, the above summary leads to the identity</p>
 $$
     AA\adj = \det(A)I = A\adj A.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14754,11 +14776,10 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Therefore, when $\det(A) \neq 0$,<br>
+<p>Therefore, when $\det(A) \neq 0$,</p>
 $$
     A^{-1} = \frac{1}{\det(A)}A\adj.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14798,6 +14819,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14846,6 +14870,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>對所有 $i,j$，求出 $\det A(i,j)$。</p>
+<!-- eng start -->
+<p>For each $i,j$, find $\det A(i,j)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14858,6 +14885,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求 $A$ 的餘因子矩陣 $A\cof$。</p>
+<!-- eng start -->
+<p>Find the cofactor matrix $A\cof$ of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14870,6 +14900,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>求 $A$ 的伴隨矩陣 $A\adj$。</p>
+<!-- eng start -->
+<p>Find the adjugate $A\adj$ of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14892,10 +14925,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>根據拉普拉斯展開，計算行列式值時只會用到加法和乘法。<br>
-所以一個整數矩陣的行列式值也會是整數、<br>
-而一個有理數矩陣的行列式值也會是有理數。<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>根據拉普拉斯展開，計算行列式值時只會用到加法和乘法。<br />
+所以一個整數矩陣的行列式值也會是整數、<br />
+而一個有理數矩陣的行列式值也會是有理數。<br />
 利用這個性質回答以下問題。</p>
+<!-- eng start -->
+<p>According to the Laplace expansion, the computation of a determinant only uses the addition and the multiplication.  Therefore, the determinant of an integer matrix is also an integer, and the determinant of a rational matrix is also a rational number.  Use these facts to answer the following problems.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14908,6 +14944,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>說明一個有理數矩陣（若可逆）的反矩陣也會是有理數矩陣。</p>
+<!-- eng start -->
+<p>Explain why the inverse of an invertible rational matrix is also a rational matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14920,6 +14959,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>找一個可逆的整數矩陣，其反矩陣不是整數矩陣。</p>
+<!-- eng start -->
+<p>Find an invertible integer matrix such that its inverse it not an integer matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14931,9 +14973,12 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>一個整數方陣如果行列式值為 $\pm 1$，<br>
-則被稱為<strong>么模矩陣（unimodular matrix）</strong> 。<br>
+<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>一個整數方陣如果行列式值為 $\pm 1$，<br />
+則被稱為<strong>么模矩陣（unimodular matrix）</strong> 。<br />
 說明么模矩陣的反矩陣一定是整數矩陣。</p>
+<!-- eng start -->
+<p>An integer matrix with determinant $\pm 1$ is called a <strong>unimodular matrix</strong> .  Explain why the inverse of a unimodular matrix is also an integer matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14945,56 +14990,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>對以下 $n\times n$ 矩陣，<br>
-將每列寫成兩個向量相加，<br>
-其中一個向量只有常數，另一個向量只有 $x$。</p>
-<p>如此可以將 $\det(A)$ 寫成 $2^n$ 個行列式值相加。<br>
-計算這些行列式值並計算 $\det(A)$。</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5>$$
-    A = \begin{bmatrix}
-     1 - x &amp; 2 \\
-     3 &amp; 4 - x
-    \end{bmatrix}.
-$$
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5>$$
-    A = \begin{bmatrix}
-     1 - x &amp; 2 &amp; 3 \\
-     4 &amp; 5 - x &amp; 6 \\
-     7 &amp; 8 &amp; 9 - x
-    \end{bmatrix}.
-$$
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $\br_1,\br_2,\br_3$ 為 $\mathbb{R}^3$ 中的向量、<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $\br_1,\br_2,\br_3$ 為 $\mathbb{R}^3$ 中的向量、<br />
 且</p>
 $$
     A = \begin{bmatrix}
@@ -15002,8 +14998,18 @@ $$
      ~ &amp; \vdots &amp; ~ \\
      - &amp; \br_3 &amp; -
     \end{bmatrix}.
-$$<p>說明 $A\cof$ 的第一列即為 $\br_2$ 和 $\br_3$ 的外積。<br>
+$$<p>說明 $A\cof$ 的第一列即為 $\br_2$ 和 $\br_3$ 的外積。<br />
 （根據定義，$A\cof$ 的第一列和 $\br_1$ 無關。）</p>
+<!-- eng start -->
+<p>Let $\br_1,\br_2,\br_3$ be vectors in $\mathbb{R}^3$ and</p>
+$$
+    A = \begin{bmatrix}
+     - &amp; \br_1 &amp; - \\
+     ~ &amp; \vdots &amp; ~ \\
+     - &amp; \br_3 &amp; -
+    \end{bmatrix}.
+$$<p>Explain why the first row of $A\cof$ is exactly the cross product of $\br_2$ and $\br_3$.  (By definition, the first row of $A\cof$ is independent of $\br_1$.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15015,9 +15021,12 @@ $$<p>說明 $A\cof$ 的第一列即為 $\br_2$ 和 $\br_3$ 的外積。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>給定 $\beta = \{\br_2,\ldots,\br_n\}$ 為 $\mathbb{R}^n$ 中的一群線性獨立的向量。<br>
-說明如何利用 $A\cof$ 找到一根向量 $\bv$ 使得 $\bv$ 跟 $\beta$ 中的所有向量都垂直。<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>給定 $\beta = \{\br_2,\ldots,\br_n\}$ 為 $\mathbb{R}^n$ 中的一群線性獨立的向量。<br />
+說明如何利用 $A\cof$ 找到一根向量 $\bv$ 使得 $\bv$ 跟 $\beta$ 中的所有向量都垂直。<br />
 （這個動作可以看成是 $\beta$ 中向量的外積。）</p>
+<!-- eng start -->
+<p>Let $\beta = \{\br_2,\ldots,\br_n\}$ be a linearly independent set in $\mathbb{R}^n$.  Explain how to use $A\cof$ to find a vector $\bv$ such that $\bv$ is orthogonal to each vector in $\beta$.  (You may also view this operation as the cross product of $\beta$.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15029,8 +15038,11 @@ $$<p>說明 $A\cof$ 的第一列即為 $\br_2$ 和 $\br_3$ 的外積。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br />
 當 $\rank(A) = n$ 時，我們知道 $A\adj = \det(A)A^{-1}$。</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix.  When $\rank(A) = n$, we know $A\adj = \det(A)A^{-1}$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15042,9 +15054,12 @@ $$<p>說明 $A\cof$ 的第一列即為 $\br_2$ 和 $\br_3$ 的外積。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>當 $\rank(A) = n - 1$ 時，<br>
-可以假設 $A$ 的左右核分別為 $\ker(A) = \vspan\{\bu\}$ 及 $\ker(A\trans) = \vspan\{\bv\}$。<br>
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>當 $\rank(A) = n - 1$ 時，<br />
+可以假設 $A$ 的左右核分別為 $\ker(A) = \vspan\{\bu\}$ 及 $\ker(A\trans) = \vspan\{\bv\}$。<br />
 說明存在某個係數 $c$ 使得 $A\adj = c\bu\bv\trans$。</p>
+<!-- eng start -->
+<p>Suppose $\rank(A) = n - 1$.  We may assume the left kernel and the right kernel of $A$ are $\ker(A) = \vspan\{\bu\}$ 及 $\ker(A\trans) = \vspan\{\bv\}$, respectively.  Show that there is a constanct $c$ such that $A\adj = c\bu\bv\trans$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15056,9 +15071,12 @@ $$<p>說明 $A\cof$ 的第一列即為 $\br_2$ 和 $\br_3$ 的外積。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>當 $\rank(A) \leq n - 2$ 時，<br>
-說明 $A\adj = O$。<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>當 $\rank(A) \leq n - 2$ 時，<br />
+說明 $A\adj = O$。<br />
 （提示：子矩陣的秩一定要比原矩陣的秩來得小。）</p>
+<!-- eng start -->
+<p>Suppose $\rank(A) = n - 2$.  Show that $A\adj = O$.  (Hint:  The rank of a submatrix is smaller than the rank of the matrix itself.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15070,11 +15088,14 @@ $$<p>說明 $A\cof$ 的第一列即為 $\br_2$ 和 $\br_3$ 的外積。<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>定義 $(x)_k = x(x-1)\cdots(x-k+1)$ 且 $(x)_0 = 1$。<br>
-已知<br>
-$\alpha = \{1,x,\ldots, x_d\}$ 及<br>
-$\beta = \{(x)_0, (x)_1, \ldots, (x)_d\}$<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>定義 $(x)_k = x(x-1)\cdots(x-k+1)$ 且 $(x)_0 = 1$。<br />
+已知<br />
+$\alpha = \{1,x,\ldots, x_d\}$ 及<br />
+$\beta = \{(x)_0, (x)_1, \ldots, (x)_d\}$<br />
 皆是 $\mathcal{P}_d$ 的基底。</p>
+<!-- eng start -->
+<p>Define $(x)_k = x(x-1)\cdots(x-k+1)$ and $(x)_0 = 1$.  Suppose we know $\alpha = \{1,x,\ldots, x_d\}$ and $\beta = \{(x)_0, (x)_1, \ldots, (x)_d\}$ are both bases of $\mathcal{P}_d$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15086,9 +15107,12 @@ $\beta = \{(x)_0, (x)_1, \ldots, (x)_d\}$<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>當 $d = 3$ 時，求出基底轉換矩陣 $[\operatorname{id}]_\beta^\alpha$。<br>
-並說明對任意的 $d$ 來說，$[\operatorname{id}]_\beta^\alpha$ 都會是整數矩陣<br>
+<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>當 $d = 3$ 時，求出基底轉換矩陣 $[\operatorname{id}]_\beta^\alpha$。<br />
+並說明對任意的 $d$ 來說，$[\operatorname{id}]_\beta^\alpha$ 都會是整數矩陣<br />
 且行列式值為 $1$。</p>
+<!-- eng start -->
+<p>When $d = 3$, find the change-of-bases matrix $[\operatorname{id}]_\beta^\alpha$.  Explain why $[\operatorname{id}]_\beta^\alpha$ is always an integer matrix with determinant $1$ for any $d$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15100,8 +15124,11 @@ $\beta = \{(x)_0, (x)_1, \ldots, (x)_d\}$<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>當 $d = 3$ 時，求出基底轉換矩陣 $[\operatorname{id}]_\alpha^\beta$。<br>
+<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>當 $d = 3$ 時，求出基底轉換矩陣 $[\operatorname{id}]_\alpha^\beta$。<br />
 利用上一題的結果，說明對任意的 $d$ 來說，$[\operatorname{id}]_\alpha^\beta$ 都會是整數矩陣。</p>
+<!-- eng start -->
+<p>When $d = 3$, find the change-of-bases matrix $[\operatorname{id}]_\alpha^\beta$.  Explain why $[\operatorname{id}]_\beta^\alpha$ is always an integer matrix for any $d$.</p>
+<!-- eng end -->
 
 </div>
 </div>

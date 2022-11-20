@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14584,7 +14604,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14628,7 +14648,13 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\Row}{\operatorname{Row}}
 \newcommand{\spec}{\operatorname{spec}}
 \newcommand{\vspan}{\operatorname{span}}
-\newcommand{\Vol}{\operatorname{Vol}}$</p>
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14679,7 +14705,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Intuitively, this follows from the fact that<br>
+<p>Intuitively, this follows from the fact that<br />
 <em>the determinants are the scaling factors</em>!</p>
 
 </div>
@@ -14692,25 +14718,22 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>A formal proof can be done by the elementary matrices.<br>
-If both $A$ and $B$ are invertible,<br>
-then they can be written as the products of elementary matrices<br>
+<p>A formal proof can be done by the elementary matrices.<br />
+If both $A$ and $B$ are invertible,<br />
+then they can be written as the products of elementary matrices</p>
 $$
     A = F_1\cdots F_k \text{ and } B = E_1\cdots E_h,
-$$<br>
-so $AB$ can be written as the product of elementary matrices<br>
+$$<p>so $AB$ can be written as the product of elementary matrices</p>
 $$
     AB = F_1\cdots F_k E_1\cdots E_h.
-$$
-Therefore, 
+$$<p>Therefore,</p>
 $$
     \begin{aligned}
     \det(AB) &amp;= \det(F_1)\cdots\det(F_k)\det(E_1)\cdots\det(E_h) \\
      &amp;= \big(\det(F_1)\cdots\det(F_k)\big)\big(\det(E_1)\cdots\det(E_h)\big) \\
      &amp;= \det(A)\det(B).
     \end{aligned}
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14735,8 +14758,8 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Thanks to this nice property, we may derive the following facts.</p>
 <ul>
-<li>If $Q$ is invertible, then $\det(Q^{-1})\det(Q) = \det(I_n) = 1$.  </li>
-<li>If $B = Q^{-1}AQ$ for some invertible $Q$, then $\det(B) = \det(A)$.  </li>
+<li>If $Q$ is invertible, then $\det(Q^{-1})\det(Q) = \det(I_n) = 1$.</li>
+<li>If $B = Q^{-1}AQ$ for some invertible $Q$, then $\det(B) = \det(A)$.</li>
 </ul>
 
 </div>
@@ -14749,11 +14772,10 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>As a consequence, we may define the <strong>determinant</strong> of linear function $f: V\rightarrow V$ by 
+<p>As a consequence, we may define the <strong>determinant</strong> of linear function $f: V\rightarrow V$ by</p>
 $$
     \det(f) = \det([f]_\beta^\beta),
-$$
-where $\beta$ can be any basis of $V$.</p>
+$$<p>where $\beta$ can be any basis of $V$.</p>
 
 </div>
 </div>
@@ -14777,11 +14799,10 @@ where $\beta$ can be any basis of $V$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Intuitively, this follows from the fact that 
+<p>Intuitively, this follows from the fact that</p>
 $$
     \det(A\trans) = \Vol_C(A\trans) = \Vol_R(A) = \det(A),
-$$
-since we have shown that the column parallelotope and the row parallelotop (surprisingly) have the same signed volumn.</p>
+$$<p>since we have shown that the column parallelotope and the row parallelotop (surprisingly) have the same signed volumn.</p>
 
 </div>
 </div>
@@ -14793,12 +14814,12 @@ since we have shown that the column parallelotope and the row parallelotop (surp
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Again, formally we may prove by the elementary matrices.<br>
+<p>Again, formally we may prove by the elementary matrices.<br />
 Let's make some observations first.</p>
 <ul>
-<li>If $E$ is the elementary matrix for $\rho_i\leftrightarrow\rho_j$, then $E\trans = E$, so $\det(E\trans) = \det(E) = -1$.  </li>
-<li>If $E$ is the elementary matrix for $\rho_i: \times k$, then $E\trans = E$, so $\det(E\trans) = \det(E) = k$.  </li>
-<li>If $E$ is the elementary matrix for $\rho_i: +k\rho_j$, then $E\trans$ is the elementary matrix for $\rho_j: +k\rho_i$, so $\det(E\trans) = \det(E) = 1$.  </li>
+<li>If $E$ is the elementary matrix for $\rho_i\leftrightarrow\rho_j$, then $E\trans = E$, so $\det(E\trans) = \det(E) = -1$.</li>
+<li>If $E$ is the elementary matrix for $\rho_i: \times k$, then $E\trans = E$, so $\det(E\trans) = \det(E) = k$.</li>
+<li>If $E$ is the elementary matrix for $\rho_i: +k\rho_j$, then $E\trans$ is the elementary matrix for $\rho_j: +k\rho_i$, so $\det(E\trans) = \det(E) = 1$.</li>
 </ul>
 
 </div>
@@ -14811,15 +14832,13 @@ Let's make some observations first.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If $A$ is invertible, then we may write $A$ as the product of elementary matrices<br>
+<p>If $A$ is invertible, then we may write $A$ as the product of elementary matrices</p>
 $$
     A = F_1 \cdots F_k,
-$$
-so 
+$$<p>so</p>
 $$
     A\trans = F_k\trans \cdots F_1\trans
-$$
-and<br>
+$$<p>and</p>
 $$
     \begin{aligned}
     \det(A\trans) &amp;= \det(F_k\trans)\cdots\det(F_1\trans) \\
@@ -14827,8 +14846,7 @@ $$
      &amp;= \det(F_1) \cdots \det(F_k) \\
      &amp;= \det(A).
     \end{aligned}
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14865,8 +14883,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br />
 已知 $A = F_1\cdots F_k$ 及 $B = E_1\cdots E_h$ 都是一群單位矩陣的乘積。</p>
+<!-- eng start -->
+<p>Run the code below.  Suppose we know $A = F_1\cdots F_k$ and $B = E_1\cdots E_h$ are the product of some elementary matrices.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14922,6 +14943,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>將 $AB$ 寫成基本矩陣的乘積，並求出 $\det(AB)$。</p>
+<!-- eng start -->
+<p>Write $AB$ as the product of some elementary matrices and find $\det(AB)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14934,6 +14958,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>將 $A\trans$ 寫成基本矩陣的乘積，並求出 $\det(A\trans)$。</p>
+<!-- eng start -->
+<p>Write $A\trans$ as the product of some elementary matrices and find $\det(A\trans)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14956,9 +14983,12 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>在總列數為 $3$ 的情況下，<br>
-寫下以下列運算的基本矩陣 $E$，<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>在總列數為 $3$ 的情況下，<br />
+寫下以下列運算的基本矩陣 $E$，<br />
 並解釋 $E\trans$ 所對應的列運算是什麼。</p>
+<!-- eng start -->
+<p>Consider matrices with $3$ rows.  Find the elementary matrix corresponding to each of the following properties.  Then explain what is the corresponding row operation for $E\trans$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14971,6 +15001,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>列運算 $\rho_i\rightarrow\rho_j$。</p>
+<!-- eng start -->
+<p>The row operation $\rho_i\rightarrow\rho_j$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14983,6 +15016,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>列運算 $\rho_i: \times k$。</p>
+<!-- eng start -->
+<p>The row operation $\rho_i: \times k$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14995,6 +15031,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>列運算 $\rho_i: +k\rho_j$。</p>
+<!-- eng start -->
+<p>The row operation $\rho_i: +k\rho_j$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15006,8 +15045,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>若 $A$ 為一可逆矩陣。<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>若 $A$ 為一可逆矩陣。<br />
 證明 $\det(A^{-1}) = \det(A)^{-1}$。</p>
+<!-- eng start -->
+<p>Suppose $A$ is an invertible matrix.  Show that $\det(A^{-1}) = \det(A)^{-1}$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15019,8 +15061,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>若 $A$ 為一垂直矩陣（$A\trans A = AA\trans = I_n$）。<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>若 $A$ 為一垂直矩陣（$A\trans A = AA\trans = I_n$）。<br />
 證明 $\det(A) = \pm 1$。</p>
+<!-- eng start -->
+<p>Suppose $A$ is an orthogonal matrix.  Show that $\det(A) = \pm 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15032,9 +15077,12 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $V$ 為 $\mathbb{R}^3$ 中的一個二維空間，<br>
-而 $f:\mathbb{R}^3 \rightarrow \mathbb{R}^3$ 將向量 $\bv\in\mathbb{R}^3$ 投影到 $V$ 上。<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $V$ 為 $\mathbb{R}^3$ 中的一個二維空間，<br />
+而 $f:\mathbb{R}^3 \rightarrow \mathbb{R}^3$ 將向量 $\bv\in\mathbb{R}^3$ 投影到 $V$ 上。<br />
 求 $\det(f)$。</p>
+<!-- eng start -->
+<p>Let $V$ be a $2$-dimensional subspace in $\mathbb{R}^3$ and $f:\mathbb{R}^3 \rightarrow \mathbb{R}^3$ is the projection sending any vector $\bv\in\mathbb{R}^3$ onto $V$.  Find $\det(f)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15046,9 +15094,12 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $V$ 為 $\mathbb{R}^3$ 中的一個二維空間，<br>
-而 $f:\mathbb{R}^3 \rightarrow \mathbb{R}^3$ 將向量 $\bv\in\mathbb{R}^3$ 鏡射到 $V$ 的對面。<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $V$ 為 $\mathbb{R}^3$ 中的一個二維空間，<br />
+而 $f:\mathbb{R}^3 \rightarrow \mathbb{R}^3$ 將向量 $\bv\in\mathbb{R}^3$ 鏡射到 $V$ 的對面。<br />
 求 $\det(f)$。</p>
+<!-- eng start -->
+<p>Let $V$ be a $2$-dimensional subspace in $\mathbb{R}^3$ and $f:\mathbb{R}^3 \rightarrow \mathbb{R}^3$ is the reflection sending any vector $\bv\in\mathbb{R}^3$ to the other side of $V$.  Find $\det(f)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15060,14 +15111,22 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $A$ 和 $B$ 皆為 $n\times n$ 矩陣。<br>
+<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $A$ 和 $B$ 皆為 $n\times n$ 矩陣。<br />
 依照以下步驟證明以下敘述等價。</p>
 <ul>
 <li>$AB$ 可逆。</li>
 <li>$A$ 和 $B$ 皆可逆。</li>
 </ul>
-<p>（這題為證明 $\det(AB) = \det(A)\det(B)$ 的必要過程，<br>
+<p>（這題為證明 $\det(AB) = \det(A)\det(B)$ 的必要過程，<br />
 所以請不要用行列式值來證明。）</p>
+<!-- eng start -->
+<p>Let $A$ and $B$ be $n\times n$ matrix.  Follow the given steps to show the two statements below are equivalent.</p>
+<ul>
+<li>$AB$ is invertible.</li>
+<li>$A$ and $B$ are both invertible.</li>
+</ul>
+<p>(This problem is a necessary step for proving $\det(AB) = \det(A)\det(B)$, so please do not use the previous equality to prove it.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15079,8 +15138,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>證明：<br>
+<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>證明：<br />
 若 $\ker(B) \neq \{\bzero\}$，則 $\ker(AB) \neq \{\bzero\}$。</p>
+<!-- eng start -->
+<p>Show that if $\ker(B) \neq \{\bzero\}$, then $\ker(AB) \neq \{\bzero\}$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15092,8 +15154,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>證明：<br>
+<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>證明：<br />
 若 $\Col(A) \neq \mathbb{R}^n$，則 $\Col(AB) \neq \mathbb{R}^n$。</p>
+<!-- eng start -->
+<p>Show that if $\Col(A) \neq \mathbb{R}^n$, then $\Col(AB) \neq \mathbb{R}^n$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15105,8 +15170,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>證明：<br>
+<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>證明：<br />
 若 $A$ 和 $B$ 皆可逆，則 $AB$ 可逆。</p>
+<!-- eng start -->
+<p>Show that if both $A$ and $B$ are invertible, then $AB$ is also invertible.</p>
+<!-- eng end -->
 
 </div>
 </div>
