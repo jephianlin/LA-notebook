@@ -36,7 +36,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
-.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14465,6 +14464,10 @@ a.anchor-link {
   display: none;
 }
 
+.highlight  {
+  margin: 0.4em;
+}
+
 /* Input area styling */
 .jp-InputArea {
   overflow: hidden;
@@ -14474,26 +14477,9 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror.cm-s-jupyter .highlight pre {
-/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
-  padding: var(--jp-code-padding) 4px;
+.CodeMirror pre {
   margin: 0;
-
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-
-}
-
-.jp-OutputArea-output pre {
-  line-height: inherit;
-  font-family: inherit;
-}
-
-.jp-RenderedText pre {
-  color: var(--jp-content-font-color1);
-  font-size: var(--jp-code-font-size);
+  padding: 0;
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14605,7 +14591,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14678,14 +14664,15 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $S$ and $T$ be two sets.<br />
-A <strong>function</strong> $f$ from $S$ to $T$ is an assignment of each element $s\in S$ with an element $f(s)\in T$.<br />
-We usually write<br />
-$$\begin{aligned}
- f : S &amp;\rightarrow T \\
- s &amp;\mapsto f(s)
-\end{aligned}$$
-to descriibe a function.<br />
+<p>Let $S$ and $T$ be two sets.<br>
+A <strong>function</strong> $f$ from $S$ to $T$ is an assignment of each element $s\in S$ with an element $f(s)\in T$.<br>
+We usually write</p>
+$$
+    \begin{aligned}
+     f : S &amp;\rightarrow T \\
+     s &amp;\mapsto f(s)
+    \end{aligned}
+$$<p>to describe a function.<br>
 We call $S$ and $T$ the <strong>domain</strong> and the <strong>codomain</strong> of $f$.</p>
 
 </div>
@@ -14700,10 +14687,10 @@ We call $S$ and $T$ the <strong>domain</strong> and the <strong>codomain</strong
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>A function $f:S\rightarrow T$ is <strong>injective</strong> if</p>
 <ul>
-<li>for any distinct elements $s_1,s_2\in S$, i.e., $s_1\neq s_2$, their values under the function $f(s_1), f(s_1)$ are also distinct, i.e., $f(s_1)\neq f(s_2)$.</li>
+<li>for any distinct elements $s_1,s_2\in S$, i.e., $s_1\neq s_2$, their values under the function $f(s_1), f(s_1)$ are also distinct, i.e., $f(s_1)\neq f(s_2)$.  </li>
 </ul>
-<p>Equivalently, $f$ is injective if $f(s_1) = f(s_2)$ implies $s_1 = s_2$.<br />
-The term &quot;injective&quot; is also known as &quot;<strong>one-to-one</strong>&quot;.<br />
+<p>Equivalently, $f$ is injective if $f(s_1) = f(s_2)$ implies $s_1 = s_2$.<br>
+The term "injective" is also known as "<strong>one-to-one</strong>".<br>
 An <strong>injection</strong> is an injective function.</p>
 
 </div>
@@ -14718,12 +14705,14 @@ An <strong>injection</strong> is an injective function.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>A function $f : S \rightarrow T$ is <strong>surjective</strong> if</p>
 <ul>
-<li>for any element $t\in T$, there is an element $s\in S$ such that $f(s) = t$.</li>
+<li>for any element $t\in T$, there is an element $s\in S$ such that $f(s) = t$.  </li>
 </ul>
-<p>The <strong>range</strong> of a function $f$ is<br />
-$$\range(f) = \{f(s) : s\in S\}.$$<br />
-Therefore, $f$ is surjective if and only if $\range(f) = T$.<br />
-The term &quot;surjective&quot; is also known as &quot;<strong>onto</strong>&quot;.<br />
+<p>The <strong>range</strong> of a function $f$ is</p>
+$$
+    \range(f) = \{f(s) : s\in S\}.
+$$<p></p>
+<p>Therefore, $f$ is surjective if and only if $\range(f) = T$.<br>
+The term "surjective" is also known as "<strong>onto</strong>".<br>
 A <strong>surjection</strong> is a surjective function.</p>
 
 </div>
@@ -14736,7 +14725,7 @@ A <strong>surjection</strong> is a surjective function.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If a function $f$ is both injective and surjective, then it is <strong>bijective</strong>.<br />
+<p>If a function $f$ is both injective and surjective, then it is <strong>bijective</strong>.<br>
 A <strong>bijection</strong> is a bijective function.</p>
 
 </div>
@@ -14749,12 +14738,13 @@ A <strong>bijection</strong> is a bijective function.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If $f$ is a bijection, then one may define its <strong>inverse</strong> as<br />
-$$\begin{aligned} 
- f^{-1} : T &amp;\rightarrow S \\
- t &amp;\mapsto f^{-1}(t),
-\end{aligned}$$
-where $f^{-1}(t)$ is defined as the unique element $s\in S$ such that $f(s) = t$.<br />
+<p>If $f$ is a bijection, then one may define its <strong>inverse</strong> as</p>
+$$
+    \begin{aligned} 
+     f^{-1} : T &amp;\rightarrow S \\
+     t &amp;\mapsto f^{-1}(t),
+    \end{aligned}
+$$<p>where $f^{-1}(t)$ is defined as the unique element $s\in S$ such that $f(s) = t$.<br>
 (Here the existence of $s$ is because $f$ is surjective, and the uniqueness of $s$ is because $f$ is injective.)</p>
 
 </div>
@@ -14767,12 +14757,13 @@ where $f^{-1}(t)$ is defined as the unique element $s\in S$ such that $f(s) = t$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The function<br />
-$$\begin{aligned}
- \idmap_S : S &amp;\rightarrow S \\
-  s &amp;\mapsto s
-\end{aligned}$$
-is called the <strong>identity map</strong> on $S$, denoted as $\idmap_S$.</p>
+<p>The function</p>
+$$
+    \begin{aligned}
+     \idmap_S : S &amp;\rightarrow S \\
+      s &amp;\mapsto s
+    \end{aligned}
+$$<p>is called the <strong>identity map</strong> on $S$, denoted as $\idmap_S$.</p>
 
 </div>
 </div>
@@ -14784,12 +14775,15 @@ is called the <strong>identity map</strong> on $S$, denoted as $\idmap_S$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $f : S \rightarrow T$ be a function.<br />
-If $S'\subseteq S$, then the <strong>image</strong> of $S'$ is 
-$$f(S') = \{ f(s) : s\in S'\}.$$
-If $T'\subseteq T$, then the <strong>preimage</strong> of $T'$ is 
-$$f^{-1}(T') = \{ s\in S : f(s) \in T'\}.$$<br />
-Therefore, $\range(f) = f(S)$.</p>
+<p>Let $f : S \rightarrow T$ be a function.<br>
+If $S'\subseteq S$, then the <strong>image</strong> of $S'$ is</p>
+$$
+    f(S') = \{ f(s) : s\in S'\}.
+$$<p>If $T'\subseteq T$, then the <strong>preimage</strong> of $T'$ is</p>
+$$
+    f^{-1}(T') = \{ s\in S : f(s) \in T'\}.
+$$<p></p>
+<p>Therefore, $\range(f) = f(S)$.</p>
 <p>Note that although both the inverse and the preimage use the notation $f^{-1}$, the inverse is a function of elements in $T$ while the preimage is a function of subsets in $T$, so they should be distinguishable.</p>
 
 </div>
@@ -14802,7 +14796,7 @@ Therefore, $\range(f) = f(S)$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>When the domain $S$, the codomain $T$, and a formula $f$ are given, we say $f$ is <strong>well-defined</strong> if $f$ is indeed a function.<br />
+<p>When the domain $S$, the codomain $T$, and a formula $f$ are given, we say $f$ is <strong>well-defined</strong> if $f$ is indeed a function.<br>
 Here are some examples.</p>
 <ol>
 <li>The value $f(s)$ should exist in $T$:  Let $S = T = \mathbb{R}$ and $f(x) = \frac{1}{x}$.  Then $f$ is not well-defined since $f(0)$ is not a real number.</li>
@@ -14846,9 +14840,8 @@ Here are some examples.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
 <!-- eng start -->
-<p>Run the code below.</p>
+Run the code below.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14880,17 +14873,17 @@ Here are some examples.</p>
     <span class="k">if</span> <span class="n">inj</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ran</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))</span> <span class="ow">and</span> <span class="n">sur</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ran</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
         <span class="k">break</span>
     
-<span class="nb">print</span><span class="p">(</span><span class="s2">"S ="</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"T ="</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"f : S --&gt; T"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S =&quot;</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T =&quot;</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f : S --&gt; T&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"f(</span><span class="si">%s</span><span class="s2">) ="</span><span class="o">%</span><span class="k">s</span>, f[s])
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(</span><span class="si">%s</span><span class="s2">) =&quot;</span><span class="o">%</span><span class="k">s</span>, f[s])
 
 
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Injective?"</span><span class="p">,</span> <span class="n">inj</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Surjective?"</span><span class="p">,</span> <span class="n">sur</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"range(f) ="</span><span class="p">,</span> <span class="n">ran</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Injective?&quot;</span><span class="p">,</span> <span class="n">inj</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Surjective?&quot;</span><span class="p">,</span> <span class="n">sur</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;range(f) =&quot;</span><span class="p">,</span> <span class="n">ran</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14907,9 +14900,8 @@ Here are some examples.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>判斷 $f$ 是否為嵌射函數。</p>
 <!-- eng start -->
-<p>Is $f$ injective?</p>
+Is $f$ injective?  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14922,9 +14914,8 @@ Here are some examples.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>判斷 $f$ 是否為映射函數。</p>
 <!-- eng start -->
-<p>Is $f$ surjective?</p>
+Is $f$ surjective?  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14937,9 +14928,8 @@ Here are some examples.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>寫出 $f$ 的值域。</p>
 <!-- eng start -->
-<p>Find the range of $f$.</p>
+Find the range of $f$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14963,9 +14953,8 @@ Here are some examples.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>找出符合各條件的函數。</p>
 <!-- eng start -->
-<p>Find examples of functions satisfying the following conditions.</p>
+Find examples of functions satisfying the following conditions.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14978,9 +14967,8 @@ Here are some examples.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>給兩個函數的例子﹐一個是嵌射、一個不是。</p>
 <!-- eng start -->
-<p>Give an example of an injective function and an example of a non-injective function.</p>
+Give an example of an injective function and an example of a non-injective function.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14993,9 +14981,8 @@ Here are some examples.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>給兩個函數的例子﹐一個是映射、一個不是。</p>
 <!-- eng start -->
-<p>Give an example of a surjective function and an example of a non-surjective function.</p>
+Give an example of a surjective function and an example of a non-surjective function.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15006,7 +14993,7 @@ Here are some examples.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $S = \{1,2,3,4\}$、<br />
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $S = \{1,2,3,4\}$、<br>
 $T = \{1,2,3,4\}$、且</p>
 $$
     \begin{aligned}
@@ -15017,17 +15004,18 @@ $$
      f(4) &amp;= 1
     \end{aligned}.
 $$<!-- eng start -->
-<p>Let $S = \{1,2,3,4\}$, $T = \{1,2,3,4\}$, and</p>
+Let $S = \{1,2,3,4\}$, $T = \{1,2,3,4\}$, and  
+
 $$
     \begin{aligned}
-     f : S &amp;\rightarrow T \\
-     f(1) &amp;= 2 \\
-     f(2) &amp;= 3 \\
-     f(3) &amp;= 4 \\
-     f(4) &amp;= 1
+     f : S &\rightarrow T \\
+     f(1) &= 2 \\
+     f(2) &= 3 \\
+     f(3) &= 4 \\
+     f(4) &= 1
     \end{aligned}.
-$$<!-- eng end -->
-
+$$
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15040,9 +15028,8 @@ $$<!-- eng end -->
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>求 $f(\{1,3\})$。</p>
 <!-- eng start -->
-<p>Find $f(\{1,3\})$.</p>
+Find $f(\{1,3\})$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15055,9 +15042,8 @@ $$<!-- eng end -->
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>求 $f^{-1}(\{1,3\})$。</p>
 <!-- eng start -->
-<p>Find $f^{-1}(\{1,3\})$.</p>
+Find $f^{-1}(\{1,3\})$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15070,9 +15056,8 @@ $$<!-- eng end -->
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>寫出 $f$ 的反函數。</p>
 <!-- eng start -->
-<p>Find the inverse function of $f$.</p>
+Find the inverse function of $f$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15085,9 +15070,8 @@ $$<!-- eng end -->
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(d)">Exercise 3(d)<a class="anchor-link" href="#Exercise-3(d)">&#182;</a></h5><p>求 $f^{-1}(\{1\})$。</p>
 <!-- eng start -->
-<p>Find $f^{-1}(\{1\})$.</p>
+Find $f^{-1}(\{1\})$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15100,9 +15084,8 @@ $$<!-- eng end -->
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(e)">Exercise 3(e)<a class="anchor-link" href="#Exercise-3(e)">&#182;</a></h5><p>求 $f^{-1}(1)$。</p>
 <!-- eng start -->
-<p>Find $f^{-1}(1)$.</p>
+Find $f^{-1}(1)$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15113,12 +15096,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $f:S\rightarrow T$ 為一函數。<br />
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $f:S\rightarrow T$ 為一函數。<br>
 證明以下關於投影區和送影區的性質。</p>
 <!-- eng start -->
-<p>Let $f: S\rightarrow T$ be a function.  Prove the following properties about the domain and the codomain.</p>
+Let $f: S\rightarrow T$ be a function.  Prove the following properties about the domain and the codomain.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15129,12 +15111,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>證明對任何子集 $S'\subseteq S$ 都有 $S'\subseteq f^{-1}(f(S'))$。<br />
+<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>證明對任何子集 $S'\subseteq S$ 都有 $S'\subseteq f^{-1}(f(S'))$。<br>
 找一個例子讓 $S'\subsetneq f^{-1}(f(S'))$。</p>
 <!-- eng start -->
-<p>Prove that $S'\subseteq f^{-1}(f(S'))$ for any $S'\subseteq S$.  Find an example where $S'\subsetneq f^{-1}(f(S'))$.</p>
+Prove that $S'\subseteq f^{-1}(f(S'))$ for any $S'\subseteq S$.  Find an example where $S'\subsetneq f^{-1}(f(S'))$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15145,12 +15126,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>證明對任何子集 $T'\subseteq T$ 都有 $T'\supseteq f(f^{-1}(T'))$。<br />
+<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>證明對任何子集 $T'\subseteq T$ 都有 $T'\supseteq f(f^{-1}(T'))$。<br>
 找一個例子讓 $T'\supsetneq f(f^{-1}(T'))$。</p>
 <!-- eng start -->
-<p>Prove that $T'\supseteq f(f^{-1}(T'))$ for any $T'\subseteq T$.  Find an example where $T'\supsetneq f(f^{-1}(T'))$.</p>
+Prove that $T'\supseteq f(f^{-1}(T'))$ for any $T'\subseteq T$.  Find an example where $T'\supsetneq f(f^{-1}(T'))$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15161,12 +15141,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>證明若 $f$ 是嵌射﹐<br />
+<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>證明若 $f$ 是嵌射﹐<br>
 則對任何子集 $S'\subseteq S$ 都有 $S'= f^{-1}(f(S'))$。</p>
 <!-- eng start -->
-<p>Suppose $f$ is injective.  Prove that $S'= f^{-1}(f(S'))$ for any $S'\subseteq S$.</p>
+Suppose $f$ is injective.  Prove that $S'= f^{-1}(f(S'))$ for any $S'\subseteq S$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15177,12 +15156,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>證明若 $f$ 是映射﹐<br />
+<h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>證明若 $f$ 是映射﹐<br>
 則對任何子集 $T'\subseteq T$ 都有 $T'= f(f^{-1}(T'))$。</p>
 <!-- eng start -->
-<p>Suppose $f$ is surjective.  Prove that $T'= f(f^{-1}(T'))$ for any $T'\subseteq T$.</p>
+Suppose $f$ is surjective.  Prove that $T'= f(f^{-1}(T'))$ for any $T'\subseteq T$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15193,19 +15171,19 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>在以下集合中找到一個對射。<br />
-（兩個集合間如果存在一個對射﹐則它們的 <strong>數量級</strong> 就被視為是一樣的。<br />
-這個現象在個數有限的時候很自然﹐<br />
-但當個數無限多的時候會出現一個集合和它的子集個數一樣多的狀況﹐有些違反直覺﹐<br />
-但其實這現象就類似於 $\infty + 1 = \infty$ 這種概念﹐在無限大的時候是可接受的。<br />
-所有和自然數同樣數量級的集合﹐我們就說這樣的集合大小是 <strong>無窮可數</strong> 多個。<br />
-所以在當代的數學定義裡 $|\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}|$﹐<br />
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>在以下集合中找到一個對射。<br>
+（兩個集合間如果存在一個對射﹐則它們的 <strong>數量級</strong> 就被視為是一樣的。<br>
+這個現象在個數有限的時候很自然﹐<br>
+但當個數無限多的時候會出現一個集合和它的子集個數一樣多的狀況﹐有些違反直覺﹐<br>
+但其實這現象就類似於 $\infty + 1 = \infty$ 這種概念﹐在無限大的時候是可接受的。<br>
+所有和自然數同樣數量級的集合﹐我們就說這樣的集合大小是 <strong>無窮可數</strong> 多個。<br>
+所以在當代的數學定義裡 $|\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}|$﹐<br>
 但 $|\mathbb{R}| \neq |\mathbb{N}|$。）</p>
 <!-- eng start -->
-<p>For the following pairs of sets, find a bijection between them.</p>
-<p>When there is a bijection between two sets, then we believe the two sets have the same <strong>cardinality</strong> .  This is natural for finite sets.  However, it could be counter-intuitive for infinite sets since sometimes a infinite set has the same cardinality with its proper subset.  Indeed, this is similar to the idea of $\infty + 1 = \infty$, which is acceptable.  A set that has the same cardinality with the set of natural numbers is called <strong>countable</strong> , or <strong>countably infinite</strong> .  Therefore, in modern mathematics, we have $|\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}|$, but $|\mathbb{R}| \neq |\mathbb{N}|$.</p>
-<!-- eng end -->
+For the following pairs of sets, find a bijection between them.  
 
+When there is a bijection between two sets, then we believe the two sets have the same **cardinality** .  This is natural for finite sets.  However, it could be counter-intuitive for infinite sets since sometimes a infinite set has the same cardinality with its proper subset.  Indeed, this is similar to the idea of $\infty + 1 = \infty$, which is acceptable.  A set that has the same cardinality with the set of natural numbers is called **countable** , or **countably infinite** .  Therefore, in modern mathematics, we have $|\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}|$, but $|\mathbb{R}| \neq |\mathbb{N}|$.
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15216,12 +15194,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>令 $S = \{1,2,3\}$ 且 $T = \{x,y,z\}$。<br />
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>令 $S = \{1,2,3\}$ 且 $T = \{x,y,z\}$。<br>
 找一個 $S$ 到 $T$ 的對射。</p>
 <!-- eng start -->
-<p>Let $S = \{1,2,3\}$ and $T = \{x,y,z\}$.  Find a bijection between $S$ and $T$.</p>
+Let $S = \{1,2,3\}$ and $T = \{x,y,z\}$.  Find a bijection between $S$ and $T$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15232,12 +15209,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>令 $S = \mathbb{Z}$ 且 $T = 2\mathbb{Z} = \{2z: z\in\mathbb{Z}\}$。<br />
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>令 $S = \mathbb{Z}$ 且 $T = 2\mathbb{Z} = \{2z: z\in\mathbb{Z}\}$。<br>
 找一個 $S$ 到 $T$ 的對射。</p>
 <!-- eng start -->
-<p>Let $S = \mathbb{Z}$ and $T = 2\mathbb{Z} = \{2z: z\in\mathbb{Z}\}$.  Find a bijection between $S$ and $T$.</p>
+Let $S = \mathbb{Z}$ and $T = 2\mathbb{Z} = \{2z: z\in\mathbb{Z}\}$.  Find a bijection between $S$ and $T$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15248,12 +15224,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>令 $S = 2\mathbb{Z} = \{2z : z\in\mathbb{Z}\}$ 且 $T = 2\mathbb{Z} + 1 = \{2z+1 : z\in\mathbb{Z}\}$。<br />
+<h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>令 $S = 2\mathbb{Z} = \{2z : z\in\mathbb{Z}\}$ 且 $T = 2\mathbb{Z} + 1 = \{2z+1 : z\in\mathbb{Z}\}$。<br>
 找一個 $S$ 到 $T$ 的對射。</p>
 <!-- eng start -->
-<p>Let $S = 2\mathbb{Z} = \{2z : z\in\mathbb{Z}\}$ and $T = 2\mathbb{Z} + 1 = \{2z+1 : z\in\mathbb{Z}\}$.  Find a bijection between $S$ and $T$.</p>
+Let $S = 2\mathbb{Z} = \{2z : z\in\mathbb{Z}\}$ and $T = 2\mathbb{Z} + 1 = \{2z+1 : z\in\mathbb{Z}\}$.  Find a bijection between $S$ and $T$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -15264,12 +15239,11 @@ $$<!-- eng end -->
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(d)">Exercise 5(d)<a class="anchor-link" href="#Exercise-5(d)">&#182;</a></h5><p>令 $S = \mathbb{N} = \{1,2,3,\ldots\}$ 且 $T = \mathbb{Z}$。<br />
+<h5 id="Exercise-5(d)">Exercise 5(d)<a class="anchor-link" href="#Exercise-5(d)">&#182;</a></h5><p>令 $S = \mathbb{N} = \{1,2,3,\ldots\}$ 且 $T = \mathbb{Z}$。<br>
 找一個 $S$ 到 $T$ 的對射。</p>
 <!-- eng start -->
-<p>Let $S = \mathbb{N} = \{1,2,3,\ldots\}$ and $T = \mathbb{Z}$.  Find a bijection between $S$ and $T$.</p>
+Let $S = \mathbb{N} = \{1,2,3,\ldots\}$ and $T = \mathbb{Z}$.  Find a bijection between $S$ and $T$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
