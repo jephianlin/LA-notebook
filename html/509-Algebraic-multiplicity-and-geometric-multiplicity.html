@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E4%BB%A3%E6%95%B8%E9%87%8D%E6%95%B8%E8%88%87%E5%B9%BE%E4%BD%95%E9%87%8D%E6%95%B8">&#20195;&#25976;&#37325;&#25976;&#33287;&#24190;&#20309;&#37325;&#25976;<a class="anchor-link" href="#%E4%BB%A3%E6%95%B8%E9%87%8D%E6%95%B8%E8%88%87%E5%B9%BE%E4%BD%95%E9%87%8D%E6%95%B8">&#182;</a></h1>
+<h1 id="%E4%BB%A3%E6%95%B8%E9%87%8D%E6%95%B8%E8%88%87%E5%B9%BE%E4%BD%95%E9%87%8D%E6%95%B8">&#20195;&#25976;&#37325;&#25976;&#33287;&#24190;&#20309;&#37325;&#25976;<a class="anchor-link" href="#%E4%BB%A3%E6%95%B8%E9%87%8D%E6%95%B8%E8%88%87%E5%B9%BE%E4%BD%95%E9%87%8D%E6%95%B8">&#182;</a></h1><p>Algebraic multiplicity and geometric multiplicity</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14632,7 +14653,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
-\newcommand{\gm}{\operatorname{gm}}$</p>
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14671,7 +14694,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We have seen whether a matrix $A$ is diagonalizable depends on how many (independent) vectors we can find in $\ker(A - \lambda I)$ for each eigenvalue $\lambda\in\spec(A)$.<br>
+<p>We have seen whether a matrix $A$ is diagonalizable depends on how many (independent) vectors we can find in $\ker(A - \lambda I)$ for each eigenvalue $\lambda\in\spec(A)$.<br />
 In this section, we will give some quantitative measures on how much a matrix is diagonalizable.</p>
 
 </div>
@@ -14684,11 +14707,11 @@ In this section, we will give some quantitative measures on how much a matrix is
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix and $p_A(x)$ its characteristic polynomial.<br>
+<p>Let $A$ be an $n\times n$ matrix and $p_A(x)$ its characteristic polynomial.<br />
 For each $\lambda \in \spec(A)$,</p>
 <ul>
-<li>the <strong>algebtraic multiplicity</strong> of $\lambda$ is the multiplicity of $\lambda$ as a root of $p_A(x)$, denoted by $\am_A(\lambda)$, while </li>
-<li>the <strong>geometric multiplicity</strong> of $\lambda$ is the dimension of $\ker(A - \lambda I)$, denoted by $\gm_A(\lambda)$.  </li>
+<li>the <strong>algebtraic multiplicity</strong> of $\lambda$ is the multiplicity of $\lambda$ as a root of $p_A(x)$, denoted by $\am_A(\lambda)$, while</li>
+<li>the <strong>geometric multiplicity</strong> of $\lambda$ is the dimension of $\ker(A - \lambda I)$, denoted by $\gm_A(\lambda)$.</li>
 </ul>
 <p>When the context is clear, the subscript $A$ can be omitted.</p>
 
@@ -14704,8 +14727,8 @@ For each $\lambda \in \spec(A)$,</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>For any $n\times n$ matrix $A$ and $\lambda\in\spec(A)$, the following properties hold.</p>
 <ul>
-<li>$1 \leq \gm(\lambda) \leq \am(\lambda)$. </li>
-<li>The sum of $\am(\lambda)$ over all distinct eigenvalues $\lambda$ is $n$.  </li>
+<li>$1 \leq \gm(\lambda) \leq \am(\lambda)$.</li>
+<li>The sum of $\am(\lambda)$ over all distinct eigenvalues $\lambda$ is $n$.</li>
 <li>The matrix $A$ is diagonalizable if and only $\gm(\lambda) = \am(\lambda)$ for all distinct eigenvalues $\lambda$.</li>
 </ul>
 
@@ -14719,8 +14742,8 @@ For each $\lambda \in \spec(A)$,</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The fact $1\leq\gm(\lambda)$ follows immediate from the definition that $A - \lambda I$ is singular when $\lambda$ is an eigenvalue.<br>
-The exercises contains a proof of $\gm(\lambda) \leq \am(\lambda)$.<br>
+<p>The fact $1\leq\gm(\lambda)$ follows immediate from the definition that $A - \lambda I$ is singular when $\lambda$ is an eigenvalue.<br />
+The exercises contains a proof of $\gm(\lambda) \leq \am(\lambda)$.<br />
 The sum of $\am(\lambda)$ is equal to the degree of $p_A(x)$, which is $n$.</p>
 
 </div>
@@ -14733,7 +14756,7 @@ The sum of $\am(\lambda)$ is equal to the degree of $p_A(x)$, which is $n$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If $\gm(\lambda) &lt; \am(\lambda)$ for some $\lambda$, then the sum of all geometric multiplicities is less than $n$, so it is impossible to find a basis composed of eigenvectors.<br>
+<p>If $\gm(\lambda) &lt; \am(\lambda)$ for some $\lambda$, then the sum of all geometric multiplicities is less than $n$, so it is impossible to find a basis composed of eigenvectors.<br />
 If $\gm(\lambda) = \am(\lambda)$ for all distinct eigenvalues $\lambda$, we will show in the next section that $A$ is diagonalizable.</p>
 
 </div>
@@ -14746,7 +14769,7 @@ If $\gm(\lambda) = \am(\lambda)$ for all distinct eigenvalues $\lambda$, we will
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Proposition">Proposition<a class="anchor-link" href="#Proposition">&#182;</a></h5><p>Let $A$ be an $n\times n$ matrix.<br>
+<h5 id="Proposition">Proposition<a class="anchor-link" href="#Proposition">&#182;</a></h5><p>Let $A$ be an $n\times n$ matrix.<br />
 If the characteristic polynomial $p_A(x)$ has $n$ distinct roots, then $A$ is diagonalizable.</p>
 
 </div>
@@ -14786,6 +14809,9 @@ If the characteristic polynomial $p_A(x)$ has $n$ distinct roots, then $A$ is di
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14850,6 +14876,9 @@ If the characteristic polynomial $p_A(x)$ has $n$ distinct roots, then $A$ is di
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>求 $A$ 的每一個特徵值的代數重數與幾何重數。</p>
+<!-- eng start -->
+<p>For each eigenvalue of $A$, find its algebraic and geometric multiplicities.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14862,6 +14891,9 @@ If the characteristic polynomial $p_A(x)$ has $n$ distinct roots, then $A$ is di
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>判斷 $A$ 是否可對角化。</p>
+<!-- eng start -->
+<p>Determine if $A$ is diagonalizable.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14884,9 +14916,12 @@ If the characteristic polynomial $p_A(x)$ has $n$ distinct roots, then $A$ is di
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>對以下矩陣，<br>
-計算每一個特徵值的代數重數與幾何重數，<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>對以下矩陣，<br />
+計算每一個特徵值的代數重數與幾何重數，<br />
 並判斷其是否可以對角化。</p>
+<!-- eng start -->
+<p>For each of the following matrices, find the algebraic and geometric multiplicities of its eigenvalues, and determine if it is diagonalizable.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14930,9 +14965,12 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>對以下矩陣，<br>
-計算每一個特徵值的代數重數與幾何重數，<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>對以下矩陣，<br />
+計算每一個特徵值的代數重數與幾何重數，<br />
 並判斷其是否可以對角化。</p>
+<!-- eng start -->
+<p>For each of the following matrices, find the algebraic and geometric multiplicities of its eigenvalues, and determine if it is diagonalizable.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14978,11 +15016,14 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>以下矩陣稱為喬丹區塊矩陣（Jordan block）。<br>
-說明以下矩陣<br>
-不計算重數的話只有一個特徵值，<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>以下矩陣稱為喬丹區塊矩陣（Jordan block）。<br />
+說明以下矩陣<br />
+不計算重數的話只有一個特徵值，<br />
 計算這個特徵值的代數重數與幾何重數。</p>
 <p>因此大小大於等於 $2$ 的喬丹區塊矩陣皆不可對角化。</p>
+<!-- eng start -->
+<p>The following matrices are examples of Jordan blocks.  Show that each of the following matrices only has one distinct eigenvalue.  Find the algebraic and geometric multiplicities of this eigenvalue.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15032,6 +15073,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>找尋滿足以下條件的矩陣。</p>
+<!-- eng start -->
+<p>For each of the following exercises, find a matrix that meet the conditions.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15043,9 +15087,12 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>找一個矩陣 $A$ 使得<br>
-$\spec(A) = \{2,2,3,3,3\}$、<br>
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>找一個矩陣 $A$ 使得<br />
+$\spec(A) = \{2,2,3,3,3\}$、<br />
 $\gm(2) = 1$ 且 $\gm(3) = 2$。</p>
+<!-- eng start -->
+<p>Find a matrix $A$ such that $\spec(A) = \{2,2,3,3,3\}$, $\gm(2) = 1$, and $\gm(3) = 2$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15057,9 +15104,12 @@ $\gm(2) = 1$ 且 $\gm(3) = 2$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>找一個每一項都不為零的矩陣 $A$ 使得<br>
-$\spec(A) = \{2,2,3,3,3\}$、<br>
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>找一個每一項都不為零的矩陣 $A$ 使得<br />
+$\spec(A) = \{2,2,3,3,3\}$、<br />
 $\gm(2) = 1$ 且 $\gm(3) = 2$。</p>
+<!-- eng start -->
+<p>Find a matrix $A$ whose entries are all nonzero such that $\spec(A) = \{2,2,3,3,3\}$, $\gm(2) = 1$, and $\gm(3) = 2$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15071,8 +15121,11 @@ $\gm(2) = 1$ 且 $\gm(3) = 2$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣而 $\lambda$ 為其一特徵值。<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣而 $\lambda$ 為其一特徵值。<br />
 依照以下步驟證明 $\gm(\lambda) \leq \am(\lambda)$。</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix and $\lambda$ one of its eigenvalues.  Use the given instructions to show that $\gm(\lambda) \leq \am(\lambda)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15084,18 +15137,26 @@ $\gm(2) = 1$ 且 $\gm(3) = 2$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令 $d = \gm(\lambda)$ 為 $\ker(A - \lambda I)$ 的維度。<br>
-找一組 $\ker(A - \lambda I)$ 的基底 $\alpha$，<br>
-並將其擴展為 $\mathbb{R}^n$ 的一組基底 $\beta$。<br>
-（所以 $\alpha\subseteq\beta$ 且 $|\alpha| = d$。）<br>
-說明 $[f_A]_\beta^\beta$ 會有以下型式<br>
+<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令 $d = \gm(\lambda)$ 為 $\ker(A - \lambda I)$ 的維度。<br />
+找一組 $\ker(A - \lambda I)$ 的基底 $\alpha$，<br />
+並將其擴展為 $\mathbb{R}^n$ 的一組基底 $\beta$。<br />
+（所以 $\alpha\subseteq\beta$ 且 $|\alpha| = d$。）<br />
+說明 $[f_A]_\beta^\beta$ 會有以下型式</p>
 $$
     \begin{bmatrix}
     \lambda I_d &amp; B \\
     O_{n-d,d} &amp; D
     \end{bmatrix}.
-$$<br>
-（這裡 $D$ 只是一個矩陣的符號，不一定是對角矩陣。）</p>
+$$<p>（這裡 $D$ 只是一個矩陣的符號，不一定是對角矩陣。）</p>
+<!-- eng start -->
+<p>Let $d = \gm(\lambda)$ be the dimension of $\ker(A - \lambda I)$.  Let $\alpha$ be a basis of $\ker(A - \lambda I)$.  Then extend it into a basis $\beta$ of $\mathbb{R}^n$.  (Therefore, $\alpha\subseteq\beta$ and $|\alpha| = d$.)  Show that $[f_A]_\beta^\beta$ has the form</p>
+$$
+    \begin{bmatrix}
+    \lambda I_d &amp; B \\
+    O_{n-d,d} &amp; D
+    \end{bmatrix}.
+$$<p>(Here $D$ is just a matrix, which is not necessarily diagonal.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15107,9 +15168,12 @@ $$<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>由於 $[f_A]_\beta^\beta$ 和 $A$ 有相同的特徵多項式。<br>
-說明 $p_A(x)$ 中有 $(\lambda - x)^d$ 這個因式，<br>
+<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>由於 $[f_A]_\beta^\beta$ 和 $A$ 有相同的特徵多項式。<br />
+說明 $p_A(x)$ 中有 $(\lambda - x)^d$ 這個因式，<br />
 因此 $\gm(\lambda) \leq \am(\lambda)$。</p>
+<!-- eng start -->
+<p>Observe that $[f_A]_\beta^\beta$ and $A$ have the same characteristic polynomial.  Show that $(\lambda - x)^d$ is a factor of $p_A(x)$.  Therefore, $\gm(\lambda) \leq \am(\lambda)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15121,19 +15185,27 @@ $$<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $A$ 為一矩陣而 $W$ 為一 $\mathbb{R}^n$ 的子空間。<br>
-如果<br>
+<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣而 $W$ 為一 $\mathbb{R}^n$ 的子空間。<br />
+如果</p>
 $$
     f_A(W) = \{A\bw: \bw\in W\} \subseteq W,
-$$
-則我們稱 $W$ 是一個 <strong>$A$-不變子空間（$A$-invariant subspace）</strong>。</p>
-<p>同樣地，令 $f:V\rightarrow V$ 為一個線性函數<br>
+$$<p>則我們稱 $W$ 是一個 <strong>$A$-不變子空間（$A$-invariant subspace）</strong>。</p>
+<p>同樣地，令 $f:V\rightarrow V$ 為一個線性函數<br />
 而 $W$ 是 $V$ 的一個子空間。
-如果<br>
+如果</p>
 $$
     f(W) = \{f(\bw): \bw\in W\} \subseteq W,
+$$<p>則我們稱 $W$ 是一個 <strong>$f$-不變子空間（$f$-invariant subspace）</strong>。</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix and $W$ a subspace of $\mathbb{R}^n$.  If</p>
 $$
-則我們稱 $W$ 是一個 <strong>$f$-不變子空間（$f$-invariant subspace）</strong>。</p>
+    f_A(W) = \{A\bw: \bw\in W\} \subseteq W,
+$$<p>then $W$ is called an <strong>$A$-invariant subspace</strong> .</p>
+<p>Similarly, let $f:V\rightarrow V$ be a linear function and $W$ a subspace of $V$.  If</p>
+$$
+    f(W) = \{f(\bw): \bw\in W\} \subseteq W,
+$$<p>then $W$ is called a <strong>$f$-invariant subspace</strong> .</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15145,17 +15217,25 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣而 $W$ 為一 $A$-不變子空間。<br>
-令 $\alpha$ 為 $W$ 的一組基底<br>
-並將基擴展為 $\mathbb{R}^n$ 的一組基底 $\beta$。<br>
-說明 $[f_A]_\beta^\beta$ 會有以下型式<br>
+<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣而 $W$ 為一 $A$-不變子空間。<br />
+令 $\alpha$ 為 $W$ 的一組基底<br />
+並將基擴展為 $\mathbb{R}^n$ 的一組基底 $\beta$。<br />
+說明 $[f_A]_\beta^\beta$ 會有以下型式</p>
 $$
     \begin{bmatrix}
     \lambda A' &amp; B \\
     O_{n-d,d} &amp; D
     \end{bmatrix}.
-$$<br>
-（這裡 $D$ 只是一個矩陣的符號，不一定是對角矩陣。）</p>
+$$<p>（這裡 $D$ 只是一個矩陣的符號，不一定是對角矩陣。）</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix and $W$ an $A$-invariant subspace.  Let $\alpha$ be a basis of $W$.  Then extend it into a basis $\beta$ of $\mathbb{R}^n$.  Show that $[f_A]_\beta^\beta$ has the form</p>
+$$
+    \begin{bmatrix}
+    \lambda A' &amp; B \\
+    O_{n-d,d} &amp; D
+    \end{bmatrix}.
+$$<p>(Here $D$ is just a matrix, which is not necessarily diagonal.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15167,8 +15247,11 @@ $$<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>若 $A$ 為一矩陣，而 $\lambda$ 為其一特徵值。<br>
+<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>若 $A$ 為一矩陣，而 $\lambda$ 為其一特徵值。<br />
 說明 $\ker(A - \lambda I)$ 為一 $A$-不變子空間。</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix and $\lambda$ one of its eigenvalues.  Show that $\ker(A - \lambda I)$ is an $A$-invariant subspace.</p>
+<!-- eng end -->
 
 </div>
 </div>

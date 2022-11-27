@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E4%BA%8C%E6%AC%A1%E6%9B%B2%E7%B7%9A">&#20108;&#27425;&#26354;&#32218;<a class="anchor-link" href="#%E4%BA%8C%E6%AC%A1%E6%9B%B2%E7%B7%9A">&#182;</a></h1>
+<h1 id="%E4%BA%8C%E6%AC%A1%E6%9B%B2%E7%B7%9A">&#20108;&#27425;&#26354;&#32218;<a class="anchor-link" href="#%E4%BA%8C%E6%AC%A1%E6%9B%B2%E7%B7%9A">&#182;</a></h1><p>Quadratic curve</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14630,7 +14651,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\vspan}{\operatorname{span}}
 \newcommand{\Vol}{\operatorname{Vol}}
 \newcommand{\sgn}{\operatorname{sgn}}
-\newcommand{\idmap}{\operatorname{id}}$</p>
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14669,11 +14694,10 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Consider an equation of the form 
+<p>Consider an equation of the form</p>
 $$
     ax^2 + bxy + cy^2 = 1.
-$$
-Then it can be written as 
+$$<p>Then it can be written as</p>
 $$
     \begin{bmatrix} x &amp; y \end{bmatrix}
     \begin{bmatrix}
@@ -14681,12 +14705,10 @@ $$
      \frac{b}{2} &amp; c
     \end{bmatrix}
     \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 1 \end{bmatrix}.  
-$$<br>
-Although an $1\times 1$ matrix is different from a scalar, we often abuse the notation and write<br>
+$$<p>Although an $1\times 1$ matrix is different from a scalar, we often abuse the notation and write</p>
 $$
     \bx\trans A \bx = 1.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14697,9 +14719,9 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Since $A$ is symmetirc, by the spectral theorem,<br>
-there is an orthonormal basis $\beta$ of $\mathbb{R}^n$ such that $[f_A]_\beta^\beta = D$ is a diagonal matrix.<br>
-By setting $Q$ as the matrix whose columns are vectors in $\beta$,<br>
+<p>Since $A$ is symmetirc, by the spectral theorem,<br />
+there is an orthonormal basis $\beta$ of $\mathbb{R}^n$ such that $[f_A]_\beta^\beta = D$ is a diagonal matrix.<br />
+By setting $Q$ as the matrix whose columns are vectors in $\beta$,<br />
 we get $Q$ is an orthogonal matrix such that $Q\trans AQ = D$ is a diagonal matrix.</p>
 
 </div>
@@ -14712,7 +14734,7 @@ we get $Q$ is an orthogonal matrix such that $Q\trans AQ = D$ is a diagonal matr
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We may let $Q\by = \bx$ and $\by = Q\trans\bx$.<br>
+<p>We may let $Q\by = \bx$ and $\by = Q\trans\bx$.<br />
 This means $\by = [\bx]_\beta$ is the vector representation of $\bx$.</p>
 
 </div>
@@ -14726,11 +14748,10 @@ This means $\by = [\bx]_\beta$ is the vector representation of $\bx$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>By viewing the equation $\bx\trans A\bx = 1$ from the perspective of $\beta$, 
-we get<br>
+we get</p>
 $$
     \bx\trans A\bx = \by\trans Q\trans A Q\by = \by\trans D\by = 1.  
-$$
-It is much easier to describe the solution set of $\by\trans D\by = 1$ since $D$ is diagonal.</p>
+$$<p>It is much easier to describe the solution set of $\by\trans D\by = 1$ since $D$ is diagonal.</p>
 
 </div>
 </div>
@@ -14767,8 +14788,11 @@ It is much easier to describe the solution set of $\by\trans D\by = 1$ since $D$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br />
 令 $\beta = \{\bv_1, \cdots, \bv_n\}$ 為 $Q$ 的各行向量。</p>
+<!-- eng start -->
+<p>Run the code below.  Let $\beta = \{\bv_1, \cdots, \bv_n\}$ be the columns of $Q$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14830,12 +14854,18 @@ It is much easier to describe the solution set of $\by\trans D\by = 1$ since $D$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>找一個 $2\times 2$ 矩陣 $A$，將上述方程式寫成<br>
+<h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>找一個 $2\times 2$ 矩陣 $A$，將上述方程式寫成</p>
 $$
     \begin{bmatrix} x &amp; y \end{bmatrix}
     A
     \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 1 \end{bmatrix}.  
-$$</p>
+$$<!-- eng start -->
+<p>Find a $2\times 2$ matrix $A$ so that the equation above is equivalent to</p>
+$$
+    \begin{bmatrix} x &amp; y \end{bmatrix}
+    A
+    \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 1 \end{bmatrix}.  
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -14848,6 +14878,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>計算 $D = Q^{-1}AQ$ 並說明同一個解集合用 $\beta$ 基底觀察出的方程式。</p>
+<!-- eng start -->
+<p>Calculate $D = Q^{-1}AQ$ and find the equation with the solution set under the perspective of $\beta$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14860,6 +14893,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>描述這個方程式的解集合的形狀。</p>
+<!-- eng start -->
+<p>Describe the shape of the solution set.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14883,6 +14919,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>描述以下方程式的解集合的形狀。</p>
+<!-- eng start -->
+<p>Describe the shape of the solution set of the given equations.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14914,6 +14953,28 @@ $$
     \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
     \end{bmatrix}.
 $$<p>考慮方程式 $5x^2 + 5y^2 - 2xy = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    4 &amp; 0 \\
+    0 &amp; 6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    5 &amp; -1 \\
+    -1 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+    \end{bmatrix}.
+$$<p>Consider the equation $5x^2 + 5y^2 - 2xy = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14945,6 +15006,28 @@ $$
     \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
     \end{bmatrix}.
 $$<p>考慮方程式 $-x^2 -y^2 + 10xy = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    4 &amp; 0 \\
+    0 &amp; -6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    -1 &amp; 5 \\
+    5 &amp; -1
+    \end{bmatrix}
+    \begin{bmatrix}
+    \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+    \end{bmatrix}.
+$$<p>Consider the equation $-x^2 -y^2 + 10xy = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14976,6 +15059,28 @@ $$
     \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
     \end{bmatrix}.
 $$<p>考慮方程式 $x^2 + y^2 + 2xy = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; 0
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; 1
+    \end{bmatrix}
+    \begin{bmatrix}
+    \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+    \end{bmatrix}.
+$$<p>Consider the equation $x^2 + y^2 + 2xy = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14988,6 +15093,9 @@ $$<p>考慮方程式 $x^2 + y^2 + 2xy = 1$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>描述以下方程式的解集合的形狀。</p>
+<!-- eng start -->
+<p>Describe the shape of the solution set of the given equations.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15023,6 +15131,32 @@ $$
     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}
     \end{bmatrix}.
 $$<p>考慮方程式 $4x^2 + 4y^2 + 5z^2 - 2xz - 2yz = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 4 &amp; 0 \\
+    0 &amp; 0 &amp; 6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    4 &amp; 0 &amp; -1 \\
+    0 &amp; 4 &amp; -1 \\
+    -1 &amp; -1 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}
+    \end{bmatrix}.
+$$<p>Consider the equation $4x^2 + 4y^2 + 5z^2 - 2xz - 2yz = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15058,6 +15192,32 @@ $$
     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}
     \end{bmatrix}.
 $$<p>考慮方程式 $2x^2 + 2y^2 - 3z^2 - 4xy + 6xz + 6yz = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 4 &amp; 0 \\
+    0 &amp; 0 &amp; -6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    2 &amp; -2 &amp; 3 \\
+    -2 &amp; 2 &amp; 3 \\
+    3 &amp; 3 &amp; -3
+    \end{bmatrix}
+    \begin{bmatrix}
+    \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
+    \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}}
+    \end{bmatrix}.
+$$<p>Consider the equation $2x^2 + 2y^2 - 3z^2 - 4xy + 6xz + 6yz = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15070,6 +15230,9 @@ $$<p>考慮方程式 $2x^2 + 2y^2 - 3z^2 - 4xy + 6xz + 6yz = 1$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>說明方程式 $2x^2 + 2y^2 - 3 - 4xy + 6x + 6y = 0$ 的解集合是一個三維圓椎和一個平面的交集。</p>
+<!-- eng start -->
+<p>Show that the solution set of $2x^2 + 2y^2 - 3 - 4xy + 6x + 6y = 0$ is the intersection of the surface of a cone and a plane.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15081,63 +15244,119 @@ $$<p>考慮方程式 $2x^2 + 2y^2 - 3z^2 - 4xy + 6xz + 6yz = 1$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $D$ 為一對角矩陣，<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $D$ 為一對角矩陣，<br />
 $n_+$、$n_-$、$n_0$ 分別為 $D$ 的對角線上正的、負的、為零的元素的個數。
-考慮<br>
+考慮</p>
 $$
     \begin{bmatrix} x &amp; y \end{bmatrix}
     D
     \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 1 \end{bmatrix}  
-$$<br>
-的解集合。
+$$<p>的解集合。
 完成以下表格。</p>
 <table>
-<thead><tr>
-<th>n+</th>
-<th>n-</th>
-<th>n0</th>
-<th>shape </th>
+<thead>
+<tr>
+  <th>n+</th>
+  <th>n-</th>
+  <th>n0</th>
+  <th>shape </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>橢圓 </td>
+  <td>2</td>
+  <td>0</td>
+  <td>0</td>
+  <td>橢圓</td>
 </tr>
 <tr>
-<td>0</td>
-<td>2</td>
-<td>0</td>
-<td></td>
+  <td>0</td>
+  <td>2</td>
+  <td>0</td>
+  <td></td>
 </tr>
 <tr>
-<td>0</td>
-<td>0</td>
-<td>2</td>
-<td></td>
+  <td>0</td>
+  <td>0</td>
+  <td>2</td>
+  <td></td>
 </tr>
 <tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td></td>
+  <td>1</td>
+  <td>1</td>
+  <td>0</td>
+  <td></td>
 </tr>
 <tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td></td>
+  <td>1</td>
+  <td>0</td>
+  <td>1</td>
+  <td></td>
 </tr>
 <tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td></td>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td></td>
 </tr>
 </tbody>
 </table>
+<!-- eng start -->
+<p>Let $D$ be a diagonal matrix, $n_+$, $n_-$, $n_0$ are the number of positive, negative, zero entries on the diagonal of $D$.  Consider the solution set of</p>
+$$
+    \begin{bmatrix} x &amp; y \end{bmatrix}
+    D
+    \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 1 \end{bmatrix}.  
+$$<p>Then complete the table below.</p>
+<table>
+<thead>
+<tr>
+  <th>n+</th>
+  <th>n-</th>
+  <th>n0</th>
+  <th>shape </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>2</td>
+  <td>0</td>
+  <td>0</td>
+  <td>橢圓</td>
+</tr>
+<tr>
+  <td>0</td>
+  <td>2</td>
+  <td>0</td>
+  <td></td>
+</tr>
+<tr>
+  <td>0</td>
+  <td>0</td>
+  <td>2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>1</td>
+  <td>1</td>
+  <td>0</td>
+  <td></td>
+</tr>
+<tr>
+  <td>1</td>
+  <td>0</td>
+  <td>1</td>
+  <td></td>
+</tr>
+<tr>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+<!-- eng end -->
 
 </div>
 </div>

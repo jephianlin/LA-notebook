@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E9%81%9E%E8%BF%B4%E9%97%9C%E4%BF%82%E5%BC%8F">&#36958;&#36852;&#38364;&#20418;&#24335;<a class="anchor-link" href="#%E9%81%9E%E8%BF%B4%E9%97%9C%E4%BF%82%E5%BC%8F">&#182;</a></h1>
+<h1 id="%E9%81%9E%E8%BF%B4%E9%97%9C%E4%BF%82%E5%BC%8F">&#36958;&#36852;&#38364;&#20418;&#24335;<a class="anchor-link" href="#%E9%81%9E%E8%BF%B4%E9%97%9C%E4%BF%82%E5%BC%8F">&#182;</a></h1><p>Recurrence relation</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14630,7 +14651,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\vspan}{\operatorname{span}}
 \newcommand{\Vol}{\operatorname{Vol}}
 \newcommand{\sgn}{\operatorname{sgn}}
-\newcommand{\idmap}{\operatorname{id}}$</p>
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14669,15 +14694,14 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Consider a sequence that satisfies<br>
+<p>Consider a sequence that satisfies</p>
 $$
     \begin{aligned}
     a_{n+2} &amp;= c_1a_{n+1} + c_2a_n, \\
     a_0 &amp;= p,\quad a_1 = q,
     \end{aligned}
-$$
-where $c_1,c_2,p,q$ are some given values.<br>
-The first line is called a <strong>recurrence relation</strong>, while<br>
+$$<p>where $c_1,c_2,p,q$ are some given values.<br />
+The first line is called a <strong>recurrence relation</strong>, while<br />
 the second line is called the <strong>initial conditions</strong>.</p>
 
 </div>
@@ -14690,14 +14714,13 @@ the second line is called the <strong>initial conditions</strong>.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>A famous example is the <strong>Fibonacci sequence</strong> defined by<br>
+<p>A famous example is the <strong>Fibonacci sequence</strong> defined by</p>
 $$
     \begin{aligned}
     a_{n+2} &amp;= a_{n+1} + a_n, \\
     a_0 &amp;= 1,\quad a_1 = 1.
     \end{aligned}
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14728,15 +14751,14 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>That is, by setting $\bv_n = \begin{bmatrix} a_n \\ a_{n+1} \end{bmatrix}$,<br>
-there is a matrix $A$ such that<br>
+<p>That is, by setting $\bv_n = \begin{bmatrix} a_n \\ a_{n+1} \end{bmatrix}$,<br />
+there is a matrix $A$ such that</p>
 $$
     \begin{aligned}
     \bv_{n+1} &amp;= A\bv_n, \\
     \bv_0 &amp;= \begin{bmatrix} p \\ q \end{bmatrix}.
     \end{aligned}
-$$
-As long as we have a formulat for $A^n$, then we know $\bv_n = A^n\bv_0$.</p>
+$$<p>As long as we have a formulat for $A^n$, then we know $\bv_n = A^n\bv_0$.</p>
 
 </div>
 </div>
@@ -14775,6 +14797,9 @@ As long as we have a formulat for $A^n$, then we know $\bv_n = A^n\bv_0$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14827,6 +14852,9 @@ As long as we have a formulat for $A^n$, then we know $\bv_n = A^n\bv_0$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>依照定義依序求出 $a_2,\ldots, a_5$。</p>
+<!-- eng start -->
+<p>Find $a_2,\ldots, a_5$ by definition.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14838,8 +14866,11 @@ As long as we have a formulat for $A^n$, then we know $\bv_n = A^n\bv_0$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>令 $\bv_n = \begin{bmatrix} a_n \\ a_{n+1} \end{bmatrix}$，<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>令 $\bv_n = \begin{bmatrix} a_n \\ a_{n+1} \end{bmatrix}$，<br />
 找到一個矩陣 $A$ 使得 $\bv_{n+1} = A\bv_n$。</p>
+<!-- eng start -->
+<p>Let $\bv_n = \begin{bmatrix} a_n \\ a_{n+1} \end{bmatrix}$.  Find a matrix $A$ such that $\bv_{n+1} = A\bv_n$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14851,8 +14882,11 @@ As long as we have a formulat for $A^n$, then we know $\bv_n = A^n\bv_0$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>利用題目給的 $A^5$，求出 $a_5$。<br>
+<h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>利用題目給的 $A^5$，求出 $a_5$。<br />
 比較答案是否和前面算的一樣。</p>
+<!-- eng start -->
+<p>Use the given $A^5$ to find $a_5$.  Does it agree with the one you found in (a)?</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14876,6 +14910,9 @@ As long as we have a formulat for $A^n$, then we know $\bv_n = A^n\bv_0$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>解以下遞迴關係式中 $a_n$ 的一般式。</p>
+<!-- eng start -->
+<p>Solve $a_n$ for each of the following recurrence relations.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14907,6 +14944,28 @@ $$
     2 &amp; 3
     \end{bmatrix}.
 $$<p>考慮遞迴關係式 $a_{n+2} = 5a_{n+1} - 6a_n$、$a_0 = a_1 = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; 3
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; 3
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -6 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; 3
+    \end{bmatrix}.
+$$<p>Consider the recurrence relation $a_{n+2} = 5a_{n+1} - 6a_n$ with $a_0 = a_1 = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14938,6 +14997,28 @@ $$
     2 &amp; -2
     \end{bmatrix}.
 $$<p>考慮遞迴關係式 $a_{n+2} = 0a_{n+1} - 4a_n$、$a_0 = a_1 = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; -2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; -2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 0
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; -2
+    \end{bmatrix}.
+$$<p>Consider the recurrence relation $a_{n+2} = 0a_{n+1} - 4a_n$ with $a_0 = a_1 = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14949,7 +15030,7 @@ $$<p>考慮遞迴關係式 $a_{n+2} = 0a_{n+1} - 4a_n$、$a_0 = a_1 = 1$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(d)">Exercise 2(d)<a class="anchor-link" href="#Exercise-2(d)">&#182;</a></h5><p>已知</p>
+<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>已知</p>
 $$
     \begin{bmatrix}
     2 &amp; 1 \\
@@ -14969,6 +15050,28 @@ $$
     4 &amp; 0
     \end{bmatrix}.
 $$<p>考慮遞迴關係式 $a_{n+2} = 4a_{n+1} - 4a_n$、$a_0 = a_1 = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    2 &amp; 1 \\
+    0 &amp; 2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    2 &amp; -1 \\
+    4 &amp; 0
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 4
+    \end{bmatrix}
+    \begin{bmatrix}
+    2 &amp; -1 \\
+    4 &amp; 0
+    \end{bmatrix}.
+$$<p>Consider the recurrence relation $a_{n+2} = 4a_{n+1} - 4a_n$ with $a_0 = a_1 = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14980,7 +15083,7 @@ $$<p>考慮遞迴關係式 $a_{n+2} = 4a_{n+1} - 4a_n$、$a_0 = a_1 = 1$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(e)">Exercise 2(e)<a class="anchor-link" href="#Exercise-2(e)">&#182;</a></h5><p>已知</p>
+<h5 id="Exercise-2(d)">Exercise 2(d)<a class="anchor-link" href="#Exercise-2(d)">&#182;</a></h5><p>已知</p>
 $$
     \begin{bmatrix}
     3 &amp; 1 \\
@@ -15000,6 +15103,28 @@ $$
     9 &amp; 0
     \end{bmatrix}.
 $$<p>考慮遞迴關係式 $a_{n+2} = 6a_{n+1} - 9a_n$、$a_0 = a_1 = 1$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    3 &amp; 1 \\
+    0 &amp; 3
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    3 &amp; -1 \\
+    9 &amp; 0
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -9 &amp; 6
+    \end{bmatrix}
+    \begin{bmatrix}
+    3 &amp; -1 \\
+    9 &amp; 0
+    \end{bmatrix}.
+$$<p>Consider the recurrence relation $a_{n+2} = 6a_{n+1} - 9a_n$ with $a_0 = a_1 = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15034,8 +15159,34 @@ $$
     3 &amp; 2 &amp; 1 \\
     9 &amp; 4 &amp; 1
     \end{bmatrix}.
-$$<p>考慮遞迴關係式 $a_{n+3} = 6a_{n+2} - 11a_{n+1} + 6a_n$、$a_0 = a_1 = a_2 = 1$。<br>
+$$<p>考慮遞迴關係式 $a_{n+3} = 6a_{n+2} - 11a_{n+1} + 6a_n$、$a_0 = a_1 = a_2 = 1$。<br />
 解 $a_n$ 的一般式。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 2 &amp; 0 \\
+    0 &amp; 0 &amp; 1
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    3 &amp; 2 &amp; 1 \\
+    9 &amp; 4 &amp; 1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 1 \\
+    6 &amp; -11 &amp; 6
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    3 &amp; 2 &amp; 1 \\
+    9 &amp; 4 &amp; 1
+    \end{bmatrix}.
+$$<p>Solve $a_n$ for the recurrence relation $a_{n+3} = 6a_{n+2} - 11a_{n+1} + 6a_n$ with $a_0 = a_1 = a_2 = 1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15048,6 +15199,9 @@ $$<p>考慮遞迴關係式 $a_{n+3} = 6a_{n+2} - 11a_{n+1} + 6a_n$、$a_0 = a_1 
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>解費波那契數列的 $a_n$ 的一般式。</p>
+<!-- eng start -->
+<p>Find a formula for the $n$-th term $a_n$ in the Fibonacci sequence.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15060,6 +15214,9 @@ $$<p>考慮遞迴關係式 $a_{n+3} = 6a_{n+2} - 11a_{n+1} + 6a_n$、$a_0 = a_1 
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>以下提供解遞迴關係式的另一種觀點。</p>
+<!-- eng start -->
+<p>The following exercises provide an alternative theory to solve the recurrence relation.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15071,18 +15228,26 @@ $$<p>考慮遞迴關係式 $a_{n+3} = 6a_{n+2} - 11a_{n+1} + 6a_n$、$a_0 = a_1 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>考慮集合<br>
+<h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>考慮集合</p>
 $$
     \mathbb{R}^\mathbb{Z} = \{( \ldots, a_{-1}, a_0, a_1, \ldots): a_n \in \mathbb{R} \text{ for all }n\in\mathbb{Z}\}.
-$$
-定義向量加法與數列的純量乘法為<br>
+$$<p>定義向量加法與數列的純量乘法為</p>
 $$
     ( \ldots, a_{-1}, a_0, a_1, \ldots) + ( \ldots, b_{-1}, b_0, b_1, \ldots) = ( \ldots, a_{-1} + b_{-1}, a_0 + b_0, a_1 + b_1, \ldots),
-$$
-$$
+$$$$
     k( \ldots, a_{-1}, a_0, a_1, \ldots) = ( \ldots, ka_{-1}, ka_0, ka_1, \ldots).
+$$<p>說明 $\mathbb{R}^\mathbb{Z}$ 搭配以上定義的向量加法與純量乘法後，是一個向量空間。</p>
+<!-- eng start -->
+<p>Consider the set</p>
 $$
-說明 $\mathbb{R}^\mathbb{Z}$ 搭配以上定義的向量加法與純量乘法後，是一個向量空間。</p>
+    \mathbb{R}^\mathbb{Z} = \{( \ldots, a_{-1}, a_0, a_1, \ldots): a_n \in \mathbb{R} \text{ for all }n\in\mathbb{Z}\}.
+$$<p>Define the vector addition and the scalar multiplication on it as</p>
+$$
+    ( \ldots, a_{-1}, a_0, a_1, \ldots) + ( \ldots, b_{-1}, b_0, b_1, \ldots) = ( \ldots, a_{-1} + b_{-1}, a_0 + b_0, a_1 + b_1, \ldots),
+$$$$
+    k( \ldots, a_{-1}, a_0, a_1, \ldots) = ( \ldots, ka_{-1}, ka_0, ka_1, \ldots).
+$$<p>Show that $\mathbb{R}^\mathbb{Z}$ equipped with the two operations above is a vector space.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15094,12 +15259,17 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>定義一個左移函數（advanced operator） $A: \mathbb{R}^\mathbb{Z} \rightarrow \mathbb{R}^\mathbb{Z}$ 為<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>定義一個左移函數（advanced operator） $A: \mathbb{R}^\mathbb{Z} \rightarrow \mathbb{R}^\mathbb{Z}$ 為</p>
 $$
     A(\ldots, a_n, \ldots) = (\ldots, a_{n+1},\ldots).
-$$
-即將數列 $(\ldots, a_n, \ldots)$ 全部往左移一格。<br>
+$$<p>即將數列 $(\ldots, a_n, \ldots)$ 全部往左移一格。<br />
 說明 $A$ 是一個線性函數。</p>
+<!-- eng start -->
+<p>Define the advanced operator $A: \mathbb{R}^\mathbb{Z} \rightarrow \mathbb{R}^\mathbb{Z}$ by</p>
+$$
+    A(\ldots, a_n, \ldots) = (\ldots, a_{n+1},\ldots).
+$$<p>This operator shifts the given sequence to the left by one slot.  Show that $A$ is a linear function.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15122,10 +15292,14 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>說明 $A - 3\idmap$ 也是一個線性函數且<br>
+<p>說明 $A - 3\idmap$ 也是一個線性函數且</p>
 $$
     \ker(A - 3\idmap) = \vspan\{(\ldots, 3^n, \ldots)\}.
-$$</p>
+$$<!-- eng start -->
+<p>Show that $A - 3\idmap$ is also a linear function and</p>
+$$
+    \ker(A - 3\idmap) = \vspan\{(\ldots, 3^n, \ldots)\}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15137,15 +15311,21 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>若 $f$ 和 $g$ 為兩個 $\mathbb{R}^\mathbb{Z} \rightarrow \mathbb{R}^\mathbb{Z}$ 的函數。<br>
-我們用 $fg$ 代表函數的合成 $f(g(\cdot))$。<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>若 $f$ 和 $g$ 為兩個 $\mathbb{R}^\mathbb{Z} \rightarrow \mathbb{R}^\mathbb{Z}$ 的函數。<br />
+我們用 $fg$ 代表函數的合成 $f(g(\cdot))$。<br />
 所以 $A^2$ 表示代入 $A$ 函數兩次。</p>
-<p>已知 $A^2 - 5A + 6\idmap = (A - 2\idmap)(A - 3\idmap)$。<br>
-說明<br>
+<p>已知 $A^2 - 5A + 6\idmap = (A - 2\idmap)(A - 3\idmap)$。<br />
+說明</p>
 $$
     \ker(A^2 - 5A + 6\idmap) \supseteq \vspan \{(\ldots, 2^n, \ldots), (\ldots, 3^n, \ldots)\}.
-$$<br>
-（實際上兩個集合相等，但另一個方向證明要花比較多的力氣。）</p>
+$$<p>（實際上兩個集合相等，但另一個方向證明要花比較多的力氣。）</p>
+<!-- eng start -->
+<p>Let $f$ and $g$ be functions in $\mathbb{R}^\mathbb{Z} \rightarrow \mathbb{R}^\mathbb{Z}$.  We let $fg$ be the composition $f(g(\cdot))$.  Thus, $A^2$ means applying the operator $A$ to the sequence twice.</p>
+<p>It is known that $A^2 - 5A + 6\idmap = (A - 2\idmap)(A - 3\idmap)$.  Show that</p>
+$$
+    \ker(A^2 - 5A + 6\idmap) \supseteq \vspan \{(\ldots, 2^n, \ldots), (\ldots, 3^n, \ldots)\}.
+$$<p>(In fact, these two sets are exactly the same, but it is harder to show the other direction.)</p>
+<!-- eng end -->
 
 </div>
 </div>

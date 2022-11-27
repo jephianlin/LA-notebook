@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E7%B7%9A%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B">&#32218;&#24615;&#24494;&#20998;&#26041;&#31243;<a class="anchor-link" href="#%E7%B7%9A%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B">&#182;</a></h1>
+<h1 id="%E7%B7%9A%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B">&#32218;&#24615;&#24494;&#20998;&#26041;&#31243;<a class="anchor-link" href="#%E7%B7%9A%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B">&#182;</a></h1><p>Linear differential equation</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14630,7 +14651,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\vspan}{\operatorname{span}}
 \newcommand{\Vol}{\operatorname{Vol}}
 \newcommand{\sgn}{\operatorname{sgn}}
-\newcommand{\idmap}{\operatorname{id}}$</p>
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14669,8 +14694,8 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In this section, every function, such as $x$ and $y$, are from $\mathbb{R}$ to $\mathbb{R}$ in variable $t$.<br>
-We will use the notation $\dot{x}$ and $x'$ interchangeably for $\frac{dx}{dt}$.<br>
+<p>In this section, every function, such as $x$ and $y$, are from $\mathbb{R}$ to $\mathbb{R}$ in variable $t$.<br />
+We will use the notation $\dot{x}$ and $x'$ interchangeably for $\frac{dx}{dt}$.<br />
 Note that the derivative is taken with respect to $t$ but not to $x$.</p>
 
 </div>
@@ -14683,17 +14708,15 @@ Note that the derivative is taken with respect to $t$ but not to $x$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Some differential equations are easy to be solved.<br>
-For example, the solution to the equation<br>
+<p>Some differential equations are easy to be solved.<br />
+For example, the solution to the equation</p>
 $$
     \dot{x} = kx
-$$<br>
-is $x = C_1e^{kt}$ for any constant $C_1\in\mathbb{R}$.<br>
-And one may try that the solution to the equation<br>
+$$<p>is $x = C_1e^{kt}$ for any constant $C_1\in\mathbb{R}$.<br />
+And one may try that the solution to the equation</p>
 $$
     \dot{x} = kx + C_1e^{kt}
-$$
-is $x = (C_2 + C_1t)e^{kt}$ for any constant $C_2\in\mathbb{R}$.<br>
+$$<p>is $x = (C_2 + C_1t)e^{kt}$ for any constant $C_2\in\mathbb{R}$.<br />
 (To see these are <em>all</em> the solutions relies on the Picard–Lindelöf theorem.)</p>
 
 </div>
@@ -14706,15 +14729,14 @@ is $x = (C_2 + C_1t)e^{kt}$ for any constant $C_2\in\mathbb{R}$.<br>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $x_1$ and $x_2$ be functions in variable $t$.<br>
-The system<br>
+<p>Let $x_1$ and $x_2$ be functions in variable $t$.<br />
+The system</p>
 $$
     \begin{aligned}
     \dot{x}_1 &amp;= ax_1 + bx_2 \\
     \dot{x}_2 &amp;= cx_1 + dx_2
     \end{aligned}
-$$
-is called a <strong>homogeneous system of first-order linear differential equation</strong>.</p>
+$$<p>is called a <strong>homogeneous system of first-order linear differential equation</strong>.</p>
 
 </div>
 </div>
@@ -14726,7 +14748,7 @@ is called a <strong>homogeneous system of first-order linear differential equati
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>One may write<br>
+<p>One may write</p>
 $$
     \bx = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}, \quad  
     \dot{\bx} = \begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix}, \text{ and}\quad 
@@ -14734,12 +14756,10 @@ $$
      a &amp; b \\
      c &amp; d 
     \end{bmatrix}.  
-$$
-Then the system becomes<br>
+$$<p>Then the system becomes</p>
 $$
     \dot{\bx} = A\bx.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14750,13 +14770,12 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If $A$ is diagonalizable as $D = Q^{-1}AQ$, we may set $Q\by = \bx$ for some $\by = \begin{bmatrix} y_1 \\ y_2 \end{bmatrix}$.<br>
+<p>If $A$ is diagonalizable as $D = Q^{-1}AQ$, we may set $Q\by = \bx$ for some $\by = \begin{bmatrix} y_1 \\ y_2 \end{bmatrix}$.<br />
 Since $Q$ is a constant matrix, $\dot{\bx} = \dot{(Q\by)} = Q\dot{\by}$.
-Thus, the original system becomes<br>
+Thus, the original system becomes</p>
 $$
     \dot{\by} = Q^{-1}AQ \by = D\by,
-$$
-which is much easier to be solved.<br>
+$$<p>which is much easier to be solved.<br />
 Once $\by$ is solved, $\bx$ can be found by $\bx = Q\by$.</p>
 
 </div>
@@ -14795,6 +14814,9 @@ Once $\by$ is solved, $\bx$ can be found by $\bx = Q\by$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14842,6 +14864,9 @@ Once $\by$ is solved, $\bx$ can be found by $\bx = Q\by$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>計算 $\dot{x}_1$ 及 $\dot{x}_2$。</p>
+<!-- eng start -->
+<p>Find $\dot{x}_1$ and $\dot{x}_2$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14854,6 +14879,9 @@ Once $\by$ is solved, $\bx$ can be found by $\bx = Q\by$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>驗證題目給的 $x_1$ 和 $x_2$ 是否滿足給定的微分方程組。</p>
+<!-- eng start -->
+<p>Verify that $x_1$ and $x_2$ are solutions to the system of differential equations.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14876,8 +14904,11 @@ Once $\by$ is solved, $\bx$ can be found by $\bx = Q\by$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>解以下的微分方程組。<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>解以下的微分方程組。<br />
 （請記得加上該有的常數。）</p>
+<!-- eng start -->
+<p>Solve the following differential equation.  (Note that constant terms are important.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14914,7 +14945,34 @@ $$
     \dot{x}_1 &amp;= 5x_1 - x_2 \\
     \dot{x}_2 &amp;= -x_1 + 5x_2
     \end{aligned}
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    4 &amp; 0 \\
+    0 &amp; 6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    5 &amp; -1 \\
+    -1 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}.
+$$<p>Solve the system of differential equations:</p>
+$$
+    \begin{aligned}
+    \dot{x}_1 &amp;= 5x_1 - x_2 \\
+    \dot{x}_2 &amp;= -x_1 + 5x_2
+    \end{aligned}
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14950,7 +15008,34 @@ $$
     \dot{x}_1 &amp;= -x_1 + 5x_2 \\
     \dot{x}_2 &amp;= 5x_1 - x_2
     \end{aligned}
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    4 &amp; 0 \\
+    0 &amp; -6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    -1 &amp; 5 \\
+    5 &amp; -1
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}.
+$$<p>Solve the system of differential equations:</p>
+$$
+    \begin{aligned}
+    \dot{x}_1 &amp;= -x_1 + 5x_2 \\
+    \dot{x}_2 &amp;= 5x_1 - x_2
+    \end{aligned}
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14986,7 +15071,34 @@ $$
     \dot{x}_1 &amp;= x_1 + x_2 \\
     \dot{x}_2 &amp;= x_1 + x_2
     \end{aligned}
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; 0
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; 1
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}.
+$$<p>Solve the system of differential equations:</p>
+$$
+    \begin{aligned}
+    \dot{x}_1 &amp;= x_1 + x_2 \\
+    \dot{x}_2 &amp;= x_1 + x_2
+    \end{aligned}
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -14997,8 +15109,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>解以下的微分方程組。<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>解以下的微分方程組。<br />
 （請記得加上該有的常數。）</p>
+<!-- eng start -->
+<p>Solve the following differential equation.  (Note that constant terms are important.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15040,7 +15155,39 @@ $$
     \dot{x}_2 &amp;= 0x_1 + 4x_2 - x_3 \\
     \dot{x}_3 &amp;= -x_1 - x_2 + 5x_3
     \end{aligned}
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 4 &amp; 0 \\
+    0 &amp; 0 &amp; 6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    4 &amp; 0 &amp; -1 \\
+    0 &amp; 4 &amp; -1 \\
+    -1 &amp; -1 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}.
+$$<p>Solve the system of differential equations:</p>
+$$
+    \begin{aligned}
+    \dot{x}_1 &amp;= 4x_1 + 0x_2 - x_3 \\
+    \dot{x}_2 &amp;= 0x_1 + 4x_2 - x_3 \\
+    \dot{x}_3 &amp;= -x_1 - x_2 + 5x_3
+    \end{aligned}
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15081,7 +15228,39 @@ $$
     \dot{x}_2 &amp;= -2x_1 + 2x_2 + 3x_3 \\
     \dot{x}_3 &amp;= 3x_1 + 3x_2 - 3x_3
     \end{aligned}
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 4 &amp; 0 \\
+    0 &amp; 0 &amp; -6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    2 &amp; -2 &amp; 3 \\
+    -2 &amp; 2 &amp; 3 \\
+    3 &amp; 3 &amp; -3
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}.
+$$<p>Solve the system of differential equations:</p>
+$$
+    \begin{aligned}
+    \dot{x}_1 &amp;= 2x_1 - 2x_2 + 3x_3 \\
+    \dot{x}_2 &amp;= -2x_1 + 2x_2 + 3x_3 \\
+    \dot{x}_3 &amp;= 3x_1 + 3x_2 - 3x_3
+    \end{aligned}
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15092,9 +15271,9 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>對於高階的線性微分方程 $y'' + c_1 y' + c_2 y = 0$，<br>
-我們也可以寫成矩陣形式。<br>
-令
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>對於高階的線性微分方程 $y'' + c_1 y' + c_2 y = 0$，<br />
+我們也可以寫成矩陣形式。<br />
+令</p>
 $$
     \by = \begin{bmatrix} y \\ y' \end{bmatrix}, \quad
     \dot{\by} = \begin{bmatrix} y' \\ y'' \end{bmatrix},\text{ and}\quad
@@ -15102,12 +15281,24 @@ $$
     0 &amp; 1 \\
     -c_2 &amp; -c_1
     \end{bmatrix}. 
-$$
-則原方程式可以改寫為<br>
+$$<p>則原方程式可以改寫為</p>
 $$
     \dot{\by} = A\by.
+$$<p>解以下的微分方程。</p>
+<!-- eng start -->
+<p>For the higher-order differential equation $y'' + c_1 y' + c_2 y = 0$, we may let</p>
 $$
-解以下的微分方程。</p>
+    \by = \begin{bmatrix} y \\ y' \end{bmatrix}, \quad
+    \dot{\by} = \begin{bmatrix} y' \\ y'' \end{bmatrix},\text{ and}\quad
+    A = \begin{bmatrix}  
+    0 &amp; 1 \\
+    -c_2 &amp; -c_1
+    \end{bmatrix}. 
+$$<p>Then the differential equation can be written as</p>
+$$
+    \dot{\by} = A\by.
+$$<p>Solve the following differential equations.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15139,6 +15330,28 @@ $$
     3 &amp; 2
     \end{bmatrix}.
 $$<p>考慮微分方程 $y'' - 5y' + 6y = 0$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; 3
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    3 &amp; 2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -6 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    3 &amp; 2
+    \end{bmatrix}.
+$$<p>Consider the differential equation $y'' - 5y' + 6y = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15170,6 +15383,28 @@ $$
     2 &amp; -2
     \end{bmatrix}.
 $$<p>考慮微分方程 $y'' + 0y' + 4y = 0$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; -2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; -2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 0
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; -2
+    \end{bmatrix}.
+$$<p>Consider the differential equation $y'' + 0y' + 4y = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15201,6 +15436,28 @@ $$
     4 &amp; 0
     \end{bmatrix}.
 $$<p>考慮微分方程 $y'' - 4y' + 4y = 0$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    2 &amp; 1 \\
+    0 &amp; 2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    2 &amp; -1 \\
+    4 &amp; 0
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 4
+    \end{bmatrix}
+    \begin{bmatrix}
+    2 &amp; -1 \\
+    4 &amp; 0
+    \end{bmatrix}.
+$$<p>Consider the differential equation $y'' - 4y' + 4y = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15232,6 +15489,28 @@ $$
     9 &amp; 0
     \end{bmatrix}.
 $$<p>考慮微分方程 $y'' - 6y' - 9y = 0$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    3 &amp; 1 \\
+    0 &amp; 3
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    3 &amp; -1 \\
+    9 &amp; 0
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -9 &amp; 6
+    \end{bmatrix}
+    \begin{bmatrix}
+    3 &amp; -1 \\
+    9 &amp; 0
+    \end{bmatrix}.
+$$<p>Consider the differential equation $y'' - 6y' - 9y = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15267,6 +15546,32 @@ $$
     9 &amp; 4 &amp; 1
     \end{bmatrix}.
 $$<p>解微分方程 $y''' - 6y'' + 11y' - 6y = 0$。</p>
+<!-- eng start -->
+<p>It is known that</p>
+$$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 2 &amp; 0 \\
+    0 &amp; 0 &amp; 1
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    3 &amp; 2 &amp; 1 \\
+    9 &amp; 4 &amp; 1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 1 \\
+    6 &amp; -11 &amp; 6
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    3 &amp; 2 &amp; 1 \\
+    9 &amp; 4 &amp; 1
+    \end{bmatrix}.
+$$<p>Consider the differential equation $y''' - 6y'' + 11y' - 6y = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>

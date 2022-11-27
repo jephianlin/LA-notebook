@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E6%9C%80%E5%B0%8F%E5%A4%9A%E9%A0%85%E5%BC%8F">&#26368;&#23567;&#22810;&#38917;&#24335;<a class="anchor-link" href="#%E6%9C%80%E5%B0%8F%E5%A4%9A%E9%A0%85%E5%BC%8F">&#182;</a></h1>
+<h1 id="%E6%9C%80%E5%B0%8F%E5%A4%9A%E9%A0%85%E5%BC%8F">&#26368;&#23567;&#22810;&#38917;&#24335;<a class="anchor-link" href="#%E6%9C%80%E5%B0%8F%E5%A4%9A%E9%A0%85%E5%BC%8F">&#182;</a></h1><p>Minimal polynomial</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14632,7 +14653,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
-\newcommand{\gm}{\operatorname{gm}}$</p>
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14672,11 +14695,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix.<br>
+<p>Let $A$ be an $n\times n$ matrix.<br />
 Define the <strong>minimal polynomial</strong> of $A$ as the nonzero polynomial $m_A(x)$ with the smallest degree such that</p>
 <ul>
-<li>the leading coefficient of $m_A(x)$ is $1$, and </li>
-<li>$m_A(A) = O$.  </li>
+<li>the leading coefficient of $m_A(x)$ is $1$, and</li>
+<li>$m_A(A) = O$.</li>
 </ul>
 <p>By the Cayley–Hamilton Theorem, the minimal polynomial exists and has degree at most $n$.</p>
 
@@ -14692,9 +14715,9 @@ Define the <strong>minimal polynomial</strong> of $A$ as the nonzero polynomial 
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>The minimal polynomial of $A$ has the following properties:</p>
 <ul>
-<li>If $p(x)$ is a polynomial with $p(A) = O$, then $m_A(x) \mid p(x)$.  </li>
-<li>The minimal polynomial of $A$ is unique.  </li>
-<li>$m_A(x) \mid p_A(x)$. </li>
+<li>If $p(x)$ is a polynomial with $p(A) = O$, then $m_A(x) \mid p(x)$.</li>
+<li>The minimal polynomial of $A$ is unique.</li>
+<li>$m_A(x) \mid p_A(x)$.</li>
 </ul>
 
 </div>
@@ -14707,11 +14730,11 @@ Define the <strong>minimal polynomial</strong> of $A$ as the nonzero polynomial 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Suppose $\bv$ is a vector in $\mathbb{R}^n$.<br>
+<p>Suppose $\bv$ is a vector in $\mathbb{R}^n$.<br />
 Define the <strong>minimal polynomial</strong> of $A$ at $\bv$ as the nonzero polynomial $m_{A,\bv}(x)$ with the smallest degree such that</p>
 <ul>
-<li>the leading coefficient of $m_{A,\bv}(x)$ is $1$, and </li>
-<li>$m_{A,\bv}(A)\bv = \bzero$.  </li>
+<li>the leading coefficient of $m_{A,\bv}(x)$ is $1$, and</li>
+<li>$m_{A,\bv}(A)\bv = \bzero$.</li>
 </ul>
 
 </div>
@@ -14726,10 +14749,10 @@ Define the <strong>minimal polynomial</strong> of $A$ at $\bv$ as the nonzero po
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>The minimal polynomial of $A$ at $\bv$ has the following properties:</p>
 <ul>
-<li>If $p(x)$ is a polynomial with $p(A)\bv = \bzero$, then $m_{A,\bv}(x) \mid p(x)$.  </li>
-<li>The minimal polynomial of $A$ is unique.  </li>
-<li>$m_A(x) \mid m_A(x)$.  </li>
-<li>If $\lambda$ is an eigenvalue of $A$, then $(x - \lambda)$ is a factor of $m_A(x)$.  </li>
+<li>If $p(x)$ is a polynomial with $p(A)\bv = \bzero$, then $m_{A,\bv}(x) \mid p(x)$.</li>
+<li>The minimal polynomial of $A$ is unique.</li>
+<li>$m_A(x) \mid m_A(x)$.</li>
+<li>If $\lambda$ is an eigenvalue of $A$, then $(x - \lambda)$ is a factor of $m_A(x)$.</li>
 </ul>
 
 </div>
@@ -14742,7 +14765,7 @@ Define the <strong>minimal polynomial</strong> of $A$ at $\bv$ as the nonzero po
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Theorem-(Minimal-polynomial-and-diagonalizability)">Theorem (Minimal polynomial and diagonalizability)<a class="anchor-link" href="#Theorem-(Minimal-polynomial-and-diagonalizability)">&#182;</a></h5><p>Let $A$ be an $n\times n$ real matrix.<br>
+<h5 id="Theorem-(Minimal-polynomial-and-diagonalizability)">Theorem (Minimal polynomial and diagonalizability)<a class="anchor-link" href="#Theorem-(Minimal-polynomial-and-diagonalizability)">&#182;</a></h5><p>Let $A$ be an $n\times n$ real matrix.<br />
 Then $A$ is diagonalizable (over $\mathbb{C}$) if and only if $m_A(x)$ has no repeated roots.</p>
 
 </div>
@@ -14755,33 +14778,33 @@ Then $A$ is diagonalizable (over $\mathbb{C}$) if and only if $m_A(x)$ has no re
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix.<br>
-One may use standard techniques on a vector space to find the minimal polynomial.<br>
+<p>Let $A$ be an $n\times n$ matrix.<br />
+One may use standard techniques on a vector space to find the minimal polynomial.<br />
 Let $\beta$ be the standard basis of the space of $n\times n$ matrices; see 210.</p>
 <ol>
-<li>Calculate the $n^2\times n$ matrix<br>
-$$
- \Psi = \begin{bmatrix}
-  | &amp; | &amp; ~ &amp; | \\
-  [I]_\beta &amp; [A]_\beta &amp; \cdots &amp; [A^{n-1}]_\beta \\
-  | &amp; | &amp; ~ &amp; | \\
- \end{bmatrix}.
-$$</li>
-<li>Use the row operation to find the smallest $d$ such that<br>
-$$
- A^d \in \vspan\{I, A, \ldots, A^{d-1}\}.
-$$
-(Indeed, $d$ corresponds to the left-most free variable.)</li>
-<li>If<br>
-$$
- A_d = c_1A_{d-1} + \cdots + c_dI,
-$$
-then<br>
-$$
- m_A(x) = x^d - c_1x^{d-1} - c_2x^{d-2} - \cdots - c_d
-$$
-is the minimal polynomial of $A$.  </li>
+<li>Calculate the $n^2\times n$ matrix</li>
 </ol>
+$$
+    \Psi = \begin{bmatrix}
+     | &amp; | &amp; ~ &amp; | \\
+     [I]_\beta &amp; [A]_\beta &amp; \cdots &amp; [A^{n-1}]_\beta \\
+     | &amp; | &amp; ~ &amp; | \\
+    \end{bmatrix}.
+$$<ol start="2">
+<li>Use the row operation to find the smallest $d$ such that</li>
+</ol>
+$$
+    A^d \in \vspan\{I, A, \ldots, A^{d-1}\}.
+$$<p>(Indeed, $d$ corresponds to the left-most free variable.)<br />
+3. If<br />
+$$
+    A_d = c_1A_{d-1} + \cdots + c_dI,
+$$
+then<br />
+$$
+    m_A(x) = x^d - c_1x^{d-1} - c_2x^{d-2} - \cdots - c_d
+$$
+is the minimal polynomial of $A$.</p>
 
 </div>
 </div>
@@ -14793,15 +14816,14 @@ is the minimal polynomial of $A$.  </li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The minimal polynomial of $A$ at $\bv$ can be found in a similar mannar but focusing on the $n\times n$ matrix
+<p>The minimal polynomial of $A$ at $\bv$ can be found in a similar mannar but focusing on the $n\times n$ matrix</p>
 $$
     \Psi = \begin{bmatrix}
      | &amp; | &amp; ~ &amp; | \\
      I\bv &amp; A\bv &amp; \cdots &amp; A^{n-1}\bv \\
      | &amp; | &amp; ~ &amp; | \\
     \end{bmatrix}
-$$
-instead.</p>
+$$<p>instead.</p>
 
 </div>
 </div>
@@ -14840,16 +14862,25 @@ instead.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
-令<br>
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br />
+令</p>
 $$
     \Psi = \begin{bmatrix}
      | &amp; | &amp; ~ &amp; | \\
      [I]_\beta &amp; [A]_\beta &amp; \cdots &amp; [A^{n-1}]_\beta \\
      | &amp; | &amp; ~ &amp; | \\
     \end{bmatrix}.
+$$<p>已知 $R$ 為 $\Psi$ 的最簡階梯型。</p>
+<!-- eng start -->
+<p>Run the code below.  Let</p>
 $$
-已知 $R$ 為 $\Psi$ 的最簡階梯型。</p>
+    \Psi = \begin{bmatrix}
+     | &amp; | &amp; ~ &amp; | \\
+     [I]_\beta &amp; [A]_\beta &amp; \cdots &amp; [A^{n-1}]_\beta \\
+     | &amp; | &amp; ~ &amp; | \\
+    \end{bmatrix}.
+$$<p>It is known that $R$ is the reduced echelon form of $\Psi$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14898,6 +14929,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>求 $\Psi$。</p>
+<!-- eng start -->
+<p>Find $\Psi$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14910,6 +14944,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>計算 $m_A(x)$。</p>
+<!-- eng start -->
+<p>Find $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14933,6 +14970,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>以下討論對角矩陣的最小多項式。</p>
+<!-- eng start -->
+<p>The following exercises explore the minimal polynomial of a diagonal matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14944,15 +14984,24 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     1 &amp; 0 &amp; 0 \\
     0 &amp; 2 &amp; 0 \\
     0 &amp; 0 &amp; 3
     \end{bmatrix}.
+$$<p>求 $m_A(x)$。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-求 $m_A(x)$。</p>
+    A = \begin{bmatrix}
+    1 &amp; 0 &amp; 0 \\
+    0 &amp; 2 &amp; 0 \\
+    0 &amp; 0 &amp; 3
+    \end{bmatrix}.
+$$<p>Find $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14964,15 +15013,24 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     2 &amp; 0 &amp; 0 \\
     0 &amp; 2 &amp; 0 \\
     0 &amp; 0 &amp; 3
     \end{bmatrix}.
+$$<p>求 $m_A(x)$。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-求 $m_A(x)$。</p>
+    A = \begin{bmatrix}
+    2 &amp; 0 &amp; 0 \\
+    0 &amp; 2 &amp; 0 \\
+    0 &amp; 0 &amp; 3
+    \end{bmatrix}.
+$$<p>Find $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14984,10 +15042,13 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>若 $r_1,\ldots,r_n$ 為 $n$ 個實數，<br>
-而扣掉重覆元素後，其相異實數為 $\lambda_1,\ldots,\lambda_q$。<br>
-令 $A$ 為一對角矩陣，其對角線上元素為 $r_1,\ldots,r_n$。 
+<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>若 $r_1, \ldots, r_n$ 為 $n$ 個實數，<br />
+而扣掉重覆元素後，其相異實數為 $\lambda_1, \ldots, \lambda_q$。<br />
+令 $A$ 為一對角矩陣，其對角線上元素為 $r_1, \ldots, r_n$。 
 求 $m_A(x)$。</p>
+<!-- eng start -->
+<p>Let $r_1, \ldots, r_n$ be $n$ real numbers.  By removing repeated elements, we may assume $\lambda_1, \ldots, \lambda_q$ are the distinct values of them.  Let $A$ be a diagonal matrix whose diagonal is composed of $r_1, \ldots, r_n$.  Find $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15000,6 +15061,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>以下討論喬丹標準型的最小多項式。</p>
+<!-- eng start -->
+<p>The following exercises explore the minimal polynomial of a Jordan form.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15011,15 +15075,24 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     2 &amp; 1 &amp; 0 \\
     0 &amp; 2 &amp; 1 \\
     0 &amp; 0 &amp; 2
     \end{bmatrix}.
+$$<p>求 $m_A(x)$。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-求 $m_A(x)$。</p>
+    A = \begin{bmatrix}
+    2 &amp; 1 &amp; 0 \\
+    0 &amp; 2 &amp; 1 \\
+    0 &amp; 0 &amp; 2
+    \end{bmatrix}.
+$$<p>Find $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15031,7 +15104,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     2 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
@@ -15042,8 +15115,21 @@ $$
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 3 &amp; 1 \\
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 3
     \end{bmatrix}.
+$$<p>求 $m_A(x)$。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-求 $m_A(x)$。</p>
+    A = \begin{bmatrix}
+    2 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 2 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 2 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 3 &amp; 1 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 3
+    \end{bmatrix}.
+$$<p>Find $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15055,11 +15141,15 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>定義 $J_{\lambda,m}$ 為一 $m\times m$ 矩陣，<br>
-其對角線上的元素皆為 $\lambda$，<br>
-而在每個 $\lambda$ 的上面一項放一個 $1$（除了第一行），<br>
+<h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>定義 $J_{\lambda,m}$ 為一 $m\times m$ 矩陣，<br />
+其對角線上的元素皆為 $\lambda$，<br />
+而在每個 $\lambda$ 的上面一項放一個 $1$（除了第一行），<br />
 其餘元素為 $0$。</p>
 <p>求 $J_{\lambda,m}$ 的最小多項式。</p>
+<!-- eng start -->
+<p>Let $J_{\lambda,m}$ be the $m\times m$ matrix whose diagonal entries are equal to $\lambda$ such that there is a $1$ above each $\lambda$ (except for the first column) and other entries are $0$.</p>
+<p>Find the minimal polynomial of $J_{\lambda,m}$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15071,11 +15161,15 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(d)">Exercise 3(d)<a class="anchor-link" href="#Exercise-3(d)">&#182;</a></h5><p>令矩陣 $A$ 是一個區塊對角矩陣，<br>
+<h5 id="Exercise-3(d)">Exercise 3(d)<a class="anchor-link" href="#Exercise-3(d)">&#182;</a></h5><p>令矩陣 $A$ 是一個區塊對角矩陣，<br />
 其對角區塊皆由一些 $J_{\lambda,m}$ 組成。</p>
-<p>說明 $A$ 的最小多項式為 $\prod_\lambda (x - \lambda)^h$，<br>
-其中 $\lambda$ 跑過對角線上所有的相異 $\lambda$，<br>
+<p>說明 $A$ 的最小多項式為 $\prod_\lambda (x - \lambda)^h$，<br />
+其中 $\lambda$ 跑過對角線上所有的相異 $\lambda$，<br />
 而對每個 $\lambda$ 而言，$h$ 是所有 $J_{\lambda,m}$ 中最大的區塊的大小。</p>
+<!-- eng start -->
+<p>Let $A$ be a block diagonal matrix whose diagonal blocks are composed of $J_{\lambda,m}$'s.</p>
+<p>Show that the minimal polyonimial of $A$ is $\prod_\lambda (x - \lambda)^h$, where $\lambda$ runs through all distinct elements on the diagonal, while $h$ is the maximum size of $J_{\lambda,m}$ among all diagonal blocks with a given $\lambda$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15087,14 +15181,22 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     4 &amp; 6 &amp; 2 \\
     -4 &amp; -10 &amp; -4 \\
     11 &amp; 33 &amp; 13
     \end{bmatrix}.
-$$</p>
+$$<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    4 &amp; 6 &amp; 2 \\
+    -4 &amp; -10 &amp; -4 \\
+    11 &amp; 33 &amp; 13
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15106,15 +15208,23 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>計算 $A^0, A^1, A^2$，<br>
-並求出<br>
+<h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>計算 $A^0, A^1, A^2$，<br />
+並求出</p>
 $$
     \Psi = \begin{bmatrix}
      | &amp; | &amp; | \\
      [I]_\beta &amp; [A]_\beta &amp; [A^{2}]_\beta \\
      | &amp; | &amp; | \\
     \end{bmatrix}.
-$$</p>
+$$<!-- eng start -->
+<p>Find $A^0, A^1, A^2$ and compute</p>
+$$
+    \Psi = \begin{bmatrix}
+     | &amp; | &amp; | \\
+     [I]_\beta &amp; [A]_\beta &amp; [A^{2}]_\beta \\
+     | &amp; | &amp; | \\
+    \end{bmatrix}.
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15127,6 +15237,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>求 $m_A(x)$。</p>
+<!-- eng start -->
+<p>Find $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15138,16 +15251,24 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>令 $\bv = (2, -8, 22)$。<br>
-計算 $A^0\bv, A^1\bv, A^2\bv$，<br>
-並求出<br>
+<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>令 $\bv = (2, -8, 22)$。<br />
+計算 $A^0\bv, A^1\bv, A^2\bv$，<br />
+並求出</p>
 $$
     \Psi = \begin{bmatrix}
      | &amp; | &amp; | \\
      I\bv &amp; A\bv &amp; A^{2}\bv \\
      | &amp; | &amp; | \\
     \end{bmatrix}
-$$</p>
+$$<!-- eng start -->
+<p>Let $\bv = (2, -8, 22)$.  Find $A^0\bv, A^1\bv, A^2\bv$ and compute</p>
+$$
+    \Psi = \begin{bmatrix}
+     | &amp; | &amp; | \\
+     I\bv &amp; A\bv &amp; A^{2}\bv \\
+     | &amp; | &amp; | \\
+    \end{bmatrix}
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15160,6 +15281,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(d)">Exercise 4(d)<a class="anchor-link" href="#Exercise-4(d)">&#182;</a></h5><p>求 $m_{A,\bv}(x)$。</p>
+<!-- eng start -->
+<p>Find $m_{A,\bv}(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15171,11 +15295,15 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br>
-說明若 $A^d \in \vspan\{I, A, \ldots, A^{d-1}\}$<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br />
+說明若 $A^d \in \vspan\{I, A, \ldots, A^{d-1}\}$<br />
 則對任何 $k\geq d$ 都有 $A^k \in \vspan\{I, A, \ldots, A^{d-1}\}$。</p>
-<p>因此若 $A$ 的最小多項式為 $d$ 次時，<br>
+<p>因此若 $A$ 的最小多項式為 $d$ 次時，<br />
 $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底。</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix.  Show that if $A^d \in \vspan\{I, A, \ldots, A^{d-1}\}$, then $A^k \in \vspan\{I, A, \ldots, A^{d-1}\}$ for any $k\geq d$.</p>
+<p>Therefore, if the minimal polynomial of $A$ has degree $d$, then $\{I, A, \ldots, A^{d-1}\}$ is a basis of $\vspan\{I, A, A^2, \ldots \}$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15187,8 +15315,11 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br />
 以下探討 $m_A(x)$ 的一些基本性質。</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix.  The following exercises studies some basic properties of $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15200,12 +15331,17 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>若 $p(x)$ 為一多項式且 $p(A) = O$，<br>
-說明對於任何多項式 $a(x)$ 和 $b(x)$，<br>
+<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>若 $p(x)$ 為一多項式且 $p(A) = O$，<br />
+說明對於任何多項式 $a(x)$ 和 $b(x)$，<br />
 把多項式 $a(x)p(x) + b(x)m_A(x)$ 代入 $A$ 也會是 $O$。</p>
-<p>因此把 $g(x) = \gcd(p(x), m_A(x))$ 代入 $A$ 也是 $O$。<br>
+<p>因此把 $g(x) = \gcd(p(x), m_A(x))$ 代入 $A$ 也是 $O$。<br />
 由於 $m_A(x)$ 已經是次方數最小的，$g(x) = m_A(x)$，且 $m_A(x) \mid p(x)$。</p>
 <p>提示：參考 312。</p>
+<!-- eng start -->
+<p>Let $p(x)$ be a polynomial with $p(A) = O$.  Show that $a(x)p(x) + b(x)m_A(x)$ has value $O$ at $x = A$ is $O$ for any polynomials $a(x)$ and $b(x)$.</p>
+<p>Therefore, $g(x) = \gcd(p(x), m_A(x))$ is $O$ at $x = A$.  However, since $m_A(x)$ has the minimum degree, it must be $g(x) = m_A(x)$ and $m_A(x) \mid p(x)$。</p>
+<p>Hint:  See 312.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15218,6 +15354,9 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>說明每個矩陣的最小多項式是唯一的。</p>
+<!-- eng start -->
+<p>Show that the minimal polynomial is unique for each matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15230,6 +15369,9 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(c)">Exercise 6(c)<a class="anchor-link" href="#Exercise-6(c)">&#182;</a></h5><p>說明 $m_A(x) \mid p_A(x)$。</p>
+<!-- eng start -->
+<p>Show that $m_A(x) \mid p_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15241,9 +15383,12 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣、<br>
-而 $\bv$ 為一 $\mathbb{R}^n$ 中的向量。<br>
+<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣、<br />
+而 $\bv$ 為一 $\mathbb{R}^n$ 中的向量。<br />
 以下探討 $m_{A,\bv}(x)$ 的一些基本性質。</p>
+<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix and $\bv$ a vector in $\mathbb{R}^n$.  The following exercises studies some basic properties of $m_{A,\bv}(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15255,11 +15400,15 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>若 $p(x)$ 為一多項式且 $p(A)\bv = \bzero$，<br>
-說明對於任何多項式 $a(x)$ 和 $b(x)$，<br>
+<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>若 $p(x)$ 為一多項式且 $p(A)\bv = \bzero$，<br />
+說明對於任何多項式 $a(x)$ 和 $b(x)$，<br />
 把多項式 $a(x)p(x) + b(x)m_{A,\bv}(x)$ 代入 $A$ 後再乘上 $\bv$ 也會是 $\bzero$。</p>
-<p>因此把 $g(x) = \gcd(p(x), m_{A,\bv}(x))$ 代入 $A$ 後再乘上 $\bv$ 也是 $\bzero$。<br>
+<p>因此把 $g(x) = \gcd(p(x), m_{A,\bv}(x))$ 代入 $A$ 後再乘上 $\bv$ 也是 $\bzero$。<br />
 由於 $m_{A,\bv}(x)$ 已經是次方數最小的，$g(x) = m_{A,\bv}(x)$，且 $m_{A,\bv}(x) \mid p(x)$。</p>
+<!-- eng start -->
+<p>Let $p(x)$ be a polynomial with $p(A)\bv = \bzero$.  Show that the value of $a(x)p(x) + b(x)m_A(x)$ at $x = A$ multiplied by $\bv$ is $\bzero$ for any polynomials $a(x)$ and $b(x)$.</p>
+<p>Therefore, the value of $g(x) = \gcd(p(x), m_A(x))$ at $x = A$ multiplied by $\bv$ is $\bzero$.  However, since $m_{A,\bv}(x)$ has the minimum degree, it must be $g(x) = m_{A,\bv}(x)$ and $m_{A,\bv}(x) \mid p(x)$。</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15272,6 +15421,9 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>說明每個矩陣在任一向量上的最小多項式是唯一的。</p>
+<!-- eng start -->
+<p>Show that the minimal polynomial at any given vector is unique for each matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15284,6 +15436,9 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-7(c)">Exercise 7(c)<a class="anchor-link" href="#Exercise-7(c)">&#182;</a></h5><p>說明 $m_{A,\bv}(x) \mid m_A(x)$。</p>
+<!-- eng start -->
+<p>Show that $m_{A,\bv}(x) \mid m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15296,6 +15451,9 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-7(d)">Exercise 7(d)<a class="anchor-link" href="#Exercise-7(d)">&#182;</a></h5><p>說明任何 $p_A(x)$ 的根也是 $m_A(x)$ 的根。</p>
+<!-- eng start -->
+<p>Show that any root of $p_A(x)$ is also a root of $m_A(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15310,9 +15468,17 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <h5 id="Exercise-8">Exercise 8<a class="anchor-link" href="#Exercise-8">&#182;</a></h5><p>依照以下步驟證明以下敘述等價：</p>
 <ol>
 <li>$A$ 可以在複數中對角化。</li>
-<li>$A$ 的最小多項式沒有重根。  </li>
+<li>$A$ 的最小多項式沒有重根。</li>
 </ol>
 <p>（由本節第 2 題已看出條件 1 會推得條件 2，所以以下著重在另一個方向的推導。）</p>
+<!-- eng start -->
+<p>Use the given instructions to show that the following are equivalent:</p>
+<ol>
+<li>$A$ is diagonalizable over $\mathbb{C}$.</li>
+<li>The minimal polyonimal of $A$ has no repeated roots.</li>
+</ol>
+<p>(From Problem 2 we can see Statement 1 implies Statement 2, so we focus on the other direction.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15324,8 +15490,11 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-8(a)">Exercise 8(a)<a class="anchor-link" href="#Exercise-8(a)">&#182;</a></h5><p>令 $B_1,\ldots, B_q$ 為 $n\times n$ 矩陣。<br>
+<h5 id="Exercise-8(a)">Exercise 8(a)<a class="anchor-link" href="#Exercise-8(a)">&#182;</a></h5><p>令 $B_1,\ldots, B_q$ 為 $n\times n$ 矩陣。<br />
 證明若 $B_1\cdots B_q = O$，則 $\nul(B_1) + \cdots + \nul(B_q) \geq n$。</p>
+<!-- eng start -->
+<p>Let $B_1,\ldots, B_q$ be $n\times n$ matrices.  Show that if $B_1\cdots B_q = O$, then $\nul(B_1) + \cdots + \nul(B_q) \geq n$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15337,9 +15506,12 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-8(b)">Exercise 8(b)<a class="anchor-link" href="#Exercise-8(b)">&#182;</a></h5><p>令 $\lambda_1,\ldots,\lambda_q$ 為 $A$ 的相異特徵值。<br>
+<h5 id="Exercise-8(b)">Exercise 8(b)<a class="anchor-link" href="#Exercise-8(b)">&#182;</a></h5><p>令 $\lambda_1,\ldots,\lambda_q$ 為 $A$ 的相異特徵值。<br />
 若 $A$ 的最小多項式沒有重根，
 說明 $\gm(\lambda_1) + \cdots + \gm(\lambda_q) \geq n$。</p>
+<!-- eng start -->
+<p>Let $\lambda_1,\ldots,\lambda_q$ be the distinct eigenvalues of $A$.  Suppose the minimal polynomial of $A$ has no repeated roots.  Show that $\gm(\lambda_1) + \cdots + \gm(\lambda_q) \geq n$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15352,6 +15524,9 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-8(c)">Exercise 8(c)<a class="anchor-link" href="#Exercise-8(c)">&#182;</a></h5><p>證明若 $A$ 的最小多項式沒有重根，則 $A$ 可對角化。</p>
+<!-- eng start -->
+<p>Show that if the minimal polynomial of $A$ has no repeated roots, then $A$ is a diagonalizable.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15364,6 +15539,9 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-9">Exercise 9<a class="anchor-link" href="#Exercise-9">&#182;</a></h5><p>以下探討最小多項式的應用。</p>
+<!-- eng start -->
+<p>The following exercises demonstrates some applications of the minimal polynomial.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15375,8 +15553,11 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-9(a)">Exercise 9(a)<a class="anchor-link" href="#Exercise-9(a)">&#182;</a></h5><p>若一個 $n\times n$ 矩陣 $A$ 滿足 $A^2 = A$，則稱之為<strong>冪等矩陣（idempotent matrix）</strong> 。<br>
+<h5 id="Exercise-9(a)">Exercise 9(a)<a class="anchor-link" href="#Exercise-9(a)">&#182;</a></h5><p>若一個 $n\times n$ 矩陣 $A$ 滿足 $A^2 = A$，則稱之為<strong>冪等矩陣（idempotent matrix）</strong> 。<br />
 說明任何冪等矩陣一定可以對角化，並找出所有的相異特徵值。</p>
+<!-- eng start -->
+<p>An $n\times n$ matrix $A$ with $A^2 = A$ is called an <strong>idempotent matrix</strong> .  Show that every idempotent matrix is diagonalizable and find all of its distinct eigenvalues.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15388,8 +15569,11 @@ $\{I, A, \ldots, A^{d-1}\}$ 為 $\vspan\{I, A, A^2, \ldots \}$ 的一組基底�
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-9(a)">Exercise 9(a)<a class="anchor-link" href="#Exercise-9(a)">&#182;</a></h5><p>若一個 $n\times n$ 矩陣 $A$ 找得到一個整數 $k \geq 0$ 使得 $A^k = O$，則稱之為<strong>冪零矩陣（nilpotent matrix）</strong> 。<br>
+<h5 id="Exercise-9(a)">Exercise 9(a)<a class="anchor-link" href="#Exercise-9(a)">&#182;</a></h5><p>若一個 $n\times n$ 矩陣 $A$ 找得到一個整數 $k \geq 0$ 使得 $A^k = O$，則稱之為<strong>冪零矩陣（nilpotent matrix）</strong> 。<br />
 找出一個冪等矩陣所有的相異特徵值。</p>
+<!-- eng start -->
+<p>An $n\times n$ matrix $A$ with $A^k = O$ for some integer $k$ is called an <strong>nilpotent matrix</strong> .  Find all the distinct eigenvalues of a nilpotent matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>

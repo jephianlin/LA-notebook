@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E5%9C%96%E8%88%87%E7%89%B9%E5%BE%B5%E6%96%B9%E7%A8%8B%E5%BC%8F">&#22294;&#33287;&#29305;&#24501;&#26041;&#31243;&#24335;<a class="anchor-link" href="#%E5%9C%96%E8%88%87%E7%89%B9%E5%BE%B5%E6%96%B9%E7%A8%8B%E5%BC%8F">&#182;</a></h1>
+<h1 id="%E5%9C%96%E8%88%87%E7%89%B9%E5%BE%B5%E6%96%B9%E7%A8%8B%E5%BC%8F">&#22294;&#33287;&#29305;&#24501;&#26041;&#31243;&#24335;<a class="anchor-link" href="#%E5%9C%96%E8%88%87%E7%89%B9%E5%BE%B5%E6%96%B9%E7%A8%8B%E5%BC%8F">&#182;</a></h1><p>Graph and characteristic polynomial</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14632,7 +14653,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
-\newcommand{\gm}{\operatorname{gm}}$</p>
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14672,16 +14695,14 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix.<br>
-From 507, we know that<br>
+<p>Let $A$ be an $n\times n$ matrix.<br />
+From 507, we know that</p>
 $$
      \det(A - xI) = s_0(-x)^n + s_1(-x)^{n-1} + \cdots + s_n.
-$$
-with 
+$$<p>with</p>
 $$
     s_k = \sum_{\substack{\alpha\subseteq[n] \\ |\alpha| = k}} \det A[\alpha].
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14692,7 +14713,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We also know that the determinants can be calculated through graph theory in 414.<br>
+<p>We also know that the determinants can be calculated through graph theory in 414.<br />
 In this section, we will see how $s_k$ can be found through the digraph of $A$.</p>
 
 </div>
@@ -14705,12 +14726,12 @@ In this section, we will see how $s_k$ can be found through the digraph of $A$.<
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $\Gamma$ be the weighted digraph of $A$ and $\alpha\subseteq [n]$ a subset of vertices.<br>
+<p>Let $\Gamma$ be the weighted digraph of $A$ and $\alpha\subseteq [n]$ a subset of vertices.<br />
 An <strong>elementary subgraph on $\alpha$</strong> of $\Gamma$ is a subgraph $H$ of $\Gamma$ such that</p>
 <ul>
-<li>$V(H) = \alpha$, </li>
-<li>$E(H) \subseteq E(\Gamma)$, and </li>
-<li>every vertex of $H$ has exactly one directed edge leaving it and exactly one directed edge arriving it.  </li>
+<li>$V(H) = \alpha$,</li>
+<li>$E(H) \subseteq E(\Gamma)$, and</li>
+<li>every vertex of $H$ has exactly one directed edge leaving it and exactly one directed edge arriving it.</li>
 </ul>
 <p>The set of all elementary subgraphs on $\alpha$ of $\Gamma$ is denoted by $\mathfrak{E}_\alpha(\Gamma)$.</p>
 
@@ -14724,11 +14745,11 @@ An <strong>elementary subgraph on $\alpha$</strong> of $\Gamma$ is a subgraph $H
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Every elementary subgraph on $\alpha$ must be composed of some cycles.<br>
-Let $c(H)$ be the number of cycles, including loops, doubly directed edges, and cycles of length at least $3$.<br>
-The <strong>sign</strong> of $H$ is defined as $\sgn(H) = (-1)^{|\alpha| + c(H)}$.<br>
+<p>Every elementary subgraph on $\alpha$ must be composed of some cycles.<br />
+Let $c(H)$ be the number of cycles, including loops, doubly directed edges, and cycles of length at least $3$.<br />
+The <strong>sign</strong> of $H$ is defined as $\sgn(H) = (-1)^{|\alpha| + c(H)}$.<br />
 The <strong>weight</strong> of $H$ is defined as the product of the weights of every edges of $H$.</p>
-<p>We vacuously define the graph $H$ with no edge and no vertex as the only elementary subgraph on $\emptyset$.<br>
+<p>We vacuously define the graph $H$ with no edge and no vertex as the only elementary subgraph on $\emptyset$.<br />
 Its sign is $1$ and its weight is $1$.</p>
 
 </div>
@@ -14741,11 +14762,10 @@ Its sign is $1$ and its weight is $1$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Thus, we have 
+<p>Thus, we have</p>
 $$
     \det A[\alpha] = \sum_{H\in\mathfrak{E}_\alpha(\Gamma)} \sgn(H) w(H).
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14756,12 +14776,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Moreover, let $\mathfrak{E}_k(\Gamma)$ be the set of all elementary subgraphs on $\alpha$ of $\Gamma$ with $|\alpha| = k$.<br>
-Then<br>
+<p>Moreover, let $\mathfrak{E}_k(\Gamma)$ be the set of all elementary subgraphs on $\alpha$ of $\Gamma$ with $|\alpha| = k$.<br />
+Then</p>
 $$
     s_k = \sum_{\substack{\alpha\subseteq[n] \\ |\alpha| = k}} \det A[\alpha] = \sum_{H\in\mathfrak{E}_k(\Gamma)} \sgn(H) w(H).
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14798,6 +14817,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14844,6 +14866,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>畫出 $\Gamma(A)$ 並標上每條邊的權重。</p>
+<!-- eng start -->
+<p>Draw $\Gamma(A)$ and mark the weight on each edge.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14856,6 +14881,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>對於所有 $k = 1,2,3$，求出所有 $k$ 點的基本子圖，計算其正負號以及權重。</p>
+<!-- eng start -->
+<p>For each $k = 1,2,3$, find all elementary subgraphs of order $k$, their signs, and their weights.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14868,6 +14896,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>計算 $A$ 的特徵多項式。</p>
+<!-- eng start -->
+<p>Find the characteristic polynomial of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14890,7 +14921,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
@@ -14899,11 +14930,22 @@ $$
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
     1 &amp; 0 &amp; 0 &amp; 0 &amp; 0
     \end{bmatrix}
-$$
-且 $\Gamma$ 為其賦權有向圖。<br>
-說明 $\mathfrak{E}_k(\Gamma)$ 在 $k = 0,\ldots, 4$ 的時候都是空集合，<br>
-而 $\mathfrak{E}_5(\Gamma)$ 只有一個基本子圖。<br>
+$$<p>且 $\Gamma$ 為其賦權有向圖。<br />
+說明 $\mathfrak{E}_k(\Gamma)$ 在 $k = 0,\ldots, 4$ 的時候都是空集合，<br />
+而 $\mathfrak{E}_5(\Gamma)$ 只有一個基本子圖。<br />
 計算 $A$ 的特徵多項式。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+    1 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+    \end{bmatrix}
+$$<p>and $\Gamma$ its weighted directed graph.  Show that $\mathfrak{E}_k(\Gamma)$ is empty for $k = 0,\ldots, 4$ and $\mathfrak{E}_5(\Gamma)$ contains only one elementary subgraph.  Use these facts to find the characteristic polynomial of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14915,7 +14957,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     0 &amp; 0 &amp; 0 &amp; 0 &amp; -a_5 \\
@@ -14924,10 +14966,21 @@ $$
     0 &amp; 0 &amp; 1 &amp; 0 &amp; -a_2 \\
     0 &amp; 0 &amp; 0 &amp; 1 &amp; -a_1
     \end{bmatrix}
-$$
-且 $\Gamma$ 為其賦權有向圖。<br>
-說明 $\mathfrak{E}_k(\Gamma)$ 在 $k = 0,\ldots, 5$ 的時候都恰只有一個基本子圖。<br>
+$$<p>且 $\Gamma$ 為其賦權有向圖。<br />
+說明 $\mathfrak{E}_k(\Gamma)$ 在 $k = 0,\ldots, 5$ 的時候都恰只有一個基本子圖。<br />
 計算 $A$ 的特徵多項式。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; -a_5 \\
+    1 &amp; 0 &amp; 0 &amp; 0 &amp; -a_4 \\
+    0 &amp; 1 &amp; 0 &amp; 0 &amp; -a_3 \\
+    0 &amp; 0 &amp; 1 &amp; 0 &amp; -a_2 \\
+    0 &amp; 0 &amp; 0 &amp; 1 &amp; -a_1
+    \end{bmatrix}
+$$<p>and $\Gamma$ its weighted directed graph.  Show that $\mathfrak{E}_k(\Gamma)$ is empty for $k = 0,\ldots, 4$ and $\mathfrak{E}_5(\Gamma)$ contains only one elementary subgraph.  Use these facts to find the characteristic polynomial of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14939,7 +14992,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
@@ -14950,9 +15003,23 @@ $$
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 \\
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 \\
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0
-    \end{bmatrix}
+    \end{bmatrix}.
+$$<p>計算 $A$ 的特徵多項式。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-計算 $A$ 的特徵多項式。</p>
+    A = \begin{bmatrix}
+    0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0
+    \end{bmatrix}.
+$$<p>Find the characteristic polynomial of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14964,7 +15031,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
@@ -14975,9 +15042,23 @@ $$
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 \\
     0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 \\
     1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0
-    \end{bmatrix}
+    \end{bmatrix}.
+$$<p>計算 $A$ 的特徵多項式。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-計算 $A$ 的特徵多項式。</p>
+    A = \begin{bmatrix}
+    0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+    1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 \\
+    1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0
+    \end{bmatrix}.
+$$<p>Find the characteristic polynomial of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14989,17 +15070,25 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $n_1$ 和 $n_2$ 為兩正整數。<br>
-令
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $n_1$ 和 $n_2$ 為兩正整數。<br />
+令</p>
 $$
     M = \begin{bmatrix}
     O_{n_1,n_1} &amp; B \\
     A &amp; O_{n_2,n_2}
     \end{bmatrix}
-$$
-且 $\Gamma$ 為其賦權有向圖。<br>
-說明 $\mathfrak{E}_k(\Gamma)$ 在 $k$ 不是偶數時都是空集合，<br>
+$$<p>且 $\Gamma$ 為其賦權有向圖。<br />
+說明 $\mathfrak{E}_k(\Gamma)$ 在 $k$ 不是偶數時都是空集合，<br />
 因此 $s_k(M) = 0$。</p>
+<!-- eng start -->
+<p>Let $n_1$ and $n_2$ be positive integers.  Let</p>
+$$
+    M = \begin{bmatrix}
+    O_{n_1,n_1} &amp; B \\
+    A &amp; O_{n_2,n_2}
+    \end{bmatrix}
+$$<p>and $\Gamma$ its weighted directed graph.  Show that $\mathfrak{E}_k(\Gamma)$ is empty whenever $k$ is not even, so $s_k(M) = 0$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15011,18 +15100,27 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $n_1$、$n_2$、和 $n_3$ 為正整數。<br>
-令
+<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>令 $n_1$、$n_2$、和 $n_3$ 為正整數。<br />
+令</p>
 $$
     M = \begin{bmatrix}
     O_{n_1,n_1} &amp; B &amp; O \\
     O &amp; O_{n_2,n_2} &amp; C \\
     A &amp; O &amp; O_{n_3,n_3}
     \end{bmatrix}
-$$
-且 $\Gamma$ 為其賦權有向圖。<br>
-說明 $\mathfrak{E}_k(\Gamma)$ 在 $k$ 不是 $3$ 的倍數時都是空集合，<br>
+$$<p>且 $\Gamma$ 為其賦權有向圖。<br />
+說明 $\mathfrak{E}_k(\Gamma)$ 在 $k$ 不是 $3$ 的倍數時都是空集合，<br />
 因此 $s_k(M) = 0$。</p>
+<!-- eng start -->
+<p>Let $n_1$, $n_2$, and $n_3$ be positive integers.  Let</p>
+$$
+    M = \begin{bmatrix}
+    O_{n_1,n_1} &amp; B &amp; O \\
+    O &amp; O_{n_2,n_2} &amp; C \\
+    A &amp; O &amp; O_{n_3,n_3}
+    \end{bmatrix}
+$$<p>and $\Gamma$ its weighted directed graph.  Show that $\mathfrak{E}_k(\Gamma)$ is empty whenever $k$ is not a multiple of $3$, so $s_k(M) = 0$.<br />
+&lt;!-- eng end --</p>
 
 </div>
 </div>

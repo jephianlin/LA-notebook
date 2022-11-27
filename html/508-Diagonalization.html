@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E7%9F%A9%E9%99%A3%E5%B0%8D%E8%A7%92%E5%8C%96">&#30697;&#38499;&#23565;&#35282;&#21270;<a class="anchor-link" href="#%E7%9F%A9%E9%99%A3%E5%B0%8D%E8%A7%92%E5%8C%96">&#182;</a></h1>
+<h1 id="%E7%9F%A9%E9%99%A3%E5%B0%8D%E8%A7%92%E5%8C%96">&#30697;&#38499;&#23565;&#35282;&#21270;<a class="anchor-link" href="#%E7%9F%A9%E9%99%A3%E5%B0%8D%E8%A7%92%E5%8C%96">&#182;</a></h1><p>Diagonalization</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14630,7 +14651,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\vspan}{\operatorname{span}}
 \newcommand{\Vol}{\operatorname{Vol}}
 \newcommand{\sgn}{\operatorname{sgn}}
-\newcommand{\idmap}{\operatorname{id}}$</p>
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14669,8 +14694,8 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We know that an $n\times n$ matrix is diagonalizable if and only if there is a basis of $\mathbb{R}^n$ composed of eigenvectors.<br>
-We also know how to find the eigenvalues through the characteristic polynomial.<br>
+<p>We know that an $n\times n$ matrix is diagonalizable if and only if there is a basis of $\mathbb{R}^n$ composed of eigenvectors.<br />
+We also know how to find the eigenvalues through the characteristic polynomial.<br />
 Indeed, that is all we need to perform the diagonalization of a matrix.</p>
 
 </div>
@@ -14683,16 +14708,16 @@ Indeed, that is all we need to perform the diagonalization of a matrix.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix.<br>
+<p>Let $A$ be an $n\times n$ matrix.<br />
 Here are the steps for its diagonalization:</p>
 <ol>
-<li>Calculate the characteristic polynomial $p_A(x) = \det(A - xI)$ and solve the roots for $\spec(A)$.  </li>
-<li>For each $\lambda\in\spec(A)$, find a basis $\beta_\lambda$ for $\ker(A - \lambda I)$.  </li>
-<li>Let $\beta$ be the union of all such $\beta_\lambda$.  </li>
-<li>If $\beta$ is a basis of $\mathbb{R}^n$, then $A$ can be diagonalized through $\beta$.<br>
-That is, $[f_A]_\beta^\beta = D$ is a diagonal matrix.<br>
-Equivalently, $D = Q^{-1}AQ$, where $Q$ is the matrix whose columns are the vectors in $\beta$.  </li>
+<li>Calculate the characteristic polynomial $p_A(x) = \det(A - xI)$ and solve the roots for $\spec(A)$.</li>
+<li>For each $\lambda\in\spec(A)$, find a basis $\beta_\lambda$ for $\ker(A - \lambda I)$.</li>
+<li>Let $\beta$ be the union of all such $\beta_\lambda$.</li>
+<li>If $\beta$ is a basis of $\mathbb{R}^n$, then $A$ can be diagonalized through $\beta$.</li>
 </ol>
+<p>That is, $[f_A]_\beta^\beta = D$ is a diagonal matrix.<br />
+Equivalently, $D = Q^{-1}AQ$, where $Q$ is the matrix whose columns are the vectors in $\beta$.</p>
 
 </div>
 </div>
@@ -14704,7 +14729,7 @@ Equivalently, $D = Q^{-1}AQ$, where $Q$ is the matrix whose columns are the vect
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>If $\beta = \{\bv_1, \ldots, \bv_n\}$ is a basis of $\mathbb{R}^n$ such $\bv_i$ is an eigenvector of $A$ with respect to $\lambda_i$ for all $i$.<br>
+<h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>If $\beta = \{\bv_1, \ldots, \bv_n\}$ is a basis of $\mathbb{R}^n$ such $\bv_i$ is an eigenvector of $A$ with respect to $\lambda_i$ for all $i$.<br />
 Then the equalities $A\bv_i = \lambda_i\bv_i$ is equivalent to</p>
 $$
     AQ = 
@@ -14744,8 +14769,8 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>The above process might not able to finish for a few different reasons:</p>
 <ul>
-<li>The root of $p_A(x)$ might not be real.  If we instite the basis should be using real vectors, then it cannot be done.  </li>
-<li>It is possible that $\beta_\lambda$ does not provide enough independent eigenvectors, so $\beta$ is not a bsis of $\mathbb{R}^n$.  </li>
+<li>The root of $p_A(x)$ might not be real.  If we instite the basis should be using real vectors, then it cannot be done.</li>
+<li>It is possible that $\beta_\lambda$ does not provide enough independent eigenvectors, so $\beta$ is not a bsis of $\mathbb{R}^n$.</li>
 </ul>
 
 </div>
@@ -14758,14 +14783,13 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Here is an example of diagonalizing<br>
+<p>Here is an example of diagonalizing</p>
 $$
     A = \begin{bmatrix}
     2 &amp; 3 \\
     3 &amp; 2
     \end{bmatrix}.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14777,7 +14801,7 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><em>Solve for the eigenvalues</em>:</p>
-<p>The characteristic polynomial of $A$ is<br>
+<p>The characteristic polynomial of $A$ is</p>
 $$
     p_A(x) = 
     \det\begin{bmatrix}
@@ -14785,8 +14809,7 @@ $$
     3 &amp; 2 - x
     \end{bmatrix} 
     = x^2 - 4x - 5,
-$$
-which as roots $-1, 5$.</p>
+$$<p>which as roots $-1, 5$.</p>
 
 </div>
 </div>
@@ -14799,15 +14822,13 @@ which as roots $-1, 5$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><em>Solve for the eigenvectors</em>:</p>
-<p>For $\lambda = 5$, calculate the basis of $\ker(A - 5I)$ and get<br>
+<p>For $\lambda = 5$, calculate the basis of $\ker(A - 5I)$ and get</p>
 $$
     \ker(A - 5I) = \ker \begin{bmatrix} -3 &amp; 3 \\ 3 &amp; -3 \end{bmatrix} = \vspan\left\{\begin{bmatrix} 1 \\ 1 \end{bmatrix}\right\}.
-$$</p>
-<p>For $\lambda = -1$, calculate the basis of $\ker(A + I)$ and get<br>
+$$<p>For $\lambda = -1$, calculate the basis of $\ker(A + I)$ and get</p>
 $$
     \ker(A + I) = \ker \begin{bmatrix} 3 &amp; 3 \\ 3 &amp; 3 \end{bmatrix} = \vspan\left\{\begin{bmatrix} 1 \\ -1 \end{bmatrix}\right\}.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14818,7 +14839,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>By setting<br>
+<p>By setting</p>
 $$
     \beta = \left\{
     \begin{bmatrix} 1 \\ 1 \end{bmatrix}, 
@@ -14828,16 +14849,14 @@ $$
      1 &amp; 1 \\
      1 &amp; -1
     \end{bmatrix},
-$$
-we get<br>
+$$<p>we get</p>
 $$
     [f_A]_\beta^\beta = Q^{-1}AQ = 
     \begin{bmatrix}
     5 &amp; 0 \\
     0 &amp; -1
     \end{bmatrix}.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14875,6 +14894,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14923,6 +14945,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>求出 $A$ 的所有特徵值。</p>
+<!-- eng start -->
+<p>Find all the eigenvalues of $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14935,6 +14960,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>對每個特徵值，求出對應的特徵向量。</p>
+<!-- eng start -->
+<p>For each of the eigenvalues, find the corresponding eigenvector.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14947,6 +14975,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>求出 $Q$ 使得 $D = Q^{-1}AQ$ 是一個對角矩陣。</p>
+<!-- eng start -->
+<p>Find a matrix $Q$ such that $D = Q^{-1}AQ$ is a diagonal matrix.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14969,8 +15000,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>將以下矩陣 $A$ 對角化。<br>
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>將以下矩陣 $A$ 對角化。<br />
 （求出可逆矩陣 $Q$ 和對角矩陣 $D$ 使得 $D = Q^{-1}AQ$。）</p>
+<!-- eng start -->
+<p>Diagonalize the following matrices $A$.  (That is, find an invertible matrix $Q$ and a diagonal matrix $D$ such that $D = Q^{-1}AQ$.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15014,8 +15048,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>將以下矩陣 $A$ 對角化。<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>將以下矩陣 $A$ 對角化。<br />
 （求出可逆矩陣 $Q$ 和對角矩陣 $D$ 使得 $D = Q^{-1}AQ$。）</p>
+<!-- eng start -->
+<p>Diagonalize the following matrices $A$.  (That is, find an invertible matrix $Q$ and a diagonal matrix $D$ such that $D = Q^{-1}AQ$.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15078,8 +15115,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>將以下矩陣 $A$ 對角化，<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>將以下矩陣 $A$ 對角化，<br />
 並說明 $f_A$ 的作用。</p>
+<!-- eng start -->
+<p>Diagonalize the following matrices $A$ and describe the effect of $f_A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15125,17 +15165,26 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     3 &amp; 1 &amp; 0 \\
     0 &amp; 3 &amp; 1 \\
     0 &amp; 0 &amp; 3
     \end{bmatrix}.
+$$<p>說明 $A$ 矩陣只有一個特徵值 $3$（重根三次），<br />
+但 $\ker(A - 3I)$ 的維度只有 $1$，<br />
+找不到足夠的特徵向量將 $A$ 對角化。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-說明 $A$ 矩陣只有一個特徵值 $3$（重根三次），<br>
-但 $\ker(A - 3I)$ 的維度只有 $1$，<br>
-找不到足夠的向量將 $A$ 對角化。</p>
+    A = \begin{bmatrix}
+    3 &amp; 1 &amp; 0 \\
+    0 &amp; 3 &amp; 1 \\
+    0 &amp; 0 &amp; 3
+    \end{bmatrix}.
+$$<p>Show that $A$ only has one eigenvalue $3$ (repeated three times), but $\ker(A - 3I)$ has dimension $1$ and we do not have enough independent eigenvectors to diagonalize $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15147,7 +15196,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
      0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
@@ -15156,9 +15205,21 @@ $$
      0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
      1 &amp; 0 &amp; 0 &amp; 0 &amp; 0
     \end{bmatrix}
-$$
-並令 $\zeta = e^{\frac{2\pi}{5}i}$ 為 $1$ 的五次方根。</p>
+$$<p>並令 $\zeta = e^{\frac{2\pi}{5}i}$ 為 $1$ 的五次方根。</p>
 <p>這個練習告訴我們，如果運氣很好有找到所有的特徵向量，則不見得要解特徵多項式也可以找得到 $\spec(A)$。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}
+     0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+     0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+     0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+     0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+     1 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+    \end{bmatrix}
+$$<p>and let $\zeta = e^{\frac{2\pi}{5}i}$ be the fifth roots of $1$.</p>
+<p>Through the following exercises, we will see that $\spec(A)$ can also be found by the eigenvectors (if we know them by luck) rather than the characteristic polynomial.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15170,7 +15231,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令</p>
 $$
     Q = \begin{bmatrix}
      1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\
@@ -15179,10 +15240,22 @@ $$
      1 &amp; \zeta^3 &amp; \zeta^6 &amp; \zeta^9 &amp; \zeta^{12} \\
      1 &amp; \zeta^4 &amp; \zeta^8 &amp; \zeta^{12} &amp; \zeta^{16} \\
     \end{bmatrix}.
-$$
-驗證 $Q^*Q = 5I_5$，<br>
+$$<p>驗證 $Q^*Q = 5I_5$，<br />
 因此 $Q$ 可逆且其行向量集合是一組 $\mathbb{C}^5$ 的基底。</p>
 <p>（這裡 $Q^*$ 的意思是將 $Q$ 轉置後再逐項取共軛。）</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    Q = \begin{bmatrix}
+     1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\
+     1 &amp; \zeta &amp; \zeta^2 &amp; \zeta^3 &amp; \zeta^4 \\
+     1 &amp; \zeta^2 &amp; \zeta^4 &amp; \zeta^6 &amp; \zeta^8 \\
+     1 &amp; \zeta^3 &amp; \zeta^6 &amp; \zeta^9 &amp; \zeta^{12} \\
+     1 &amp; \zeta^4 &amp; \zeta^8 &amp; \zeta^{12} &amp; \zeta^{16} \\
+    \end{bmatrix}.
+$$<p>Verify that $Q^*Q = 5I_5$.  Therefore, $Q$ is invertible and it columns form a basis of $\mathbb{C}^5$.</p>
+<p>(Here $Q^*$ is the conjugate transpose of $Q$.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15194,8 +15267,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>說明 $Q$ 的每個行向量都是 $A$ 的特徵向量，並找出對應的特徵值。<br>
+<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>說明 $Q$ 的每個行向量都是 $A$ 的特徵向量，並找出對應的特徵值。<br />
 利用這點將 $A$ 對角化。</p>
+<!-- eng start -->
+<p>Show that each column of $Q$ is an eigenvector of $A$ and find the corresponding eigenvalue.  Use them to diagonalize $A$.</p>
+<!-- eng end -->
 
 </div>
 </div>

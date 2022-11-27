@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E7%9F%A9%E9%99%A3%E6%8C%87%E6%95%B8">&#30697;&#38499;&#25351;&#25976;<a class="anchor-link" href="#%E7%9F%A9%E9%99%A3%E6%8C%87%E6%95%B8">&#182;</a></h1>
+<h1 id="%E7%9F%A9%E9%99%A3%E6%8C%87%E6%95%B8">&#30697;&#38499;&#25351;&#25976;<a class="anchor-link" href="#%E7%9F%A9%E9%99%A3%E6%8C%87%E6%95%B8">&#182;</a></h1><p>Matrix exponential</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14630,7 +14651,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\vspan}{\operatorname{span}}
 \newcommand{\Vol}{\operatorname{Vol}}
 \newcommand{\sgn}{\operatorname{sgn}}
-\newcommand{\idmap}{\operatorname{id}}$</p>
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14669,11 +14694,10 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We know the exponential function can be written as<br>
+<p>We know the exponential function can be written as</p>
 $$
     e^x = \frac{1}{0!} + \frac{1}{1!}x + \frac{1}{2!}x^2 + \cdots.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14684,11 +14708,10 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In a similar way, the <strong>matrix exponential</strong> of a square matrix $A$ is defined as<br>
+<p>In a similar way, the <strong>matrix exponential</strong> of a square matrix $A$ is defined as</p>
 $$
     e^A = \frac{1}{0!}I + \frac{1}{1!}A + \frac{1}{2!}A^2 + \cdots.  
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14699,7 +14722,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The computation of the matrix exponential can be a tedious work, at least by hand.<br>
+<p>The computation of the matrix exponential can be a tedious work, at least by hand.<br />
 However, when $D$ is a diagonal matrix, its matrix exponential can be easily obtained by</p>
 $$
     \begin{aligned}
@@ -14750,8 +14773,8 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Moreover, suppose $A$ is diagonalizable as $D = Q^{-1}AQ$ and $A = QDQ^{-1}$.<br>
-Then the matrix exponential can be computed as<br>
+<p>Moreover, suppose $A$ is diagonalizable as $D = Q^{-1}AQ$ and $A = QDQ^{-1}$.<br />
+Then the matrix exponential can be computed as</p>
 $$
     \begin{aligned}
     e^A &amp;=  \frac{1}{0!}I + \frac{1}{1!}A + \frac{1}{2!}A^2 + \cdots \\
@@ -14759,8 +14782,7 @@ $$
      &amp;= Q\left(\frac{1}{0!}I + \frac{1}{1!}D + \frac{1}{2!}D^2 + \cdots \right)Q^{-1} \\
      &amp;= Qe^DQ^{-1}.  
     \end{aligned}
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14798,9 +14820,12 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
-令 $s_k = \sum_{r = 0}^k \frac{1}{r!}A^r$ 為計算 $e^A$ 時的部份和。<br>
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br />
+令 $s_k = \sum_{r = 0}^k \frac{1}{r!}A^r$ 為計算 $e^A$ 時的部份和。<br />
 定義 $\|B - C\|^2$ 為 $B - C$ 矩陣各項的平方和。</p>
+<!-- eng start -->
+<p>Run the code below.  Let $s_k = \sum_{r = 0}^k \frac{1}{r!}A^r$ be the partial sum of $e^A$.  Define $\|B - C\|^2$ as the square sum of entries of $B - C$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14852,6 +14877,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>計算 $\|s_5 - s_{10}\|^2$。</p>
+<!-- eng start -->
+<p>Find 計算 $\|s_5 - s_{10}\|^2$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14864,6 +14892,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>計算 $\|s_{10} - s_{15}\|^2$。</p>
+<!-- eng start -->
+<p>Find 計算 $\|s_{10} - s_{15}\|^2$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14875,10 +14906,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>在高等微積分會算到，在一個完備的空間裡<br>
-（像是 $\mathbb{R}$ 或是 $\mathbb{R}^n$ 或是跟矩陣長很像的 $\mathbb{R}^{n^2}$），<br>
-如果一個數列有 $\| s_n - s_m \|$ 隨著 $n,m$ 變大而距離愈來愈小，<br>
-則 $s_n$ 數列會收斂。</p>
+<h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>在高等微積分會學到，在一個完備的空間裡<br />
+（像是 $\mathbb{R}$ 或是 $\mathbb{R}^n$ 或是跟矩陣長很像的 $\mathbb{R}^{n^2}$），<br />
+如果一個數列有 $\| s_n - s_m \|$ 隨著 $n,m$ 變大而距離愈來愈小，<br />
+則 $\{s_n\}$ 數列會收斂。</p>
+<!-- eng start -->
+<p>In the future analysis courses, we will learn that in a complete space (such as $\mathbb{R}$, $\mathbb{R}^n$, or $\mathbb{R}^{n^2}$, which has a similar stucture as matrices), any sequence $\{s_n\}$ with $\| s_n - s_m \|$ going to zero as $n,m$ goes to infinity will converge.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14902,6 +14936,9 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $O_n$ 為 $n\times n$ 的零矩陣，用定義計算 $e^{O_n}$。</p>
+<!-- eng start -->
+<p>Let $O_n$ be the $n\times n$ zero matrix.  Find $e^{O_n}$ by definition.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14913,14 +14950,22 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
      0 &amp; -1 \\
      1 &amp; 0
     \end{bmatrix}.
+$$<p>依照以下步驟求出 $e^{tA}$，其中 $t$ 是變數。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-依照以下步驟求出 $e^{tA}$，其中 $t$ 是變數。</p>
+    A = \begin{bmatrix}
+     0 &amp; -1 \\
+     1 &amp; 0
+    \end{bmatrix}.
+$$<p>Use the given instructions to find $e^{tA}$, where $t$ is a variable.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14933,6 +14978,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>計算 $A, A^2, A^3, A^4$ 並找出 $A^n$ 的規律。</p>
+<!-- eng start -->
+<p>Find $A, A^2, A^3, A^4$.  Then find a pattern of $A^n$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14944,7 +14992,10 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>利用定義求出 $e^{tA}$，並 $t$ 在旋轉矩陣中扮演的角色。</p>
+<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>利用定義求出 $e^{tA}$，並解釋 $t$ 在旋轉矩陣中扮演的角色。</p>
+<!-- eng start -->
+<p>Find $e^{tA}$ by definition.  Then explain what is the geometric meaning of $t$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14957,6 +15008,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>對以下矩陣 $A$ 求出 $e^A$。</p>
+<!-- eng start -->
+<p>For the following matrices $A$, find $e^A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14993,7 +15047,34 @@ $$
     5 &amp; -1 \\
     -1 &amp; 5
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    4 &amp; 0 \\
+    0 &amp; 6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    5 &amp; -1 \\
+    -1 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    5 &amp; -1 \\
+    -1 &amp; 5
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15029,7 +15110,34 @@ $$
     -1 &amp; 5 \\
     5 &amp; -1
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    4 &amp; 0 \\
+    0 &amp; -6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    -1 &amp; 5 \\
+    5 &amp; -1
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    -1 &amp; 5 \\
+    5 &amp; -1
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15065,7 +15173,34 @@ $$
     1 &amp; 1 \\
     1 &amp; 1
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; 0
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; 1
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; -1
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; 1
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15077,6 +15212,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>對以下矩陣 $A$ 求出 $e^A$。</p>
+<!-- eng start -->
+<p>For the following matrices $A$, find $e^A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15118,7 +15256,39 @@ $$
     0 &amp; 4 &amp; -1 \\
     -1 &amp; -1 &amp; 5
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 4 &amp; 0 \\
+    0 &amp; 0 &amp; 6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    4 &amp; 0 &amp; -1 \\
+    0 &amp; 4 &amp; -1 \\
+    -1 &amp; -1 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    4 &amp; 0 &amp; -1 \\
+    0 &amp; 4 &amp; -1 \\
+    -1 &amp; -1 &amp; 5
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15159,7 +15329,39 @@ $$
     -2 &amp; 2 &amp; 3 \\
     3 &amp; 3 &amp; -3
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    3 &amp; 0 &amp; 0 \\
+    0 &amp; 4 &amp; 0 \\
+    0 &amp; 0 &amp; -6
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    2 &amp; -2 &amp; 3 \\
+    -2 &amp; 2 &amp; 3 \\
+    3 &amp; 3 &amp; -3
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; -1 &amp; 1 \\
+    1 &amp; 0 &amp; -2
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    2 &amp; -2 &amp; 3 \\
+    -2 &amp; 2 &amp; 3 \\
+    3 &amp; 3 &amp; -3
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15171,6 +15373,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>對以下矩陣 $A$ 求出 $e^A$。</p>
+<!-- eng start -->
+<p>For the following matrices $A$, find $e^A$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15207,7 +15412,34 @@ $$
     0 &amp; 1 \\
     -6 &amp; 5
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; 3
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    3 &amp; 2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -6 &amp; 5
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    3 &amp; 2
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    0 &amp; 1 \\
+    -6 &amp; 5
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15243,7 +15475,34 @@ $$
     0 &amp; 1 \\
     -4 &amp; 0
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    2 &amp; 0 \\
+    0 &amp; -2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; -2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 0
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 &amp; 1 \\
+    2 &amp; -2
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 0
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15279,7 +15538,34 @@ $$
     0 &amp; 1 \\
     -4 &amp; 4
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    2 &amp; 1 \\
+    0 &amp; 2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    2 &amp; -1 \\
+    4 &amp; 0
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 4
+    \end{bmatrix}
+    \begin{bmatrix}
+    2 &amp; -1 \\
+    4 &amp; 0
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    0 &amp; 1 \\
+    -4 &amp; 4
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15315,7 +15601,34 @@ $$
     0 &amp; 1 \\
     -9 &amp; 6
     \end{bmatrix}.
+$$<!-- eng start -->
+<p>It is known that</p>
 $$
+    \begin{bmatrix}
+    3 &amp; 1 \\
+    0 &amp; 3
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+    3 &amp; -1 \\
+    9 &amp; 0
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+    0 &amp; 1 \\
+    -9 &amp; 6
+    \end{bmatrix}
+    \begin{bmatrix}
+    3 &amp; -1 \\
+    9 &amp; 0
+    \end{bmatrix}.
+$$<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    0 &amp; 1 \\
+    -9 &amp; 6
+    \end{bmatrix}.
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15326,8 +15639,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>經由以下步驟說明 $\dot{\bx} = A\bx$ 的解就是 $e^{tA}\bc$，<br>
+<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>經由以下步驟說明 $\dot{\bx} = A\bx$ 的解就是 $e^{tA}\bc$，<br />
 其中 $\bc = (c_1,\ldots, c_n)$ 是一個控制常數的向量。</p>
+<!-- eng start -->
+<p>Use the given instructions to show that $e^{tA}\bc$ represents all the solutions of the equation $\dot{\bx} = A\bx$, where $\bc = (c_1,\ldots, c_n)$ is a vector of constant terms.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15339,10 +15655,13 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>若 $A$ 可被對角化為 $D = Q^{-1}AQ$。<br>
-令 $Q\by = \bx$。<br>
-首先說明 $\dot{\by} = D\by$ 的解就是 $e^{Dt}\bd$，<br>
+<h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>若 $A$ 可被對角化為 $D = Q^{-1}AQ$。<br />
+令 $Q\by = \bx$。<br />
+首先說明 $\dot{\by} = D\by$ 的解就是 $e^{Dt}\bd$，<br />
 其中 $\bd = (d_1,\ldots, d_n)$ 可以是任何常數。</p>
+<!-- eng start -->
+<p>Suppose $A$ is diagonalizable and has $D = Q^{-1}AQ$ for some diagonal matrix $D$.  Let $Q\by = \bx$.  First, show that $e^{Dt}\bd$ represents all the solutions of the equation $\dot{\by} = D\by$, where $\bd = (d_1,\ldots, d_n)$ is a vector of constant terms.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15354,8 +15673,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>藉由 $\bx = Q^{-1}\by$ 來得到 $\bx = e^{tA}\bc$，<br>
+<h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>藉由 $\bx = Q^{-1}\by$ 來得到 $\bx = e^{tA}\bc$，<br />
 其中 $\bc = Q\bd$ 是一組獨立的常數（因為 $Q$ 可逆）。</p>
+<!-- eng start -->
+<p>Let $\bx = Q^{-1}\by$.  Explain why $\bx = e^{tA}\bc$ represents all the solutions to the equation, where $\bc = Q\bd$ is composed of independent constants (since $Q$ is invertible).</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15368,6 +15690,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Remark">Remark<a class="anchor-link" href="#Remark">&#182;</a></h5><p>如果 $A$ 不可對角化則必須仰賴喬丹標準型，但 $e^{tA}\bc$ 這個公式還是正確的。</p>
+<!-- eng start -->
+<p>If $A$ is not diagonalizable, then we need to find the Jordan canonical form of $A$, but the formula $e^{tA}\bc$ is still the general solution.</p>
+<!-- eng end -->
 
 </div>
 </div>

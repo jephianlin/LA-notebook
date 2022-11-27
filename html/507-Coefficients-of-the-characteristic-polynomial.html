@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14454,13 +14455,14 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
-}
-
-.highlight  {
-  margin: 0.4em;
 }
 
 /* Input area styling */
@@ -14472,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14515,11 +14534,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14573,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14593,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E7%89%B9%E5%BE%B5%E5%A4%9A%E9%A0%85%E5%BC%8F%E4%BF%82%E6%95%B8">&#29305;&#24501;&#22810;&#38917;&#24335;&#20418;&#25976;<a class="anchor-link" href="#%E7%89%B9%E5%BE%B5%E5%A4%9A%E9%A0%85%E5%BC%8F%E4%BF%82%E6%95%B8">&#182;</a></h1>
+<h1 id="%E7%89%B9%E5%BE%B5%E5%A4%9A%E9%A0%85%E5%BC%8F%E4%BF%82%E6%95%B8">&#29305;&#24501;&#22810;&#38917;&#24335;&#20418;&#25976;<a class="anchor-link" href="#%E7%89%B9%E5%BE%B5%E5%A4%9A%E9%A0%85%E5%BC%8F%E4%BF%82%E6%95%B8">&#182;</a></h1><p>Coefficients of the characteristic polynomial</p>
+
 </div>
 </div>
 </div>
@@ -14584,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14630,7 +14651,11 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\vspan}{\operatorname{span}}
 \newcommand{\Vol}{\operatorname{Vol}}
 \newcommand{\sgn}{\operatorname{sgn}}
-\newcommand{\idmap}{\operatorname{id}}$</p>
+\newcommand{\idmap}{\operatorname{id}}
+\newcommand{\am}{\operatorname{am}}
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14669,9 +14694,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ matrix.<br>
-Let $\alpha \subseteq [n]$ be a subset of indices.<br>
-We let $A[\alpha]$ be the submatrix of $A$ induced on rows and columns in $\alpha$.<br>
+<p>Let $A$ be an $n\times n$ matrix.<br />
+Let $\alpha \subseteq [n]$ be a subset of indices.<br />
+We let $A[\alpha]$ be the submatrix of $A$ induced on rows and columns in $\alpha$.<br />
 Such a matrix is called a <strong>principal submatrix</strong> of $A$, and its determinant is called a <strong>principal minor</strong>.</p>
 
 </div>
@@ -14684,13 +14709,12 @@ Such a matrix is called a <strong>principal submatrix</strong> of $A$, and its d
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $s_k = s_k(A)$ be the sum of all $k\times k$ principal minors.<br>
-Vacuously, we define $s_0 = 1$.<br>
-Then<br>
+<p>Let $s_k = s_k(A)$ be the sum of all $k\times k$ principal minors.<br />
+Vacuously, we define $s_0 = 1$.<br />
+Then</p>
 $$
     \det(A - xI) = s_0(-x)^n + s_1(-x)^{n-1} + \cdots + s_n.
-$$</p>
-
+$$
 </div>
 </div>
 </div>
@@ -14701,8 +14725,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In particular,<br>
-$s_1 = \tr(A)$ is the sum of all diagonal entries of $A$, and<br>
+<p>In particular,<br />
+$s_1 = \tr(A)$ is the sum of all diagonal entries of $A$, and<br />
 $s_n = \det(A)$.</p>
 
 </div>
@@ -14715,7 +14739,7 @@ $s_n = \det(A)$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>This identity follows from the expansion of the characteristic polynomial by the distributive law on each column.<br>
+<p>This identity follows from the expansion of the characteristic polynomial by the distributive law on each column.<br />
 Here is an example.</p>
 $$
     \begin{aligned}
@@ -14812,6 +14836,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
+<!-- eng start -->
+<p>Run the code below.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14869,6 +14896,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>列出所有的 $3\times 3$ 主子矩陣，並計算 $s_3$。</p>
+<!-- eng start -->
+<p>List all the $3\times 3$ principal submatrices and find $s_3$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14881,6 +14911,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>列出所有的 $2\times 2$ 主子矩陣，並計算 $s_2$。</p>
+<!-- eng start -->
+<p>List all the $2\times 2$ principal submatrices and find $s_2$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14893,6 +14926,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>列出所有的 $1\times 1$ 主子矩陣，並計算 $s_1$。</p>
+<!-- eng start -->
+<p>List all the $1\times 1$ principal submatrices and find $s_1$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14905,6 +14941,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(d)">Exercise 1(d)<a class="anchor-link" href="#Exercise-1(d)">&#182;</a></h5><p>計算 $A$ 的特徵多項式及 $\spec(A)$。</p>
+<!-- eng start -->
+<p>Find the characteristic polynomial of $A$ and $\spec(A)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -14928,6 +14967,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>利用 $s_k$ 計算以下矩陣 $A$ 的特徵多項式以及 $\spec(A)$。</p>
+<!-- eng start -->
+<p>Find the characteristic polynomial of $A$ and $\spec(A)$ through $s_k$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15004,6 +15046,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>利用 $s_k$ 計算以下矩陣 $A$ 的特徵多項式以及 $\spec(A)$。</p>
+<!-- eng start -->
+<p>Find the characteristic polynomial of $A$ and $\spec(A)$ through $s_k$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15066,9 +15111,12 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $J_n$ 為 $n\times n$ 的全 $1$ 矩陣。<br>
-對每一個 $k = 0,\ldots, n$，計算 $s_k$，<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $J_n$ 為 $n\times n$ 的全 $1$ 矩陣。<br />
+對每一個 $k = 0,\ldots, n$，計算 $s_k$，<br />
 並藉此求 $J_n$ 的特徵多項式及 $\spec(J_n)$。</p>
+<!-- eng start -->
+<p>Let $J_n$ be the $n\times n$ all-ones matrix.  For each of $k = 0,\ldots, n$, find $s_k$.  Then use them to find the characteristic polynomial of $J_n$ and $\spec(J_n)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15080,15 +15128,23 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $J_{m,n}$ 為 $m\times n$ 的全 $1$ 矩陣，而<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $J_{m,n}$ 為 $m\times n$ 的全 $1$ 矩陣，而</p>
 $$
     A = \begin{bmatrix}
     O_{n,n} &amp; J_{n,m} \\
     J_{m,n} &amp; O_{m,m}
     \end{bmatrix}.
-$$
-對每一個 $k = 0,\ldots, n$，計算 $s_k$，<br>
+$$<p>對每一個 $k = 0,\ldots, n$，計算 $s_k$，<br />
 並藉此求 $A$ 的特徵多項式及 $\spec(A)$。</p>
+<!-- eng start -->
+<p>Let $J_{m,n}$ be the $m\times n$ all-ones matrix and</p>
+$$
+    A = \begin{bmatrix}
+    O_{n,n} &amp; J_{n,m} \\
+    J_{m,n} &amp; O_{m,m}
+    \end{bmatrix}.
+$$<p>For each of $k = 0,\ldots, n$, find $s_k$.  Then use them to find the characteristic polynomial of $J_n$ and $\spec(J_n)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15100,12 +15156,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br>
-若特徵多項式 $p_A(x)$ 的根為 $\lambda_1,\ldots,\lambda_n$，則<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br />
+若特徵多項式 $p_A(x) = s_0(-x)^n + s_1(-x)^{n-1} + \cdots + s_n$ 的根為 $\lambda_1,\ldots,\lambda_n$，則</p>
 $$
     p_A(x) = (\lambda_1 - x) \cdots (\lambda_n - x).
-$$
-如此一來我們就有根與係數的關係<br>
+$$<p>如此一來我們就有根與係數的關係</p>
 $$
     \begin{aligned}
     s_0 &amp;= 1, \\
@@ -15114,7 +15169,20 @@ $$
     \vdots &amp; \\
     s_n &amp;= \lambda_1\cdots\lambda_n.
     \end{aligned}
-$$</p>
+$$<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix.  Let $\lambda_1,\ldots,\lambda_n$ be the roots of the characteristic polynomial $p(A) = s_0(-x)^n + s_1(-x)^{n-1} + \cdots + s_n$.  Then</p>
+$$
+    p_A(x) = (\lambda_1 - x) \cdots (\lambda_n - x).
+$$<p>Thus, Vieta's formulas describe the relations between the coefficients of a polynomial and its roots by</p>
+$$
+    \begin{aligned}
+    s_0 &amp;= 1, \\
+    s_1 &amp;= \lambda_1 + \cdots + \lambda_n, \\
+    s_2 &amp;= \sum_{i&lt;j}\lambda_i\lambda_j, \\
+    \vdots &amp; \\
+    s_n &amp;= \lambda_1\cdots\lambda_n.
+    \end{aligned}
+$$<!-- eng end -->
 
 </div>
 </div>
@@ -15126,12 +15194,16 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令 $J_n$ 為 $n\times n$ 的全 $1$ 矩陣。<br>
-若已知 $\spec(J_n)$ 中有 $n-1$ 個零，<br>
+<h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>令 $J_n$ 為 $n\times n$ 的全 $1$ 矩陣。<br />
+若已知 $\spec(J_n)$ 中有 $n-1$ 個零，<br />
 求最後一個特徵值。</p>
-<p>（未來會發現這是求 $\spec(J_n)$，<br>
-也可以反推特徵多項式，<br>
-所以請不要用先前提目的結果來計算這題。）</p>
+<p>（未來會發現這雖然是求 $\spec(J_n)$，<br />
+但也可以反推特徵多項式，<br />
+所以請不要用先前題目的結果來計算這題。）</p>
+<!-- eng start -->
+<p>Let $J_n$ be the $n\times n$ all-ones matrix.  It is known that $\spec(J_n)$ contains $n-1$ copies of $0$.  Find the last eigenvalues.</p>
+<p>(In the future we will see that $\spec(J_n)$ can be used to find the characteristic polynomial, so please do not use the previous results on the characteristic polynomial to solve this problem.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15143,18 +15215,27 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>令 $J_{m,n}$ 為 $m\times n$ 的全 $1$ 矩陣，而<br>
+<h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>令 $J_{m,n}$ 為 $m\times n$ 的全 $1$ 矩陣，而</p>
 $$
     A = \begin{bmatrix}
     O_{n,n} &amp; J_{n,m} \\
     J_{m,n} &amp; O_{m,m}
     \end{bmatrix}.
-$$
-若已知 $\spec(A)$ 中有 $n-2$ 個零，<br>
+$$<p>若已知 $\spec(A)$ 中有 $n-2$ 個零，<br />
 求最後兩個特徵值。</p>
-<p>（未來會發現這是求 $\spec(A)$，<br>
-也可以反推特徵多項式，<br>
+<p>（未來會發現這雖然是求 $\spec(A)$，<br />
+但也可以反推特徵多項式，<br />
 所以請不要用先前提目的結果來計算這題。）</p>
+<!-- eng start -->
+<p>Let $J_{m,n}$ be the $m\times n$ all-ones matrix and</p>
+$$
+    A = \begin{bmatrix}
+    O_{n,n} &amp; J_{n,m} \\
+    J_{m,n} &amp; O_{m,m}
+    \end{bmatrix}.
+$$<p>It is known that $\spec(J_n)$ contains $n-2$ copies of $0$.  Find the last two eigenvalues.</p>
+<p>(In the future we will see that $\spec(J_n)$ can be used to find the characteristic polynomial, so please do not use the previous results on the characteristic polynomial to solve this problem.)</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15166,11 +15247,15 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>證明若 $A$ 和 $B$ 相似<br>
-（也就是存在可逆的 $Q$ 使得 $B = Q^{-1}AQ$），<br>
+<h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>證明若 $A$ 和 $B$ 相似<br />
+（也就是存在可逆的 $Q$ 使得 $B = Q^{-1}AQ$），<br />
 則對每一個 $k = 0,\ldots, n$ 都有 $s_k(B) = s_k(A)$。</p>
-<p>因此我們也可以把任一線性函數 $f:V\rightarrow V$ 的 $s_k(f)$ 定義成 $s_k([f]_\beta^\beta)$，<br>
+<p>因此我們也可以把任一線性函數 $f:V\rightarrow V$ 的 $s_k(f)$ 定義成 $s_k([f]_\beta^\beta)$，<br />
 其中 $\beta$ 可以是 $V$ 的任意基底。</p>
+<!-- eng start -->
+<p>Show that if $A$ and $B$ are similar (meaning $B = Q^{-1}AQ$ for some invertible matrix $Q$), then $s_k(B) = s_k(A)$ for each $k = 0,\ldots, n$.</p>
+<p>Therefore, for any linear function $f:V\rightarrow V$, we may define $s_k(f)$ as $s_k([f]_\beta^\beta)$, where $\beta$ could be any basis.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15182,13 +15267,18 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-8">Exercise 8<a class="anchor-link" href="#Exercise-8">&#182;</a></h5><p>令 $A$ 與 $B$ 分別為 $m\times n$ 與 $n\times n$ 矩陣，且 $m\leq n$。<br>
-若 $\alpha\subseteq [n]$ 是一些下標的集合，<br>
-定義 $A[:,\alpha]$ 是由 $A$ 中 $\alpha$ 裡的那些行所組成的 $m\times |\alpha|$ 矩陣，<br>
+<h5 id="Exercise-8">Exercise 8<a class="anchor-link" href="#Exercise-8">&#182;</a></h5><p>令 $A$ 與 $B$ 分別為 $m\times n$ 與 $n\times n$ 矩陣，且 $m\leq n$。<br />
+若 $\alpha\subseteq [n]$ 是一些下標的集合，<br />
+定義 $A[:,\alpha]$ 是由 $A$ 中 $\alpha$ 裡的那些行所組成的 $m\times |\alpha|$ 矩陣，<br />
 而 $B[\alpha,:]$ 是由 $B$ 中 $\alpha$ 裡的那些列所組成的 $|\alpha|\times m$ 矩陣。</p>
 <h5 id="Theorem-(Cauchy%E2%80%93Binet-formula)">Theorem (Cauchy&#8211;Binet formula)<a class="anchor-link" href="#Theorem-(Cauchy%E2%80%93Binet-formula)">&#182;</a></h5>$$
     \det(AB) = \sum_{\substack{\alpha\subseteq [n] \\ |\alpha| = m}} \det(A[:,\alpha])\det(B[\alpha,:]).
-$$
+$$<!-- eng start -->
+<p>Let $A$ and $B$ be $m\times n$ and $n\times n$ matrices with $m\leq n$.  Let $\alpha\subseteq [n]$ be an index set.  Define $A[:,\alpha]$ as the $m\times |\alpha|$ matrix obtained from $A$ by collecting those columns in $\alpha$.  Similarly, define  $B[\alpha,:]$ as the $|\alpha|\times m$ matrix obtained from $A$ by collecting those rows in $\alpha$.</p>
+<h5 id="Theorem-(Cauchy%E2%80%93Binet-formula)">Theorem (Cauchy&#8211;Binet formula)<a class="anchor-link" href="#Theorem-(Cauchy%E2%80%93Binet-formula)">&#182;</a></h5>$$
+    \det(AB) = \sum_{\substack{\alpha\subseteq [n] \\ |\alpha| = m}} \det(A[:,\alpha])\det(B[\alpha,:]).
+$$<!-- eng end -->
+
 </div>
 </div>
 </div>
@@ -15199,7 +15289,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-8(a)">Exercise 8(a)<a class="anchor-link" href="#Exercise-8(a)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-8(a)">Exercise 8(a)<a class="anchor-link" href="#Exercise-8(a)">&#182;</a></h5><p>令</p>
 $$
     A = \begin{bmatrix}
     1 &amp; 2 &amp; 3 \\
@@ -15211,10 +15301,24 @@ $$
     9 &amp; 10 \\
     11 &amp; 12
     \end{bmatrix}.
-$$
-對所有大小為 $2$ 的集合 $\alpha\subseteq [3]$，<br>
-求出所有的 $A[:,\alpha]$ 及 $B[\alpha,:]$，<br>
+$$<p>對所有大小為 $2$ 的集合 $\alpha\subseteq [3]$，<br />
+求出所有的 $A[:,\alpha]$ 及 $B[\alpha,:]$，<br />
 並利用柯西比內公式計算 $AB$ 的行列式值。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    A = \begin{bmatrix}
+    1 &amp; 2 &amp; 3 \\
+    4 &amp; 5 &amp; 6
+    \end{bmatrix}
+    \text{ and }
+    B = \begin{bmatrix}
+    7 &amp; 8 \\
+    9 &amp; 10 \\
+    11 &amp; 12
+    \end{bmatrix}.
+$$<p>For each $\alpha\subseteq [3]$ of size $2$, find $A[:,\alpha]$ and $B[\alpha,:]$.  Then use the Cauchy–Binet formula to find the determinant of $AB$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15226,14 +15330,22 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-8(b)">Exercise 8(b)<a class="anchor-link" href="#Exercise-8(b)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-8(b)">Exercise 8(b)<a class="anchor-link" href="#Exercise-8(b)">&#182;</a></h5><p>令</p>
 $$
     M = \begin{bmatrix}
     O_{n,n} &amp; B \\
     A &amp; O_{m,m}
     \end{bmatrix}.
+$$<p>利用 506-6 求出 $p_M(x)$ 的 $(-x)^{n-m}$ 項係數。</p>
+<!-- eng start -->
+<p>Let</p>
 $$
-利用 506-6 求出 $p_M(x)$ 的 $(-x)^{n-m}$ 項係數。</p>
+    M = \begin{bmatrix}
+    O_{n,n} &amp; B \\
+    A &amp; O_{m,m}
+    \end{bmatrix}.
+$$<p>Use the results in 506-6 to find the coefficient of $(-x)^{n-m}$ in $p_M(x)$.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15245,15 +15357,23 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-8(b)">Exercise 8(b)<a class="anchor-link" href="#Exercise-8(b)">&#182;</a></h5><p>令<br>
+<h5 id="Exercise-8(b)">Exercise 8(b)<a class="anchor-link" href="#Exercise-8(b)">&#182;</a></h5><p>令</p>
 $$
     M = \begin{bmatrix}
     O_{n,n} &amp; B \\
     A &amp; O_{m,m}
     \end{bmatrix}.
-$$
-利用 $s_{2m}$ 的定義直接求出 $s_{2m}(M)$。<br>
+$$<p>利用 $s_{2m}$ 的定義直接求出 $s_{2m}(M)$。<br />
 配合上一題證明柯西比內公式。</p>
+<!-- eng start -->
+<p>Let</p>
+$$
+    M = \begin{bmatrix}
+    O_{n,n} &amp; B \\
+    A &amp; O_{m,m}
+    \end{bmatrix}.
+$$<p>Find $s_{2m}(M)$ by definition.  Then use the previous problem to show the Cauchy–Binet formula.</p>
+<!-- eng end -->
 
 </div>
 </div>
@@ -15265,19 +15385,28 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-9">Exercise 9<a class="anchor-link" href="#Exercise-9">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br>
-將 $p_A(x)$ 代入 $x = 0$ 可得<br>
+<h5 id="Exercise-9">Exercise 9<a class="anchor-link" href="#Exercise-9">&#182;</a></h5><p>令 $A$ 為一 $n\times n$ 矩陣。<br />
+將 $p_A(x)$ 代入 $x = 0$ 可得</p>
 $$
     s_n = p_A(0) = \det(A - 0I) = \det(A).
-$$
-類似地，我們可以利用 506-10 計算
+$$<p>類似地，我們可以利用 506-10 計算</p>
 $$
     s_{n-1} = -\frac{dp_A(x)}{dx}\Big|_{x=0} = \sum_{i = 1}^n p_{A(i)}(x)\Big|_{x=0} = \sum_{i=1}^n\det(A(i)).
-$$</p>
-<p>利用數學歸納法證明<br>
+$$<p>利用數學歸納法證明</p>
 $$
-    \det(A - xI) = s_0(-x)^n + S_1(-x)^{n-1} + \cdots + s_n.
-$$</p>
+    \det(A - xI) = s_0(-x)^n + s_1(-x)^{n-1} + \cdots + s_n.
+$$<!-- eng start -->
+<p>Let $A$ be an $n\times n$ matrix.  By substituting $x = 0$ in $p_A(x)$, we have</p>
+$$
+    s_n = p_A(0) = \det(A - 0I) = \det(A).
+$$<p>Similarly, we may use the results in 506-10 to find</p>
+$$
+    s_{n-1} = -\frac{dp_A(x)}{dx}\Big|_{x=0} = \sum_{i = 1}^n p_{A(i)}(x)\Big|_{x=0} = \sum_{i=1}^n\det(A(i)).
+$$<p>Prove that</p>
+$$
+    \det(A - xI) = s_0(-x)^n + S_1(-x)^{n-1} + \cdots + s_n
+$$<p>by induction.</p>
+<!-- eng end -->
 
 </div>
 </div>
