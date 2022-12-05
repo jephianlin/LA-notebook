@@ -36,7 +36,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
-.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14465,6 +14464,10 @@ a.anchor-link {
   display: none;
 }
 
+.highlight  {
+  margin: 0.4em;
+}
+
 /* Input area styling */
 .jp-InputArea {
   overflow: hidden;
@@ -14474,26 +14477,9 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror.cm-s-jupyter .highlight pre {
-/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
-  padding: var(--jp-code-padding) 4px;
+.CodeMirror pre {
   margin: 0;
-
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-
-}
-
-.jp-OutputArea-output pre {
-  line-height: inherit;
-  font-family: inherit;
-}
-
-.jp-RenderedText pre {
-  color: var(--jp-content-font-color1);
-  font-size: var(--jp-code-font-size);
+  padding: 0;
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14605,7 +14591,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
@@ -14694,14 +14680,14 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Recall that if $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is a linear function and $\{ \be_1,\ldots, \be_n\}$ is the standard basis of $\mathbb{R}^n$.<br />
-Then the matrix<br />
-$$[f] = \begin{bmatrix}
- | &amp; ~ &amp; | \\
- f(\be_1) &amp; \cdots &amp; f(\be_n) \\ 
- | &amp; ~ &amp; | \\
-\end{bmatrix}$$
-has the property that $f(\bb) = [f]\bb$ for all $\bb\in\mathbb{R}^n$.</p>
+<p>Recall that if $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is a linear function and $\{ \be_1,\ldots, \be_n\}$ is the standard basis of $\mathbb{R}^n$, then the matrix</p>
+$$
+    [f] = \begin{bmatrix}
+     | &amp; ~ &amp; | \\
+     f(\be_1) &amp; \cdots &amp; f(\be_n) \\ 
+     | &amp; ~ &amp; | \\
+    \end{bmatrix}
+$$<p>has the property that $f(\bb) = [f]\bb$ for all $\bb\in\mathbb{R}^n$.</p>
 
 </div>
 </div>
@@ -14713,17 +14699,18 @@ has the property that $f(\bb) = [f]\bb$ for all $\bb\in\mathbb{R}^n$.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Sometimes $f(\be_i)$ cannot be easily found, while the function $f$ is described by the bases of $\mathbb{R}^n$ and $\mathbb{R}^m$ instead.<br />
-Let $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ be a linear function,<br />
-$\alpha = \{ \bv_1, \ldots, \bv_n \}$ be a basis of $\mathbb{R}^n$, and<br />
-$\beta$ a basis of $\mathbb{R}^m$.<br />
-Then the matrix<br />
-$$[f]_\alpha^\beta = \begin{bmatrix}
- | &amp; ~ &amp; | \\
- [f(\bv_1)]_\beta &amp; \cdots &amp; [f(\bv_n)]_\beta \\ 
- | &amp; ~ &amp; | \\
-\end{bmatrix}$$
-has the property that $[f(\bb)]_\beta = [f]_\alpha^\beta [\bb]_\alpha$.<br />
+<p>Sometimes $f(\be_i)$ cannot be easily found, while the function $f$ is described by the bases of $\mathbb{R}^n$ and $\mathbb{R}^m$ instead.<br>
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ be a linear function,<br>
+$\alpha = \{ \bv_1, \ldots, \bv_n \}$ be a basis of $\mathbb{R}^n$, and<br>
+$\beta$ a basis of $\mathbb{R}^m$.<br>
+Then the matrix</p>
+$$
+    [f]_\alpha^\beta = \begin{bmatrix}
+     | &amp; ~ &amp; | \\
+     [f(\bv_1)]_\beta &amp; \cdots &amp; [f(\bv_n)]_\beta \\ 
+     | &amp; ~ &amp; | \\
+    \end{bmatrix}
+$$<p>has the property that $[f(\bb)]_\beta = [f]_\alpha^\beta [\bb]_\alpha$.<br>
 Therefore, we call $[f]_\alpha^\beta$ the <strong>matrix representation</strong> of $f$ with respect to $\alpha$ and $\beta$.</p>
 
 </div>
@@ -14736,13 +14723,14 @@ Therefore, we call $[f]_\alpha^\beta$ the <strong>matrix representation</strong>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The equality can be visualized by the following diagram.<br />
-$$\begin{array}{ccc}
- \bb &amp; \xrightarrow{f} &amp; f(\bb) \\
- \downarrow &amp; ~ &amp; \downarrow \\
- [\bb]_\alpha &amp; \xrightarrow{[f]_\alpha^\beta\cdot\square} &amp; [f(\bb)]_\beta \\ 
-\end{array}$$</p>
-
+<p>The equality can be visualized by the following diagram.</p>
+$$
+    \begin{array}{ccc}
+     \bb &amp; \xrightarrow{f} &amp; f(\bb) \\
+     \downarrow &amp; ~ &amp; \downarrow \\
+     [\bb]_\alpha &amp; \xrightarrow{[f]_\alpha^\beta\cdot\square} &amp; [f(\bb)]_\beta \\ 
+    \end{array}
+$$
 </div>
 </div>
 </div>
@@ -14756,8 +14744,8 @@ $$\begin{array}{ccc}
 <p>Let $\mathcal{E}_n$ and $\mathcal{E}_m$ be the standard basis of $\mathbb{R}^n$ and $\mathbb{R}^m$, respectively.  Since we know</p>
 <ul>
 <li>$[f]\bb =f(\bb)$,</li>
-<li>$[\idmap]_{\mathcal{E}_n}^\alpha \bb = [\bb]_\alpha$,</li>
-<li>$[\idmap]_{\mathcal{E}_m}^\beta f(\bb) = [f(\bb)]_\beta$.</li>
+<li>$[\idmap]_{\mathcal{E}_n}^\alpha \bb = [\bb]_\alpha$, </li>
+<li>$[\idmap]_{\mathcal{E}_m}^\beta f(\bb) = [f(\bb)]_\beta$.  </li>
 </ul>
 <p>We know $[f] = ([\idmap]_{\mathcal{E}_m}^\beta)^{-1} 
 [f]_\alpha^\beta
@@ -14801,13 +14789,12 @@ $$\begin{array}{ccc}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br />
-已知 $f$ 為 $\mathbb{R}^3$ 到 $\mathbb{R}^2$ 的線性函數﹐<br />
+<h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
+已知 $f$ 為 $\mathbb{R}^3$ 到 $\mathbb{R}^2$ 的線性函數﹐<br>
 而 $\alpha$ 和 $\beta$ 分別為 $\mathbb{R}^3$ 和 $\mathbb{R}^2$ 的一組基底。</p>
 <!-- eng start -->
-<p>Run the code below.  Let $f: \mathbb{R}^3 \rightarrow \mathbb{R}^2$ be a linear function.  Let $\alpha$ and $\beta$ be bases of $\mathbb{R}^3$ and $\mathbb{R}^2$, respectively.</p>
+Run the code below.  Let $f: \mathbb{R}^3 \rightarrow \mathbb{R}^2$ be a linear function.  Let $\alpha$ and $\beta$ be bases of $\mathbb{R}^3$ and $\mathbb{R}^2$, respectively.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14829,26 +14816,26 @@ $$\begin{array}{ccc}
 <span class="n">v</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">random_int_list</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">v</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"alpha contains </span><span class="si">%s</span><span class="s2"> vectors:"</span><span class="o">%</span><span class="k">n</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;alpha contains </span><span class="si">%s</span><span class="s2"> vectors:&quot;</span><span class="o">%</span><span class="k">n</span>)
 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"v</span><span class="si">%s</span><span class="s2"> ="</span><span class="o">%</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">alpha</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;v</span><span class="si">%s</span><span class="s2"> =&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">alpha</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"beta contains </span><span class="si">%s</span><span class="s2"> vectors:"</span><span class="o">%</span><span class="k">m</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;beta contains </span><span class="si">%s</span><span class="s2"> vectors:&quot;</span><span class="o">%</span><span class="k">m</span>)
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"u</span><span class="si">%s</span><span class="s2"> ="</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">beta</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;u</span><span class="si">%s</span><span class="s2"> =&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">beta</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s2">"f(v</span><span class="si">%s</span><span class="s2">) = "</span><span class="o">%</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" + "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> u</span><span class="si">%s</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">))</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;f(v</span><span class="si">%s</span><span class="s2">) = &quot;</span><span class="o">%</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; + &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> u</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">))</span> <span class="p">)</span>
     
-<span class="nb">print</span><span class="p">(</span><span class="s2">"b ="</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b =&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">print_ans</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"[b]_alpha ="</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"[f(b)]_beta ="</span><span class="p">,</span> <span class="n">A</span><span class="o">*</span><span class="n">v</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"f(b) ="</span><span class="p">,</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"[f]_alpha^beta ="</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[b]_alpha =&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[f(b)]_beta =&quot;</span><span class="p">,</span> <span class="n">A</span><span class="o">*</span><span class="n">v</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(b) =&quot;</span><span class="p">,</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[f]_alpha^beta =&quot;</span><span class="p">)</span>
     <span class="n">show</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"[f] ="</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[f] =&quot;</span><span class="p">)</span>
     <span class="n">show</span><span class="p">(</span><span class="n">beta</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">inverse</span><span class="p">())</span>
 </pre></div>
 
@@ -14866,9 +14853,8 @@ $$\begin{array}{ccc}
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>求 $[\bb]_\alpha$、$[f(\bb)]_\beta$、及 $f(\bb)$。</p>
 <!-- eng start -->
-<p>Find $[\bb]_\alpha$, $[f(\bb)]_\beta$, and $f(\bb)$.</p>
+Find $[\bb]_\alpha$, $[f(\bb)]_\beta$, and $f(\bb)$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14881,9 +14867,8 @@ $$\begin{array}{ccc}
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求 $[f]_\alpha^\beta$ 及 $[f]$。</p>
 <!-- eng start -->
-<p>Find $[f]_\alpha^\beta$ 及 $[f]$.</p>
+Find $[f]_\alpha^\beta$ 及 $[f]$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14905,13 +14890,12 @@ $$\begin{array}{ccc}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ 為一線性函數、<br />
-$\alpha = \{\bv_1, \ldots, \bv_n\}$ 為 $\mathbb{R}^n$ 的一組基底、<br />
+<h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ 為一線性函數、<br>
+$\alpha = \{\bv_1, \ldots, \bv_n\}$ 為 $\mathbb{R}^n$ 的一組基底、<br>
 $\beta = \{\bu_1, \ldots, \bu_m\}$ 為 $\mathbb{R}^m$ 的一組基底。</p>
 <!-- eng start -->
-<p>Let $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ be a linear function, $\alpha = \{\bv_1, \ldots, \bv_n\}$ a basis of $\mathbb{R}^n$, and $\beta = \{\bu_1, \ldots, \bu_m\}$ a basis of $\mathbb{R}^m$.</p>
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ be a linear function, $\alpha = \{\bv_1, \ldots, \bv_n\}$ a basis of $\mathbb{R}^n$, and $\beta = \{\bu_1, \ldots, \bu_m\}$ a basis of $\mathbb{R}^m$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
@@ -14922,7 +14906,7 @@ $\beta = \{\bu_1, \ldots, \bu_m\}$ 為 $\mathbb{R}^m$ 的一組基底。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>令 $m = n = 3$ 且<br />
+<h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>令 $m = n = 3$ 且<br>
 $\alpha = \beta$ 為</p>
 $$
     A = \begin{bmatrix} 
@@ -14930,23 +14914,25 @@ $$
      \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
      \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}
-$$<p>的各行向量。<br />
-已知<br />
-$f(\bv_1) = \bu_1$、<br />
-$f(\bv_2) = \bu_2$、<br />
-$f(\bv_3) = \bzero$。<br />
+$$<p>的各行向量。<br>
+已知<br>
+$f(\bv_1) = \bu_1$、<br>
+$f(\bv_2) = \bu_2$、<br>
+$f(\bv_3) = \bzero$。<br>
 求 $[f]_\alpha^\beta$ 及 $[f]$ 並說明 $f$ 的作用。</p>
 <!-- eng start -->
-<p>Let $m = n = 3$ and $\alpha = \beta$ the columns of</p>
+Let $m = n = 3$ and $\alpha = \beta$ the columns of 
+
 $$
     A = \begin{bmatrix} 
-     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & 0 & -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}.
-$$<p>Suppose $f(\bv_1) = \bu_1$, $f(\bv_2) = \bu_2$, and $f(\bv_3) = \bzero$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.</p>
-<!-- eng end -->
+$$
 
+Suppose $f(\bv_1) = \bu_1$, $f(\bv_2) = \bu_2$, and $f(\bv_3) = \bzero$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14957,7 +14943,7 @@ $$<p>Suppose $f(\bv_1) = \bu_1$, $f(\bv_2) = \bu_2$, and $f(\bv_3) = \bzero$.  F
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>令 $m = n = 3$ 且<br />
+<h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>令 $m = n = 3$ 且<br>
 $\alpha = \beta$ 為</p>
 $$
     A = \begin{bmatrix} 
@@ -14965,23 +14951,25 @@ $$
      \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
      \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}
-$$<p>的各行向量。<br />
-已知<br />
-$f(\bv_1) = \bu_1$、<br />
-$f(\bv_2) = \bu_2$、<br />
-$f(\bv_3) = -\bu_3$。<br />
+$$<p>的各行向量。<br>
+已知<br>
+$f(\bv_1) = \bu_1$、<br>
+$f(\bv_2) = \bu_2$、<br>
+$f(\bv_3) = -\bu_3$。<br>
 求 $[f]_\alpha^\beta$ 及 $[f]$ 並說明 $f$ 的作用。</p>
 <!-- eng start -->
-<p>Let $m = n = 3$ and $\alpha = \beta$ the columns of</p>
+Let $m = n = 3$ and $\alpha = \beta$ the columns of 
+
 $$
     A = \begin{bmatrix} 
-     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & 0 & -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}.
-$$<p>Suppose $f(\bv_1) = \bu_1$, $f(\bv_2) = \bu_2$, and $f(\bv_3) = -\bu_3$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.</p>
-<!-- eng end -->
+$$
 
+Suppose $f(\bv_1) = \bu_1$, $f(\bv_2) = \bu_2$, and $f(\bv_3) = -\bu_3$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14992,7 +14980,7 @@ $$<p>Suppose $f(\bv_1) = \bu_1$, $f(\bv_2) = \bu_2$, and $f(\bv_3) = -\bu_3$.  F
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>令 $m = n = 3$ 且<br />
+<h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>令 $m = n = 3$ 且<br>
 $\alpha = \beta$ 為</p>
 $$
     A = \begin{bmatrix} 
@@ -15000,23 +14988,25 @@ $$
      \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
      \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}
-$$<p>的各行向量。<br />
-已知<br />
-$f(\bv_1) = \bu_2$、<br />
-$f(\bv_2) = -\bu_1$、<br />
-$f(\bv_3) = \bu_3$。<br />
+$$<p>的各行向量。<br>
+已知<br>
+$f(\bv_1) = \bu_2$、<br>
+$f(\bv_2) = -\bu_1$、<br>
+$f(\bv_3) = \bu_3$。<br>
 求 $[f]_\alpha^\beta$ 及 $[f]$ 並說明 $f$ 的作用。</p>
 <!-- eng start -->
-<p>Let $m = n = 3$ and $\alpha = \beta$ the columns of</p>
+Let $m = n = 3$ and $\alpha = \beta$ the columns of 
+
 $$
     A = \begin{bmatrix} 
-     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & 0 & -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}
-$$<p>Suppose $f(\bv_1) = \bu_2$, $f(\bv_2) = -\bu_1$, and $f(\bv_3) = \bu_3$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.</p>
-<!-- eng end -->
+$$
 
+Suppose $f(\bv_1) = \bu_2$, $f(\bv_2) = -\bu_1$, and $f(\bv_3) = \bu_3$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15027,7 +15017,7 @@ $$<p>Suppose $f(\bv_1) = \bu_2$, $f(\bv_2) = -\bu_1$, and $f(\bv_3) = \bu_3$.  F
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-2(d)">Exercise 2(d)<a class="anchor-link" href="#Exercise-2(d)">&#182;</a></h5><p>令 $m = 3$、$n = 2$ 且<br />
+<h5 id="Exercise-2(d)">Exercise 2(d)<a class="anchor-link" href="#Exercise-2(d)">&#182;</a></h5><p>令 $m = 3$、$n = 2$ 且<br>
 $\alpha$ 為</p>
 $$
     A = \begin{bmatrix} 
@@ -15035,36 +15025,41 @@ $$
      \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
      \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}
-$$<p>的各行向量、<br />
+$$<p>的各行向量、<br>
 $\beta$ 為</p>
 $$
     B = \begin{bmatrix} 
      1 &amp; 1 \\
      0 &amp; 1 \\
     \end{bmatrix}
-$$<p>的各行向量。<br />
-已知<br />
-$f(\bv_1) = 3\bu_1$、<br />
-$f(\bv_2) = 4\bu_2$、<br />
-$f(\bv_3) = \bzero$。<br />
+$$<p>的各行向量。<br>
+已知<br>
+$f(\bv_1) = 3\bu_1$、<br>
+$f(\bv_2) = 4\bu_2$、<br>
+$f(\bv_3) = \bzero$。<br>
 求 $[f]_\alpha^\beta$ 及 $[f]$。</p>
 <!-- eng start -->
-<p>Let $m = 3$, $n = 2$, $\alpha$ the columns of</p>
+Let $m = 3$, $n = 2$, $\alpha$ the columns of 
+
 $$
     A = \begin{bmatrix} 
-     \frac{1}{\sqrt{3}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{6}} \\
-     \frac{1}{\sqrt{3}} &amp; 0 &amp; -\frac{2}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} \\
+     \frac{1}{\sqrt{3}} & 0 & -\frac{2}{\sqrt{6}} \\
     \end{bmatrix}
-$$<p>and $\beta$ the columns of</p>
+$$
+
+and $\beta$ the columns of 
+
 $$
     B = \begin{bmatrix} 
-     1 &amp; 1 \\
-     0 &amp; 1 \\
+     1 & 1 \\
+     0 & 1 \\
     \end{bmatrix}
-$$<p>Suppose $f(\bv_1) = 3\bu_1$, $f(\bv_2) = 4\bu_2$, and $f(\bv_3) = \bzero$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.</p>
-<!-- eng end -->
+$$
 
+Suppose $f(\bv_1) = 3\bu_1$, $f(\bv_2) = 4\bu_2$, and $f(\bv_3) = \bzero$.  Find $[f]_\alpha^\beta$ and $[f]$.  Then describe the effect of $f$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15075,13 +15070,12 @@ $$<p>Suppose $f(\bv_1) = 3\bu_1$, $f(\bv_2) = 4\bu_2$, and $f(\bv_3) = \bzero$. 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>若 $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ 為一線性函數。<br />
-而 $\mathcal{E}_n$ 和 $\mathcal{E}_m$ 分別為 $\mathbb{R}^n$ 和 $\mathbb{R}^m$ 的一組基底。<br />
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>若 $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ 為一線性函數。<br>
+而 $\mathcal{E}_n$ 和 $\mathcal{E}_m$ 分別為 $\mathbb{R}^n$ 和 $\mathbb{R}^m$ 的一組基底。<br>
 說明 $[f]$ 就是 $[f]_{\mathcal{E}_n}^{\mathcal{E}_m}$。</p>
 <!-- eng start -->
-<p>Let $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ be a linear function.  Let  $\mathcal{E}_n$ and $\mathcal{E}_m$ be the standard bases of $\mathbb{R}^n$ and $\mathbb{R}^m$, respectively.  Verify that $[f]$ is indeed $[f]_{\mathcal{E}_n}^{\mathcal{E}_m}$.</p>
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ be a linear function.  Let  $\mathcal{E}_n$ and $\mathcal{E}_m$ be the standard bases of $\mathbb{R}^n$ and $\mathbb{R}^m$, respectively.  Verify that $[f]$ is indeed $[f]_{\mathcal{E}_n}^{\mathcal{E}_m}$.  
 <!-- eng end -->
-
 </div>
 </div>
 </div>
