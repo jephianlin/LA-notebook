@@ -14579,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E6%85%A3%E6%80%A7">&#24931;&#24615;<a class="anchor-link" href="#%E6%85%A3%E6%80%A7">&#182;</a></h1>
+<h1 id="%E6%85%A3%E6%80%A7">&#24931;&#24615;<a class="anchor-link" href="#%E6%85%A3%E6%80%A7">&#182;</a></h1><p>Inertia</p>
+
 </div>
 </div>
 </div>
@@ -14639,6 +14640,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
 \newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
 \newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
@@ -14775,7 +14777,9 @@ $$<p></p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14819,7 +14823,9 @@ $$<p></p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>對 $A$ 進行列運算 $\rho_2:-\rho_1$、再進行行運算 $\kappa_2:-\kappa_1$ 的結果為何？</p>
-
+<!-- eng start -->
+Apply the row operation $\rho_2:-\rho_1$ and the column operation $\kappa_2:-\kappa_1$ to $A$.  What is the result?
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14832,7 +14838,9 @@ $$<p></p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>將 $A$ 進行一系列對稱的行列運算，讓它變成對角矩陣且對角線上只有 $1$、$0$、$-1$。<br>
 求 $\iner(A)$。</p>
-
+<!-- eng start -->
+Apply some symmetric row/column operations simultaneously to $A$ so that it becomes a diagonal matrix with $1$, $0$, or $-1$ on the diagonal.  Find $\iner(A)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14855,7 +14863,9 @@ $$<p></p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>求以下矩陣 $A$ 的 $\iner(A)$。</p>
-
+<!-- eng start -->
+Find $\iner(A)$ for the following matrices.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14934,7 +14944,9 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>一個矩陣 $A$ 的 <strong>二次型（quadratic form）</strong> 指的是長得像 $\bx\trans A\bx$ 的式子。<br>
 證明以下關於二次型的性質。</p>
-
+<!-- eng start -->
+The **quadratic form** of a matrix $A$ is any expression of the form $\bx\trans A\bx$.  Prove the following properties about the quadratic form.   
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14954,7 +14966,21 @@ $$
     \bx = \begin{bmatrix} x \\ y \end{bmatrix}.
 $$<p>證明 $\bx\trans A\bx \geq 0$。</p>
 <p>提示：展開後並將其寫成 $1(ax + by)^2 + 3(cx+dy)^2$。</p>
+<!-- eng start -->
+Let  
 
+$$
+    A = \begin{bmatrix}
+     2 & -1 \\
+     -1 & 2 
+    \end{bmatrix}, \quad
+    \bx = \begin{bmatrix} x \\ y \end{bmatrix}.
+$$
+
+Prove that $\bx\trans A\bx \geq 0$.  
+
+Hint:  Expand it and try to write it into the form of $1(ax + by)^2 + 3(cx+dy)^2$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14970,7 +14996,15 @@ $$<p>證明 $\bx\trans A\bx \geq 0$。</p>
 $$
     \bx = \begin{bmatrix} x \\ y \end{bmatrix}.
 $$<p>證明 $\bx\trans A\bx$ 可寫成 $\lambda_1(ax + bx)^2 + \lambda_2(cx + dy)^2$ 的形式。</p>
+<!-- eng start -->
+Let $A$ be a $2\times 2$ real symmetric matrix with eigenvalues $\lambda_1,\lambda_2$.  Let  
 
+$$
+    \bx = \begin{bmatrix} x \\ y \end{bmatrix}.
+$$
+
+Show that $\bx\trans A\bx$ can be written as $\lambda_1(ax + bx)^2 + \lambda_2(cx + dy)^2$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14987,9 +15021,16 @@ $$<p>證明 $\bx\trans A\bx$ 可寫成 $\lambda_1(ax + bx)^2 + \lambda_2(cx + dy
 <li>若 $\lambda_1, \lambda_2 \geq 0$ 時，$\bx\trans A\bx \geq 0$。</li>
 <li>若 $\lambda_1, \lambda_2 \leq 0$ 時，$\bx\trans A\bx \leq 0$。</li>
 <li>若 $\lambda_1, \lambda_2 &gt; 0$ 且 $\bx\neq\bzero$ 時，$\bx\trans A\bx &gt; 0$。</li>
-<li>若 $\lambda_1, \lambda_2 &lt; 0$ 且 $\bx\neq\bzero$ 時，$\bx\trans A\bx &lt; 0$。</li>
+<li>若 $\lambda_1, \lambda_2 &lt; 0$ 且 $\bx\neq\bzero$ 時，$\bx\trans A\bx &lt; 0$。  </li>
 </ol>
+<!-- eng start -->
+Let $A$ be a $2\times 2$ real symmetric matrix with eigenvalues $\lambda_1,\lambda_2$.  Show the following:
 
+1. If $\lambda_1, \lambda_2 \geq 0$, then $\bx\trans A\bx \geq 0$.  
+2. If $\lambda_1, \lambda_2 \leq 0$, then $\bx\trans A\bx \leq 0$.  
+3. If $\lambda_1, \lambda_2 > 0$ and $\bx\neq\bzero$, then $\bx\trans A\bx > 0$.  
+4. If $\lambda_1, \lambda_2 < 0$ and $\bx\neq\bzero$, then $\bx\trans A\bx < 0$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15005,9 +15046,15 @@ $$<p>證明 $\bx\trans A\bx$ 可寫成 $\lambda_1(ax + bx)^2 + \lambda_2(cx + dy
 <ol>
 <li>若 $\det(A) &gt; 0$ 且 $\tr(A) &gt; 0$，則 $\iner(A) = (2,0,0)$。</li>
 <li>若 $\det(A) &gt; 0$ 且 $\tr(A) &lt; 0$，則 $\iner(A) = (0,2,0)$。</li>
-<li>若 $\det(A) &lt; 0$，則 $\iner(A) = (1,1,0)$。</li>
+<li>若 $\det(A) &lt; 0$，則 $\iner(A) = (1,1,0)$。  </li>
 </ol>
+<!-- eng start -->
+Let $A$ be a $2\times 2$ real symmetric matrix.  Show the following:
 
+1. If $\det(A) > 0$ and $\tr(A) > 0$, then $\iner(A) = (2,0,0)$.  
+2. If $\det(A) > 0$ and $\tr(A) < 0$, then $\iner(A) = (0,2,0)$.  
+3. If $\det(A) < 0$, then $\iner(A) = (1,1,0)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15030,7 +15077,7 @@ $$
     \bx = \begin{bmatrix} x \\ y_0 + y \end{bmatrix}.
 $$<p>已知 $f$ 的函數值可以用</p>
 $$
-    f(x_0 + x, y_0 + y) \sim f(x_0, y_0) + \bx\trans A \bx.
+    f(x_0 + x, y_0 + y) \sim f(x_0, y_0) + \bx\trans A \bx
 $$<p>逼近。</p>
 <p>說明為什麼：</p>
 <ol>
@@ -15038,7 +15085,33 @@ $$<p>逼近。</p>
 <li>若 $\det(A) &gt; 0$ 且 $\tr(A) &lt; 0$，則 $f$ 在 $(x_0,y_0)$ 有局部最大值。</li>
 <li>若 $\det(A) &lt; 0$，則 $f$ 在 $(x_0,y_0)$ 為𩣑點。</li>
 </ol>
+<!-- eng start -->
+Let $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ be a function whose second derivatives exist and are continuous.  Let $(x_0,y_0)\in\mathbb{R}^2$ be a point and $f_{xx}, f_{xy} = f_{yx}, f_{yy}$ the second partial derivatives of $f$ with respect to $x$ and $y$.  
 
+Let  
+
+$$
+    A = \begin{bmatrix}
+    f_{xx} & f_{yx} \\
+    f_{xy} & f_{yy}
+    \end{bmatrix}, \quad
+    \bx = \begin{bmatrix} x \\ y_0 + y \end{bmatrix}.
+$$
+
+It is known that the approximation
+
+$$
+    f(x_0 + x, y_0 + y) \sim f(x_0, y_0) + \bx\trans A \bx
+$$
+
+holds.  
+
+Give some intuitive reasons to the following facts.  
+
+1. If $\det(A) > 0$ and $\tr(A) > 0$, then $f$ has a local minimum at $(x_0,y_0)$.  
+2. If $\det(A) > 0$ and $\tr(A) < 0$, then $f$ has a local maximum at $(x_0,y_0)$.  
+3. If $\det(A) < 0$, then $f$ has a saddle point at $(x_0,y_0)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15051,7 +15124,13 @@ $$<p>逼近。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>利用以下步驟證明西爾維斯特慣性定理。</p>
 <h5 id="Sylvester's-law-of-inertia">Sylvester's law of inertia<a class="anchor-link" href="#Sylvester's-law-of-inertia">&#182;</a></h5><p>If two symmetric matrices are congruent, then they have the same inertia.</p>
+<!-- eng start -->
+Use the given instructions to prove Sylvester's law of inertia.  
 
+##### Sylvester's law of inertia
+
+If two symmetric matrices are congruent, then they have the same inertia.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15069,7 +15148,18 @@ $$
      0 &amp; 1
     \end{bmatrix}.
 $$<p>說明 $E(t)\trans AE(t)$ 在任何 $t\in\mathbb{R}$ 時都有相同的零維數。</p>
+<!-- eng start -->
+Define  
 
+$$
+    E(t) = \begin{bmatrix}
+     1 & t \\
+     0 & 1
+    \end{bmatrix}.
+$$
+
+Show that $E(t)\trans AE(t)$ has the same nullity for any $t\in\mathbb{R}$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15087,7 +15177,18 @@ $$
      0 &amp; 1
     \end{bmatrix}.
 $$<p>說明 $E(t)\trans AE(t)$ 在任何 $t &gt; 0$ 時都有相同的零維數。</p>
+<!-- eng start -->
+Define  
 
+$$
+    E(t) = \begin{bmatrix}
+     t & 0 \\
+     0 & 1
+    \end{bmatrix}.
+$$
+
+Show that $E(t)\trans AE(t)$ has the same nullity for any $t > 0$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15105,7 +15206,18 @@ $$
      0 &amp; 1
     \end{bmatrix}.
 $$<p>說明 $\iner(E\trans AE) = \iner(A)$。</p>
+<!-- eng start -->
+Define  
 
+$$
+    E = \begin{bmatrix}
+     -1 & 0 \\
+     0 & 1
+    \end{bmatrix}.
+$$
+
+Show that $\iner(E\trans AE) = \iner(A)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15118,7 +15230,9 @@ $$<p>說明 $\iner(E\trans AE) = \iner(A)$。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(d)">Exercise 6(d)<a class="anchor-link" href="#Exercise-6(d)">&#182;</a></h5><p>已知矩陣的特徵值會隨矩陣的數值連續變動。<br>
 利用這個性質證明西爾維斯特慣性定理。</p>
-
+<!-- eng start -->
+It is known that the eigenvalues is a continuous function of the entries of the matrix.  Use this fact to prove Sylvester's law of inertia.  
+<!-- eng end -->
 </div>
 </div>
 </div>

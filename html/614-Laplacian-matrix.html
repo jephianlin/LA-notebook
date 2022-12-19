@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E7%9F%A9%E9%99%A3">&#25289;&#26222;&#25289;&#26031;&#30697;&#38499;<a class="anchor-link" href="#%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E7%9F%A9%E9%99%A3">&#182;</a></h1>
+<h1 id="%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E7%9F%A9%E9%99%A3">&#25289;&#26222;&#25289;&#26031;&#30697;&#38499;<a class="anchor-link" href="#%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E7%9F%A9%E9%99%A3">&#182;</a></h1><p>Laplacian matrix</p>
+
 </div>
 </div>
 </div>
@@ -14639,22 +14646,6 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># from lingeo import random_int_list</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -14780,7 +14771,9 @@ Thanks to the quadratic form, we can see the following properties:</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14827,7 +14820,9 @@ Thanks to the quadratic form, we can see the following properties:</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>寫出圖 $G$ 的拉普拉斯矩陣 $L$。</p>
-
+<!-- eng start -->
+Find the Laplacian matrix $L$ of $G$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14839,7 +14834,9 @@ Thanks to the quadratic form, we can see the following properties:</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>寫出 $L$ 的二次型。</p>
-
+<!-- eng start -->
+Find the quadratic form of $L$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14852,7 +14849,9 @@ Thanks to the quadratic form, we can see the following properties:</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>已知 $\bx\trans L\bx = 0$ 和 $L\bx = \bzero$ 等價。<br>
 利用二次型求出 $\ker(L)$ 並判斷 $G$ 的連通區塊個數。</p>
-
+<!-- eng start -->
+It is known that $\bx\trans L\bx = 0$ and $L\bx = \bzero$ are equivalent.  Find $\ker(L)$ by the quadratic form and determine the number of components of $G$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14881,7 +14880,18 @@ $$
     E &amp;= \{\{1,2\}, \{1,3\}, \{1,4\}\}
     \end{aligned}
 $$<p>且 $G = (V,E)$。</p>
+<!-- eng start -->
+Let  
 
+$$
+    \begin{aligned}
+    V &= \{1,2,3,4\} \\
+    E &= \{\{1,2\}, \{1,3\}, \{1,4\}\}
+    \end{aligned}
+$$
+
+and $G = (V,E)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14893,7 +14903,9 @@ $$<p>且 $G = (V,E)$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>畫出圖 $G$。</p>
-
+<!-- eng start -->
+Draw the graph $G$.    
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14905,7 +14917,9 @@ $$<p>且 $G = (V,E)$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>寫出圖 $L = L(G)$ 以及其二次型。</p>
-
+<!-- eng start -->
+Find $L = L(G)$ and its quadratic form.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14917,7 +14931,9 @@ $$<p>且 $G = (V,E)$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(c)">Exercise 2(c)<a class="anchor-link" href="#Exercise-2(c)">&#182;</a></h5><p>說明 $L$ 是一個半正定矩陣，且 $L\bone = \bzero$。</p>
-
+<!-- eng start -->
+Show that $L$ is a positive semidefinite matrix and $L\bone = \bzero$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14935,7 +14951,18 @@ $$
     E &amp;= \{\{1,2\}, \{3,4\}\}
     \end{aligned}
 $$<p>且 $G = (V,E)$。</p>
+<!-- eng start -->
+Let  
 
+$$
+    \begin{aligned}
+    V &= \{1,2,3,4\} \\
+    E &= \{\{1,2\}, \{3,4\}\}
+    \end{aligned}
+$$
+
+and $G = (V,E)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14947,7 +14974,9 @@ $$<p>且 $G = (V,E)$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>畫出圖 $G$。</p>
-
+<!-- eng start -->
+Draw the graph $G$.    
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14959,7 +14988,9 @@ $$<p>且 $G = (V,E)$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>寫出圖 $L = L(G)$ 以及其二次型。</p>
-
+<!-- eng start -->
+Find $L = L(G)$ and its quadratic form.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14971,7 +15002,9 @@ $$<p>且 $G = (V,E)$。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>求 $\bx\trans L\bx = 0$ 的所有解。</p>
-
+<!-- eng start -->
+Find all solutions to $\bx\trans L\bx = 0$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14984,7 +15017,9 @@ $$<p>且 $G = (V,E)$。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(d)">Exercise 3(d)<a class="anchor-link" href="#Exercise-3(d)">&#182;</a></h5><p>已知 $\bx\trans L\bx = 0$ 和 $L\bx = \bzero$ 等價。<br>
 利用二次型求出 $\ker(L)$ 並判斷 $G$ 的連通區塊個數。</p>
-
+<!-- eng start -->
+It is known that $\bx\trans L\bx = 0$ and $L\bx = \bzero$ are equivalent.  Find $\ker(L)$ by the quadratic form and determine the number of components of $G$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14997,7 +15032,9 @@ $$<p>且 $G = (V,E)$。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $G$ 為一圖、且 $L = L(G)$。<br>
 以下練習探討 $\ker(L)$ 的結構。</p>
-
+<!-- eng start -->
+Let $G$ be a graph and $L = L(G)$.  The following exercises studies the structure of $\ker(L)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15010,7 +15047,11 @@ $$<p>且 $G = (V,E)$。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>令 $P$ 為任一半正定矩陣，證明 $\bx\trans P\bx = 0$ 和 $P\bx = \bzero$ 等價。</p>
 <p>提示：可利用瑞利商定理、或是利用格拉姆矩陣的特性。</p>
+<!-- eng start -->
+Let $P$ be a positive semidefinite matrix.  Show that $\bx\trans P\bx = 0$ and $P\bx = \bzero$ are equivalent.  
 
+Hint:  You may either use the Rayleigh quotient theorem or use the structure of a Gram matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15021,8 +15062,10 @@ $$<p>且 $G = (V,E)$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>求 $\bx\trans L\bx = 0$ 的解。</p>
-
+<h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>求 $\bx\trans L\bx = 0$ 的所有解。</p>
+<!-- eng start -->
+Find all solutions to $\bx\trans L\bx = 0$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15033,10 +15076,12 @@ $$<p>且 $G = (V,E)$。</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>用上一提的結果說明 $\ker(L) = \{\phi_{X_1}, \ldots, \phi_{X_k}\}$。<br>
+<h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>用上一題的結果說明 $\ker(L) = \{\phi_{X_1}, \ldots, \phi_{X_k}\}$。<br>
 這裡 $X_1, \ldots, X_k$ 為 $G$ 的各連通區塊所在的點集合、<br>
 而 $\phi_{X_1}, \ldots, \phi_{X_k}$ 為其指標向量（characteristic vector）。</p>
-
+<!-- eng start -->
+Use the result from the previous exercise to show that $\ker(L) = \{\phi_{X_1}, \ldots, \phi_{X_k}\}$.  Here $X_1, \ldots, X_k$ are the vertex set of each connected components of $G$, and $\phi_{X_1}, \ldots, \phi_{X_k}$ are their characteristic vectors.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15054,7 +15099,13 @@ $$<p>且 $G = (V,E)$。</p>
 <p>則 $G$ 的 <strong>相連矩陣（incidence matrix）</strong> 為一 $n\times m$ 矩陣 $N(G)$，<br>
 其第 $j$ 行為 $\bu_j$。</p>
 <p>（相連矩陣並不唯一，取決於 $-1$ 放的位置，有 $2^m$ 種。）</p>
+<!-- eng start -->
+Let $G = (V,E)$ be a graph such that $V = \{v_1,\ldots,v_n\}$ and $E = \{e_1,\ldots,e_m\}$.  Define the vector $\bu_j$ in $\mathbb{R}^n$ such that it has a $1$ and a $-1$ on the two endpoints of $e_j$ (you may decide which one is $1$ and which one is $-1$) while other entries are zero.  
 
+The **incidence matrix** of $G$ is defined as the $n\times m$ matrix $N(G)$ whose $j$-th column is $\bu_j$.  
+
+(The incidence matrix is not unique.  Depending on the locations of $-1$, there are $2^m$ choices.)  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15073,7 +15124,19 @@ $$
     \end{aligned}
 $$<p>且 $G = (V,E)$。<br>
 寫出 $G$ 的一個相連矩陣 $N$，並驗證 $NN\trans = L(G)$。</p>
+<!-- eng start -->
+Let  
 
+$$
+    \begin{aligned}
+    V &= \{1,2,3,4\} \\
+    E &= \{\{1,2\}, \{1,3\}, \{1,4\}\}
+    \end{aligned}
+$$
+
+and $G = (V,E)$。  
+Find an incidence matrix $N$ of $G$ and verify that $NN\trans = L(G)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15087,7 +15150,9 @@ $$<p>且 $G = (V,E)$。<br>
 <h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>令 $N$ 為 $G$ 的一個相連矩陣、<br>
 而 $L$ 為 $G$ 的拉普拉斯矩陣。</p>
 <p>證明對任意 $G$ 都有 $NN\trans = L$。</p>
-
+<!-- eng start -->
+Let $N$ be an incidence matrix of $G$ and $L$ the Laplacian matrix of $G$.  Show that $NN\trans = L$ for any $G$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15101,7 +15166,15 @@ $$<p>且 $G = (V,E)$。<br>
 <h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>利用 $NN\trans = L$ 來再次證明</p>
 $$
     \bx\trans L\bx = \sum_{\{i,j\}\in E(G)}(x_i - x_j)^2.
+$$<!-- eng start -->
+Give an alternative proof of  
+
 $$
+    \bx\trans L\bx = \sum_{\{i,j\}\in E(G)}(x_i - x_j)^2.
+$$
+
+by $NN\trans = L$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15114,9 +15187,11 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $G$ 為一 $n$ 個點的圖而 $L = L(G)$。<br>
 令 $L$ 的特徵值為 $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n$。<br>
-因為 $L\bone = \bzero$，所以 $\lambda_1$。<br>
+因為 $L\bone = \bzero$，所以 $\lambda_1 = 0$。<br>
 而 $\lambda_2$ 則稱為 $G$ 的 <strong>代數連通度（algebraic connectivity）</strong> ，記作 $\lambda_2(G)$。</p>
-
+<!-- eng start -->
+Let $G$ be a graph on $n$ vertices and $L = L(G)$.  Let $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n$ be the eigenvalues of $L$.  Since $L\bone = \bzero$, we have $\lambda_1 = 0$.  On the other hand, $\lambda_2$ is known as the **algebraic connectivity** of $G$, denoted by $\lambda_2(G)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15130,9 +15205,14 @@ $$
 <h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>證明以下敘述等價：</p>
 <ul>
 <li>$\lambda_2(G) = 0$。  </li>
-<li>$G$ 不連通。</li>
+<li>$G$ 不連通。  </li>
 </ul>
+<!-- eng start -->
+Show that the following are equivalent:  
 
+- $\lambda_2(G) = 0$.    
+- $G$ is disconnected.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15153,7 +15233,21 @@ $$
     \end{aligned}
 $$<p>且 $G = (V,E)$。<br>
 計算 $G$ 的 $\lambda_2(G)$ 和 $\kappa(G)$。</p>
+<!-- eng start -->
+The connectivity of a graph $G$ is the minimum number vertices whose removal makes $G$ disconnected, denoted by $\kappa(G)$.  The other reason why $\lambda_2(G)$ is called the algebraic connectivity is because the relation $\lambda_2(G) \leq \kappa(G)$.  
 
+Let  
+
+$$
+    \begin{aligned}
+    V &= \{1,2,3,4\} \\
+    E &= \{\{1,2\}, \{2,3\}, \{3,4\}, \{4,1\}\}
+    \end{aligned}
+$$
+
+and $G = (V,E)$。  
+Find $\lambda_2(G)$ and $\kappa(G)$ of $G$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15172,7 +15266,19 @@ $$
     \end{aligned}
 $$<p>且 $G = (V,E)$。<br>
 計算 $G$ 的 $\lambda_2(G)$ 和 $\kappa(G)$。</p>
+<!-- eng start -->
+Let  
 
+$$
+    \begin{aligned}
+    V &= \{1,2,3,4,5,6\} \\
+    E &= \{\{1,2\}, \{2,3\}, \{3,4\}, \{4,5\}, \{5,6\}, \{6,1\}\}
+    \end{aligned}
+$$
+
+and $G = (V,E)$。  
+Find $\lambda_2(G)$ and $\kappa(G)$ of $G$.  
+<!-- eng end -->
 </div>
 </div>
 </div>

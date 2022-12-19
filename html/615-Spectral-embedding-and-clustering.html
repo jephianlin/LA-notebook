@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E5%B5%8C%E5%85%A5%E6%B3%95%E8%88%87%E8%AD%9C%E5%88%86%E7%BE%A4">&#25289;&#26222;&#25289;&#26031;&#23884;&#20837;&#27861;&#33287;&#35676;&#20998;&#32676;<a class="anchor-link" href="#%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E5%B5%8C%E5%85%A5%E6%B3%95%E8%88%87%E8%AD%9C%E5%88%86%E7%BE%A4">&#182;</a></h1>
+<h1 id="%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E5%B5%8C%E5%85%A5%E6%B3%95%E8%88%87%E8%AD%9C%E5%88%86%E7%BE%A4">&#25289;&#26222;&#25289;&#26031;&#23884;&#20837;&#27861;&#33287;&#35676;&#20998;&#32676;<a class="anchor-link" href="#%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E5%B5%8C%E5%85%A5%E6%B3%95%E8%88%87%E8%AD%9C%E5%88%86%E7%BE%A4">&#182;</a></h1><p>Spectral embedding and clustering</p>
+
 </div>
 </div>
 </div>
@@ -14639,22 +14646,6 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># from lingeo import random_int_list</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -14855,7 +14846,9 @@ $$<p>on the $i,i$-entry.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14910,7 +14903,9 @@ $$<p>on the $i,i$-entry.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>觀察畫出來的圖，你認為 $G$ 有幾個群？</p>
-
+<!-- eng start -->
+Observe the given graphs.  Based on your intuition, how many clusters are there in $G$?
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14922,7 +14917,9 @@ $$<p>on the $i,i$-entry.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>觀察 $L(G)$ 的特徵值，你認為 $G$ 有幾群？</p>
-
+<!-- eng start -->
+Observe the eigenvalues of $L(G)$.  Based on your intuition, how many clusters are there in $G$?
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14945,7 +14942,9 @@ $$<p>on the $i,i$-entry.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>逐行解釋以下程式碼。</p>
-
+<!-- eng start -->
+Explain the code below line by line.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14986,7 +14985,9 @@ $$<p>on the $i,i$-entry.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>逐行解釋以下程式碼。</p>
-
+<!-- eng start -->
+Explain the code below line by line.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15034,7 +15035,9 @@ $$<p>on the $i,i$-entry.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>逐行解釋以下程式碼。</p>
-
+<!-- eng start -->
+Explain the code below line by line.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15089,7 +15092,9 @@ $$<p>on the $i,i$-entry.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $G$ 為一 $n$ 個點的圖、$L = L(G)$。<br>
 令 $Y$ 為一 $n\times k$ 矩陣，其各列為 $\bx_1, \ldots, \bx_n\in\mathbb{R}^k$。</p>
-
+<!-- eng start -->
+Let $G$ be a graph on $n$ vertices and $L = L(G)$.  Let $Y$ be an $n\times k$ matrix whose rows are $\bx_1, \ldots, \bx_n\in\mathbb{R}^k$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15103,7 +15108,14 @@ $$<p>on the $i,i$-entry.</p>
 <h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>說明</p>
 $$
     \tr(Y\trans LY) = \sum_{\{i,j\}\in E(G)} \|\bx_i - \bx_j\|^2.
+$$<p></p>
+<!-- eng start -->
+Show that  
+
 $$
+    \tr(Y\trans LY) = \sum_{\{i,j\}\in E(G)} \|\bx_i - \bx_j\|^2.
+$$  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15115,7 +15127,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>說明 $\bone\trans Y = \bzero$ 表示 $\bx_1, \ldots, \bx_n$ 的中心點在原點。</p>
-
+<!-- eng start -->
+Explain why $\bone\trans Y = \bzero$ means $\bx_1, \ldots, \bx_n$ are centered at the origin.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15128,7 +15142,9 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(c)">Exercise 5(c)<a class="anchor-link" href="#Exercise-5(c)">&#182;</a></h5><p>說明 $Y\trans Y = I$ 表示 $Y$ 的各特徵向量（行向量）<br>
 彼此互相垂直、而且各自的變異數均為 $1$。</p>
-
+<!-- eng start -->
+Explain why $Y\trans Y = I$ means the feature vectors (columns) of $Y$ are mutually orthogonal and each has variance $1$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15142,7 +15158,12 @@ $$
 <h5 id="Exercise-5(d)">Exercise 5(d)<a class="anchor-link" href="#Exercise-5(d)">&#182;</a></h5><p>解釋拉普拉斯嵌入法做出來的 $Y$，就是以下最佳化問題的解：</p>
 <p>minimize $\tr(Y\trans LY) = \sum_{\{i,j\}\in E(G)} \|\bx_i - \bx_j\|^2$,<br>
 subject to $\bone\trans Y = \bzero$, $Y\trans Y = I$</p>
+<!-- eng start -->
+Show that the $Y$ from the spectral embedding is the solution to the optimization problem:  
 
+minimize $\tr(Y\trans LY) = \sum_{\{i,j\}\in E(G)} \|\bx_i - \bx_j\|^2$,  
+subject to $\bone\trans Y = \bzero$, $Y\trans Y = I$  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15155,7 +15176,9 @@ subject to $\bone\trans Y = \bzero$, $Y\trans Y = I$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>先執行（讀入）筆記最下方的所有函數，並執行以下程式碼。<br>
 查找資源解釋什麼是 $k$-means 分群演算法。</p>
-
+<!-- eng start -->
+Run the code in the end of this note to load the functions, then run the code below.  Search online to explain the $k$-means clustering algorithm.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15189,7 +15212,9 @@ subject to $\bone\trans Y = \bzero$, $Y\trans Y = I$</p>
 <h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>各種分群演算法都可以拿來將圖片的像素分群，整體的效果等同在將圖像分割。<br>
 先執行（讀入）筆記最下方的所有函數，並執行以下程式碼。<br>
 逐行解釋以下程式碼。</p>
-
+<!-- eng start -->
+Any clustering algorithm can be used to partition the pixels of an image.  And the effect of this is equivalent to image segmentation.  Run the code in the end of this note to load the functions, then run the code below.  Explain the code below line by line.
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15201,7 +15226,7 @@ subject to $\bone\trans Y = \bzero$, $Y\trans Y = I$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 未分割原圖</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### original image</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
@@ -15226,7 +15251,7 @@ subject to $\bone\trans Y = \bzero$, $Y\trans Y = I$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 用 k-means 分群進行影像分割</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### image segmentation by the k-means clustering algorithm</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
 

@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E8%96%9B%E7%88%BE%E4%B8%8A%E4%B8%89%E8%A7%92%E5%8C%96">&#34203;&#29246;&#19978;&#19977;&#35282;&#21270;<a class="anchor-link" href="#%E8%96%9B%E7%88%BE%E4%B8%8A%E4%B8%89%E8%A7%92%E5%8C%96">&#182;</a></h1>
+<h1 id="%E8%96%9B%E7%88%BE%E4%B8%8A%E4%B8%89%E8%A7%92%E5%8C%96">&#34203;&#29246;&#19978;&#19977;&#35282;&#21270;<a class="anchor-link" href="#%E8%96%9B%E7%88%BE%E4%B8%8A%E4%B8%89%E8%A7%92%E5%8C%96">&#182;</a></h1><p>Schur triangulation</p>
+
 </div>
 </div>
 </div>
@@ -14632,7 +14639,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
-\newcommand{\gm}{\operatorname{gm}}$</p>
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14773,7 +14782,9 @@ and $B_k = \begin{bmatrix} a &amp; b \\ -b &amp; a \end{bmatrix}$ if $\lambda_k 
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14825,7 +14836,9 @@ and $B_k = \begin{bmatrix} a &amp; b \\ -b &amp; a \end{bmatrix}$ if $\lambda_k 
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>令 $\hat{Q}_2 = 1 \oplus Q_2$。<br>
 求 $\hat{Q}_2^{-1} A\hat{Q}_2$。</p>
-
+<!-- eng start -->
+Let $\hat{Q}_2 = 1 \oplus Q_2$.  Find $\hat{Q}_2^{-1} A\hat{Q}_2$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14837,7 +14850,9 @@ and $B_k = \begin{bmatrix} a &amp; b \\ -b &amp; a \end{bmatrix}$ if $\lambda_k 
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求 $A$ 的所有特徵值。</p>
-
+<!-- eng start -->
+Find the spectrum of $A$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14852,25 +14867,6 @@ and $B_k = \begin{bmatrix} a &amp; b \\ -b &amp; a \end{bmatrix}$ if $\lambda_k 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="n">diagonal_matrix</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">Q</span> <span class="o">=</span> <span class="n">random_good_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">Q</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
-<span class="n">latex</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -14886,7 +14882,19 @@ $$
     0 &amp; -2 &amp; 3
     \end{bmatrix}.
 $$<p>求一個實垂直矩陣 $Q$ 使得 $Q\trans AQ$ 為一上三角矩陣。</p>
+<!-- eng start -->
+Let  
 
+$$
+    A = \begin{bmatrix}
+    -1 & -4 & 2 \\
+    2 & 4 & -1 \\
+    0 & -2 & 3
+    \end{bmatrix}.
+$$
+
+Find a real orthogonal matrix $Q$ such that $Q\trans AQ$ is an upper triangular matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14902,7 +14910,11 @@ $Q$ 為一可逆矩陣、
 而 $T$ 為一上三角矩陣。</p>
 <p>已知 $Q^{-1}AQ = T$，<br>
 證明 $\spec(A) = \spec(D)$ 且它們就是 $D$ 的對角線元素所成的集合。</p>
+<!-- eng start -->
+Let $A$ be a square matrix, $Q$ an invertible matrix, and $T$ an upper triangular matrix.  
 
+It is known that $Q^{-1}AQ = T$.  Show that $\spec(A) = \spec(D)$ and they equal the set of diagonal entries of $D$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14915,7 +14927,9 @@ $Q$ 為一可逆矩陣、
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>若 $P$ 和 $Q$ 為大小相同的么正矩陣，證明 $PQ$ 和 $QP$ 都是么正矩陣。<br>
 若 $P$ 和 $Q$ 為大小相同的實垂直矩陣，證明 $PQ$ 和 $QP$ 都是實垂直矩陣。</p>
-
+<!-- eng start -->
+If $P$ and $Q$ are unitary matrices of the same order, show that $PQ$ and $QP$ are both unitary.  If $P$ and $Q$ are real orthogonal matrices of the same order, show that $PQ$ and $QP$ are both real orthogonal.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14930,7 +14944,16 @@ $Q$ 為一可逆矩陣、
 <h5 id="Schur-triangulation-theorem">Schur triangulation theorem<a class="anchor-link" href="#Schur-triangulation-theorem">&#182;</a></h5><p>Let $A$ be a square complex matrix.<br>
 Then there are a unitary matrix $Q$ such that $Q^*AQ = T$ is a upper triangular matrix.</p>
 <p>Necessarily, the diagonal entries of $T$ are the eigenvalues of $A$.</p>
+<!-- eng start -->
+Prove the Schur triangulation theorem.
 
+##### Schur triangulation theorem
+
+Let $A$ be a square complex matrix.  
+Then there are a unitary matrix $Q$ such that $Q^*AQ = T$ is a upper triangular matrix.
+
+Necessarily, the diagonal entries of $T$ are the eigenvalues of $A$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14945,7 +14968,16 @@ Then there are a unitary matrix $Q$ such that $Q^*AQ = T$ is a upper triangular 
 <h5 id="Schur-triangulation-theorem-(real-matrix-with-real-eigenvalues)">Schur triangulation theorem (real matrix with real eigenvalues)<a class="anchor-link" href="#Schur-triangulation-theorem-(real-matrix-with-real-eigenvalues)">&#182;</a></h5><p>Let $A$ be a square real matrix.<br>
 Then there are a real orthogonal matrix $Q$ such that $Q\trans AQ = T$ is a upper triangular matrix.</p>
 <p>Necessarily, the diagonal entries of $T$ are the eigenvalues of $A$.</p>
+<!-- eng start -->
+Prove the Schur triangulation theorem for real matrices with real eigenvalues.
 
+##### Schur triangulation theorem (real matrix with real eigenvalues)
+
+Let $A$ be a square real matrix.  
+Then there are a real orthogonal matrix $Q$ such that $Q\trans AQ = T$ is a upper triangular matrix.
+
+Necessarily, the diagonal entries of $T$ are the eigenvalues of $A$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14968,7 +15000,27 @@ $$
 $$<p>such that $B_k = \begin{bmatrix} \lambda_k \end{bmatrix}$ if $\lambda_k\in\mathbb{R}$<br>
 and $B_k = \begin{bmatrix} a &amp; b \\ -b &amp; a \end{bmatrix}$ if $\lambda = a + bi$ with $b \neq 0$.</p>
 <p>Necessarily, the diagonal blocks of $T$ determine the eigenvalues of $A$.</p>
+<!-- eng start -->
+Prove the Schur triangulation theorem for real matrices.
 
+##### Schur triangulation theorem (real matrix)
+
+Let $A$ be a square real matrix.  
+Then there are a real invertible matrix $Q$ such that $Q^{-1}AQ = T$ has the form 
+
+$$
+    T = \begin{bmatrix}
+    B_1 & ~ & * \\
+     ~ & \ddots & ~ \\
+     O & ~ & B_t
+    \end{bmatrix},
+$$
+
+such that $B_k = \begin{bmatrix} \lambda_k \end{bmatrix}$ if $\lambda_k\in\mathbb{R}$  
+and $B_k = \begin{bmatrix} a & b \\ -b & a \end{bmatrix}$ if $\lambda = a + bi$ with $b \neq 0$.  
+
+Necessarily, the diagonal blocks of $T$ determine the eigenvalues of $A$.  
+<!-- eng end -->
 </div>
 </div>
 </div>

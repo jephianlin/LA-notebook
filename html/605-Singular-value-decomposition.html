@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#22855;&#30064;&#20540;&#20998;&#35299;<a class="anchor-link" href="#%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#182;</a></h1>
+<h1 id="%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#22855;&#30064;&#20540;&#20998;&#35299;<a class="anchor-link" href="#%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3">&#182;</a></h1><p>Singular value decomposition</p>
+
 </div>
 </div>
 </div>
@@ -14632,7 +14639,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
-\newcommand{\gm}{\operatorname{gm}}$</p>
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14805,8 +14814,10 @@ Let $\beta = \beta_1 \cup \beta_0$.  </li>
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
 令 $\alpha = \{\bv_1, \ldots, \bv_n\}$ 為 $\mathbb{R}^n$ 中的垂直標準基、<br>
 $\beta = \{\bu_1, \ldots, \bu_m\}$ 為 $\mathbb{R}^m$ 中的垂直標準基。<br>
-已知一線性函數 $f = \mathbb{R}^n \rightarrow \mathbb{R}^m$ 具有 $[f]_\alpha^\beta = \Sigma$ 的性質。</p>
-
+已知一線性函數 $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ 具有 $[f]_\alpha^\beta = \Sigma$ 的性質。</p>
+<!-- eng start -->
+Run the code below.  Let $\alpha = \{\bv_1, \ldots, \bv_n\}$ be an orthonormal basis of $\mathbb{R}^n$, $\beta = \{\bu_1, \ldots, \bu_m\}$ an orthonormal basis of $\mathbb{R}^m$.  It is known that $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is a linear function with $[f]_\alpha^\beta = \Sigma$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14862,7 +14873,9 @@ $\beta = \{\bu_1, \ldots, \bu_m\}$ 為 $\mathbb{R}^m$ 中的垂直標準基。<b
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>將 $f(c_1\bv_1 + \cdots + c_n\bv_n)$ 寫成 $\beta$ 的線性組合。</p>
-
+<!-- eng start -->
+Write $f(c_1\bv_1 + \cdots + c_n\bv_n)$ as a linear combination of $\beta$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14874,7 +14887,9 @@ $\beta = \{\bu_1, \ldots, \bu_m\}$ 為 $\mathbb{R}^m$ 中的垂直標準基。<b
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>用 $\alpha$ 中的向量來描述 $\ker(f)$。</p>
-
+<!-- eng start -->
+Use vectors in $\alpha$ to describe $\ker(f)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14886,7 +14901,9 @@ $\beta = \{\bu_1, \ldots, \bu_m\}$ 為 $\mathbb{R}^m$ 中的垂直標準基。<b
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>用 $\beta$ 中的向量來描述 $\range(f)$。</p>
-
+<!-- eng start -->
+Use vectors in $\beta$ to describe $\range(f)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14909,7 +14926,9 @@ $\beta = \{\bu_1, \ldots, \bu_m\}$ 為 $\mathbb{R}^m$ 中的垂直標準基。<b
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>求以下矩陣的奇異值分解。</p>
-
+<!-- eng start -->
+For each of the following matrices, find its singular value decomposition.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14959,7 +14978,16 @@ $$
      1 &amp; 1 &amp; -1 &amp; -1 
     \end{bmatrix}
 $$<p>的奇異值分解。</p>
+<!-- eng start -->
+Use the given instructions to find the singular value decomposition of  
 
+$$
+    A = \begin{bmatrix}
+     1 & 1 & 1 & 1 \\
+     1 & 1 & -1 & -1 
+    \end{bmatrix}.
+$$
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14971,7 +14999,9 @@ $$<p>的奇異值分解。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>求出 $A\trans A$ 的所有特徵值 $\lambda_1 \geq \cdots \geq \lambda_4$ 及其對應的一組垂直單位長的特徵基底 $\alpha = \{\bv_1,\ldots, \bv_4\}$。</p>
-
+<!-- eng start -->
+Find the eigenvalues $\lambda_1 \geq \cdots \geq \lambda_4$ of $A\trans A$ and the corresponding orthonormal eigenbasis $\alpha = \{\bv_1,\ldots, \bv_4\}$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14983,7 +15013,9 @@ $$<p>的奇異值分解。</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>求出 $AA\trans$ 的所有特徵值 $\mu_1 \geq \mu_2$ 及其對應的一組垂直單位長的特徵基底 $\beta = \{\bu_1, \bu_2\}$。</p>
-
+<!-- eng start -->
+Find the eigenvalues $\mu_1 \geq \mu_2$ of $AA\trans$ and the corresponding orthonormal eigenbasis $\beta = \{\bu_1, \bu_2\}$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15001,9 +15033,16 @@ $$<p>的奇異值分解。</p>
 <li>$A\bv_1 = \sigma\bu_1$ 且 $A\bv_2 = \sigma_2\bu_2$。  </li>
 <li>$A\bv_1$ 是 $AA\trans$ 的特徵向量且特徵值為 $\lambda_1$。<br>
 $A\bv_2$ 是 $AA\trans$ 的特徵向量且特徵值為 $\lambda_2$。  </li>
-<li>$A\bv_1$ 的長度為 $\sigma_1$、$A\bv_2$ 的長度為 $\sigma_2$。</li>
+<li>$A\bv_1$ 的長度為 $\sigma_1$、$A\bv_2$ 的長度為 $\sigma_2$。  </li>
 </ol>
+<!-- eng start -->
+Let $\sigma_1 = \sqrt{\lambda_1}$、$\sigma_2 = \sqrt{\lambda_2}$.  Determine if the following statements are true or false:
 
+1. $\lambda_1 = \mu_1$ and $\lambda_2 = \mu_2$.  
+2. $A\bv_1 = \sigma\bu_1$ and $A\bv_2 = \sigma_2\bu_2$.  
+3. $A\bv_1$ is an eigenvector of $AA\trans$ with respect to the eigenvalue $\lambda_1$, while $A\bv_2$ is an eigenvector of $AA\trans$ with respect to the eigenvalue $\lambda_2$.  
+3. The length of $A\bv_1$ is $\sigma_1$, and the length of $A\bv_2$ is $\sigma_2$.    
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15015,7 +15054,9 @@ $A\bv_2$ 是 $AA\trans$ 的特徵向量且特徵值為 $\lambda_2$。  </li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(d)">Exercise 3(d)<a class="anchor-link" href="#Exercise-3(d)">&#182;</a></h5><p>將 $\beta$ 做適當的修正使得 $\alpha$、$\beta$ 可以將 $A$ 奇異值分解。</p>
-
+<!-- eng start -->
+Modify your $\beta$ so that $\alpha$ and $\beta$ lead to the singular decomposition of $A$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15028,7 +15069,9 @@ $A\bv_2$ 是 $AA\trans$ 的特徵向量且特徵值為 $\lambda_2$。  </li>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>在 506-6 我們用連續性論證來說明 $AB$ 和 $BA$ 有相同的非零特徵值集合。<br>
 這裡提供另一種方式來證明。</p>
-
+<!-- eng start -->
+In 506-6, we used the continuity argument to show that $AB$ and $BA$ have the same set of nonzero eigenvalues.  Here we introduce an alternative proof.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15051,7 +15094,22 @@ $$
     \end{bmatrix}.
 $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區塊基本矩陣 $E$。<br>
 並驗證 $EXE^{-1} = Y$。</p>
+<!-- eng start -->
+Let  
 
+$$
+    X = \begin{bmatrix}
+    AB & A \\
+    O & O
+    \end{bmatrix}, \quad
+    Y = \begin{bmatrix}
+    O & A \\
+    O & BA
+    \end{bmatrix}.
+$$
+
+See 408 and write down the block elementary matrix $E$ for the operation of "adding $B$ times the upper block row to the lower block row" in $X$.  Then verify that $EXE^{-1} = Y$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15063,7 +15121,9 @@ $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>證明 $AB$ 和 $BA$ 有相同的非零特徵值集合。</p>
-
+<!-- eng start -->
+Prove that $AB$ and $BA$ have the same set of nonzero eigenvalues.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15075,7 +15135,9 @@ $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>執行以下程式碼，並用文字解釋輸出的各項是什麼。</p>
-
+<!-- eng start -->
+Run the code below.  Then explain the output in your own words.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15110,7 +15172,9 @@ $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>以下小題解釋如何利用奇異值分解進行影像壓縮（去除雜訊）。</p>
-
+<!-- eng start -->
+The following exercises demonstrate an image compression (or noise removal) technique through the singular value decomposition.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15125,7 +15189,9 @@ $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區
 選用不同的 <code>k</code> 來看看結果有什麼差異。<br>
 用文字敘述 <code>k</code> 對結果的影響、<br>
 並選一個 <code>k</code> 是你能接受的最小值。</p>
-
+<!-- eng start -->
+Run the code below.  Set `k` to be different values and observe the output.  Explain the effect of `k` to the output in your own words.  Pick the smallest `k` so that you feel the image is still clear.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15137,7 +15203,7 @@ $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 未壓縮原圖</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### original image</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
@@ -15162,7 +15228,7 @@ $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 壓縮</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### compressed image</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
 
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
@@ -15186,7 +15252,7 @@ $$<p>參考 408 寫出「把 $X$ 的上區塊左乘 $B$ 加到下區塊」的區
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6(b)">Exercise 6(b)<a class="anchor-link" href="#Exercise-6(b)">&#182;</a></h5><p>令 $A$ 為一 $m\times n$ 矩陣、且 $\rank(A) = r$。<br>
-已知 $A = U\Sigma V^\top$ 為其奇異值分解。<br>
+已知 $A = U\Sigma V\trans$ 為其奇異值分解。<br>
 令 $\bu_1,\ldots,\bu_{m}$ 為 $U$ 的各行向量、<br>
 而 $\bv_1, \ldots, \bv_{n}$ 為 $V$ 的各行向量。</p>
 <p>說明 $A$ 可寫成</p>
@@ -15194,7 +15260,17 @@ $$
     A = \sum_{i=1}^{r} \sigma_i \bu_i \bv_i\trans.
 $$<p></p>
 <p>因此對任意 $k \leq r$ 而言，$A' = \sum_{i=1}^{k} \sigma_i \bu_i \bv_i\trans$ 都可視為 $A$ 的一個逼近。</p>
+<!-- eng start -->
+Let $A$ be an $m\times n$ matrix and $\rank(A) = r$.  It is known that $A = U\Sigma V\trans$ is the singular value decomposition.  Let $\bu_1,\ldots,\bu_{m}$ be the columns of $U$ and $\bv_1, \ldots, \bv_{n}$ the columns of $V$.  
 
+Show that $A$ can be written as    
+
+$$
+    A = \sum_{i=1}^{r} \sigma_i \bu_i \bv_i\trans.
+$$  
+
+Therefore, $A' = \sum_{i=1}^{k} \sigma_i \bu_i \bv_i\trans$ can be viewed as an approximation of $A$ for any $k \leq r$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15210,7 +15286,13 @@ $$<p></p>
 <p>驗證對每一個 $i$ 都有 $\|\bu_i\bv_i\trans\| = 1$，<br>
 並說明 $\|A - A'\|^2 = \sum_{i = k+1}^r \sigma_i^2$。</p>
 <p>（因此我們刪除小的奇異值是合理的，並不會改變 $A$ 太多。）</p>
+<!-- eng start -->
+For matrices , we may define the norm by $\|X\|^2 = \tr(X\trans X)$.  Consequently, this defines the distance between two matrices $X$ and $Y$ by $\|X - Y\|$.  
 
+Verify that $\|\bu_i\bv_i\trans\| = 1$ for each $i$.  Then show that $\|A - A'\|^2 = \sum_{i = k+1}^r \sigma_i^2$.  
+
+(Therefore, it is fine to remove some small singular values, as it does not change $A$ too much.)  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15224,7 +15306,9 @@ $$<p></p>
 <h5 id="Exercise-6(d)">Exercise 6(d)<a class="anchor-link" href="#Exercise-6(d)">&#182;</a></h5><p>令 <code>x</code> 為電腦儲存一個浮點數所需的容量。<br>
 說明一張 $m\times n$ 畫素的灰階圖片大約佔 $mn$ <code>x</code> 的容量、<br>
 而給定 $k$ 經過壓縮後的圖片大約佔 $mk + nk + k$ <code>x</code> 的容量。</p>
-
+<!-- eng start -->
+Let `x` be the unit representing the space required for a computer to store a float number.  Explain that a grayscale image with $m\times n$ pixels occupies a space of about $mn$ `x` , while the compressed image by a given $k$ requires a space of about $mk + nk + k$ `x` to store it.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15237,7 +15321,9 @@ $$<p></p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>以下練習討論一個矩陣 $A$ 的<strong>摩爾–彭若斯廣義反矩陣（Moore–Penrose pseudoinverse）</strong> 。<br>
 記作 $A^\dagger$。</p>
-
+<!-- eng start -->
+The following exercises studies the **Moore–Penrose pseudoinverse** of a matrix $A$, which is denoted by $A^\dagger$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15268,7 +15354,38 @@ $$
      0 &amp; 1 &amp; 0
     \end{bmatrix}
 $$<p>的 $\Sigma^\dagger$。</p>
+<!-- eng start -->
+Let $\sigma_1, \ldots, \sigma_r$ be nonzero real numbers and  
 
+$$
+    \Sigma = \begin{bmatrix} 
+     \operatorname{diag}(\sigma_1, \ldots, \sigma_r) & O_{r,n-r} \\
+     O_{m-r,r} & O_{m-r,n-r} 
+    \end{bmatrix}.
+$$
+
+Then  
+
+$$
+    \Sigma^\dagger = \begin{bmatrix} 
+     \operatorname{diag}(\sigma_1^{-1}, \ldots, \sigma_r^{-1}) & O_{r,m-r} \\
+     O_{n-r,r} & O_{n-r,m-r} 
+    \end{bmatrix}.
+$$
+
+(Be aware of the sizes of the matrics.)
+
+For  
+
+$$
+    \Sigma = \begin{bmatrix}
+     2 & 0 & 0 \\
+     0 & 1 & 0
+    \end{bmatrix},
+$$
+
+find $\Sigma^\dagger$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15288,7 +15405,20 @@ $$
      1 &amp; 1 &amp; 1 \\
     \end{bmatrix}
 $$<p>的 $A^\dagger$。</p>
+<!-- eng start -->
+If the singular value decomposition of $A$ is $U\Sigma V\trans$, then $A^\dagger = V\Sigma^\dagger U\trans$.  
 
+For  
+
+$$
+    A = \begin{bmatrix}
+     1 & 1 & 1 \\
+     1 & 1 & 1 \\
+    \end{bmatrix},
+$$
+
+find $A^\dagger$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15301,7 +15431,9 @@ $$<p>的 $A^\dagger$。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-8">Exercise 8<a class="anchor-link" href="#Exercise-8">&#182;</a></h5><p>令 $A$ 為一 $m\times n$ 矩陣。<br>
 以下練習建立奇異值分解的理論基礎。</p>
-
+<!-- eng start -->
+Let $A$ be an $m\times n$ matrix.  The following exercises provide theoretical details about the singular value decomposition.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15314,7 +15446,9 @@ $$<p>的 $A^\dagger$。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-8(a)">Exercise 8(a)<a class="anchor-link" href="#Exercise-8(a)">&#182;</a></h5><p>令 $\bv$ 為 $A\trans A$ 的特徵向量且 $A\trans A\bv = \lambda\bv$。<br>
 證明 $A\bv$ 滿足 $AA\trans (A\bv) = \lambda(A\bv)$。</p>
-
+<!-- eng start -->
+Let $\bv$ be an eigenvector of $A\trans A$ and $A\trans A\bv = \lambda\bv$.  Show that $A\bv$ has the property that $AA\trans (A\bv) = \lambda(A\bv)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15327,7 +15461,9 @@ $$<p>的 $A^\dagger$。</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-8(b)">Exercise 8(b)<a class="anchor-link" href="#Exercise-8(b)">&#182;</a></h5><p>令 $\bv$ 為 $A\trans A$ 的特徵向量且 $A\trans A\bv = \lambda\bv$。<br>
 證明對任意向量 $\bu\in\mathbb{R}^n$，都有 $\inp{A\bv}{A\bu} = \lambda\inp{\bv}{\bu}$。</p>
-
+<!-- eng start -->
+Let $\bv$ be an eigenvector of $A\trans A$ and $A\trans A\bv = \lambda\bv$.  Show that $\inp{A\bv}{A\bu} = \lambda\inp{\bv}{\bu}$ for any $\bu\in\mathbb{R}^n$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15341,11 +15477,17 @@ $$<p>的 $A^\dagger$。</p>
 <h5 id="Exercise-8(c)">Exercise 8(c)<a class="anchor-link" href="#Exercise-8(c)">&#182;</a></h5><p>藉由以上性質證明：</p>
 <ol>
 <li>$\lambda \geq 0$。  </li>
-<li>$A\bv$ 是 $AA\trans$ 的特徵向量且長度為 $\sqrt{\lambda}$。  </li>
-<li>若 $\alpha_1$ 為 $\Row(A\trans A)$ 的一組垂直標準特徵基底、<br>
+<li>$A\bv$ 是 $AA\trans$ 的特徵向量，對應的特徵值為 $\lambda$，且長度為 $\sqrt{\lambda}$。  </li>
+<li>若 $\alpha_1$ 為 $\Row(A\trans A)$ 的一組垂直標準特徵基底，<br>
 則 $\beta_1 = \{\frac{1}{\sigma_i}A\bv: \bv \in \alpha_1\}$ 為 $\Row(AA\trans)$ 的一組垂直標準特徵基底。  </li>
 </ol>
+<!-- eng start -->
+Based on the previous exercises, prove the following properties:  
 
+1. $\lambda \geq 0$.  
+2. $A\bv$ is an eigenvector of $AA\trans$ with respect to $\lambda$ of length $\sqrt{\lambda}$.  
+3. If $\alpha_1$ is an orthonormal basis of $\Row(A\trans A)$, then $\beta_1 = \{\frac{1}{\sigma_i}A\bv: \bv \in \alpha_1\}$ is an orthonormal basis of $\Row(AA\trans)$.  
+<!-- eng end -->
 </div>
 </div>
 </div>

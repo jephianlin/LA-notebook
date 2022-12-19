@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E9%AB%94%E9%A9%97%E4%B8%BB%E6%88%90%E4%BB%BD%E5%88%86%E6%9E%90">&#39636;&#39511;&#20027;&#25104;&#20221;&#20998;&#26512;<a class="anchor-link" href="#%E9%AB%94%E9%A9%97%E4%B8%BB%E6%88%90%E4%BB%BD%E5%88%86%E6%9E%90">&#182;</a></h1>
+<h1 id="%E9%AB%94%E9%A9%97%E4%B8%BB%E6%88%90%E4%BB%BD%E5%88%86%E6%9E%90">&#39636;&#39511;&#20027;&#25104;&#20221;&#20998;&#26512;<a class="anchor-link" href="#%E9%AB%94%E9%A9%97%E4%B8%BB%E6%88%90%E4%BB%BD%E5%88%86%E6%9E%90">&#182;</a></h1><p>Understanding the principal component analysis</p>
+
 </div>
 </div>
 </div>
@@ -14632,7 +14639,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
-\newcommand{\gm}{\operatorname{gm}}$</p>
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14790,7 +14799,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14852,7 +14863,9 @@ whose rows are the new data points contains the essential information of the ori
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>若藍點為給定的資料。<br>
 改變不同的 <code>seed</code>，說明紅點、紅箭頭、橘點的意思。</p>
-
+<!-- eng start -->
+Let the blue point set be the data.  Choose different `seed` and explain the meaning of the red point, the red arrow, and the orange point.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14866,7 +14879,9 @@ whose rows are the new data points contains the essential information of the ori
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>令 $X_0$ 的列向量為將藍點資料置中過後的資料點。<br>
 若 $X_0 = U\Sigma V\trans$ 為其奇異值分解。<br>
 說明紅箭頭與 $V\trans$ 的關係。</p>
-
+<!-- eng start -->
+Let $X_0$ be the matrix whose rows are the blue points, centered at their mean.  If $X_0 = U\Sigma V\trans$ is the singular value decomposition, describe the relation between the red arrow and $V\trans$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14890,7 +14905,9 @@ whose rows are the new data points contains the essential information of the ori
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>令 $X$ 為一 $N\times d$ 矩陣，而其列向量為一筆資料。<br>
 令 $J$ 為 $N\times N$ 的全一矩陣。</p>
-
+<!-- eng start -->
+Let $X$ be an $N\times d$ matrix whose rows are the data points.  Let $J$ be the $N\times N$ all-ones matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14902,7 +14919,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(a)">Exercise 2(a)<a class="anchor-link" href="#Exercise-2(a)">&#182;</a></h5><p>說明 $\frac{1}{N}JX$ 每列的意義。</p>
-
+<!-- eng start -->
+Describe the meaning of the rows of $\frac{1}{N}JX$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14914,7 +14933,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2(b)">Exercise 2(b)<a class="anchor-link" href="#Exercise-2(b)">&#182;</a></h5><p>說明 $(I - \frac{1}{N}J)X$ 每列的意義。</p>
-
+<!-- eng start -->
+Describe the meaning of the rows of $(I - \frac{1}{N}J)X$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14926,7 +14947,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14963,7 +14986,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>解釋 <code>mu = X.mean(axis=0)</code> 的意義。</p>
-
+<!-- eng start -->
+Describe the meaning of `mu = X.mean(axis=0)` .  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14975,7 +15000,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>解釋 <code>X0 = X - mu</code> 的意義。</p>
-
+<!-- eng start -->
+Describe the meaning of `X0 = X - mu` .  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14987,7 +15014,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15059,7 +15088,9 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>說明兩段程式碼產出的圖的關係。</p>
-
+<!-- eng start -->
+Describe the relation between the two graphs in the output.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15077,7 +15108,16 @@ whose rows are the new data points contains the essential information of the ori
 <span class="n">u</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">vh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X0</span><span class="p">)</span>
 <span class="n">P</span> <span class="o">=</span> <span class="n">vh</span><span class="o">.</span><span class="n">T</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
+<!-- eng start -->
+You may use `X.shape` to check the shape of an array.  Then explain the meaning of each line in the code.  
 
+```python
+mu = X.mean(axis=0)
+X0 = X - mu
+u,s,vh = np.linalg.svd(X0)
+P = vh.T[:,:2]
+```
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15093,7 +15133,12 @@ whose rows are the new data points contains the essential information of the ori
 這筆資料實際上是貼在高維度中的一個二維平面，<br>
 且它在這個平面上排出一個一個英文字。</p>
 <p>請找出這個英文字是什麼。</p>
+<!-- eng start -->
+**Challenge**  
+The following code load some data from a file.  The data falls on a $2$-dimensional subspace of a higher dimensional space, and the data points show an English word.
 
+Try to find out this word.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15122,8 +15167,10 @@ whose rows are the new data points contains the essential information of the ori
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $X_0$ 及 $P$ 為主成份分析演算法中的矩陣。<br>
-說明 $X_0P$ 與 $X_0PP\trans$ 的列向量所代量的意義。</p>
-
+說明 $X_0P$ 與 $X_0PP\trans$ 的列向量所代表的意義。</p>
+<!-- eng start -->
+Let $X_0$ and $P$ be the matrices in the principal component analysis.  Explain the meanings of $X_0P$ and $X_0PP\trans$.  
+<!-- eng end -->
 </div>
 </div>
 </div>

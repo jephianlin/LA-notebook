@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E6%AD%A3%E5%AE%9A%E8%88%87%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%99%A3">&#27491;&#23450;&#33287;&#21322;&#27491;&#23450;&#30697;&#38499;<a class="anchor-link" href="#%E6%AD%A3%E5%AE%9A%E8%88%87%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%99%A3">&#182;</a></h1>
+<h1 id="%E6%AD%A3%E5%AE%9A%E8%88%87%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%99%A3">&#27491;&#23450;&#33287;&#21322;&#27491;&#23450;&#30697;&#38499;<a class="anchor-link" href="#%E6%AD%A3%E5%AE%9A%E8%88%87%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%99%A3">&#182;</a></h1><p>Positivity</p>
+
 </div>
 </div>
 </div>
@@ -14633,6 +14640,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
 \newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
 \newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
@@ -14737,8 +14745,7 @@ $$
      ~ &amp; \ddots &amp; ~ &amp; O_{r,n-r} \\
      ~ &amp; ~ &amp; \lambda_r &amp; ~ \\
      ~ &amp; O_{n-r,r} &amp; ~ &amp; O_{n-r,n-r}
-    \end{bmatrix} Q\trans
-    =
+    \end{bmatrix} Q\trans =
     Q\begin{bmatrix}
      \sqrt{\lambda_1} &amp; ~ &amp; ~ \\
      ~ &amp; \ddots &amp; ~ \\
@@ -14814,7 +14821,9 @@ that is, $A = \begin{bmatrix} \inp{\br_i}{\br_j} \end{bmatrix}$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14884,7 +14893,9 @@ that is, $A = \begin{bmatrix} \inp{\br_i}{\br_j} \end{bmatrix}$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>判斷 $A$ 是否為正定、半正定、負定、半負定、或是皆不是。</p>
-
+<!-- eng start -->
+Determine whether $A$ is positive definite, positive semidefinite, negative definite, negative semidefinite, or none of above.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14898,7 +14909,9 @@ that is, $A = \begin{bmatrix} \inp{\br_i}{\br_j} \end{bmatrix}$.</p>
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>若 $A$ 為正定或半正定，找一個非零向量 $\bx$ 使得 $\bx\trans A\bx &gt; 0$。<br>
 若 $A$ 為負定或半負定，找一個非零向量 $\by$ 使得 $\by\trans A\by &lt; 0$。<br>
 若以上皆不是，找兩個非零向量 $\bx$ 和 $\by$ 使得 $\bx\trans A\bx &gt; 0$ 而 $\by\trans A\by &lt; 0$。</p>
-
+<!-- eng start -->
+If $A$ is positive definite or positive semidefinite, find a nonzero vector $\bx$ such that $\bx\trans A\bx > 0$.  If $A$ is negative definite or negative semidefinite, find a nonzero vector $\bx$ such that $\bx\trans A\bx < 0$.  If $A$ belongs to none of the above categories, find nonzero vectors $\bx$ and $\by$ such that $\bx\trans A\bx > 0$ and $\by\trans A\by < 0$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14921,7 +14934,9 @@ that is, $A = \begin{bmatrix} \inp{\br_i}{\br_j} \end{bmatrix}$.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>判斷以下矩陣是否為正定、半正定、皆不是。</p>
-
+<!-- eng start -->
+For each of the following matrices, determine whether it is positive definite, positive semidefinite, or none of above.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14982,7 +14997,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $A = \begin{bmatrix} a_{ij} \end{bmatrix}$ 為 $n\times n$ 一正定矩陣。</p>
-
+<!-- eng start -->
+Let $A = \begin{bmatrix} a_{ij} \end{bmatrix}$ be an $n\times n$ positive definite matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14994,7 +15011,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-3(a)">Exercise 3(a)<a class="anchor-link" href="#Exercise-3(a)">&#182;</a></h5><p>證明對於所有 $i$ 都有 $a_{ii} \geq 0$。</p>
-
+<!-- eng start -->
+Show that $a_{ii} \geq 0$ for each $i$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15008,7 +15027,14 @@ $$
 <h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>證明</p>
 $$
     \sum_{i=1}^n\sum_{j=1}^n a_{ij} \geq 0.
+$$<p></p>
+<!-- eng start -->
+Show that  
+
 $$
+    \sum_{i=1}^n\sum_{j=1}^n a_{ij} \geq 0.
+$$  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15020,7 +15046,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>證明以下關於（半）正定矩陣的相關性質。</p>
-
+<!-- eng start -->
+Prove the following properties of positive (semi)definite matrices.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15032,7 +15060,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>正定矩陣的主子矩陣也是正定矩陣。</p>
-
+<!-- eng start -->
+The principal submatrix of a positive definite matrix is again a positive definite matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15045,7 +15075,9 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>正定矩陣加半正定矩陣是正定矩陣、<br>
 而半正定矩陣加半正定矩陣是半正定矩陣。</p>
-
+<!-- eng start -->
+The sum of a positive definite matrix and a positive semidefinite matrix is a positive definite matrix, while the sum of two positive semidefinite matrices is a positive semidefinite matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15059,9 +15091,14 @@ $$
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>依照以下步驟證明以下敘述等價：</p>
 <ol>
 <li>$A$ 是正定矩陣。</li>
-<li>$A$ 的特徵值均為正。</li>
+<li>$A$ 的特徵值均為正。  </li>
 </ol>
+<!-- eng start -->
+Use the given instruction to show that the following are equivalent:  
 
+1. $A$ is a positive definite matrix.  
+2. Every eigenvalue of $A$ is positive.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15074,7 +15111,9 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5(a)">Exercise 5(a)<a class="anchor-link" href="#Exercise-5(a)">&#182;</a></h5><p>證明若 $A$ 有一特徵值 $\lambda\leq 0$，則存在一個非零向量 $\bx$ 使得 $\bx\trans A\bx \leq 0$。<br>
 因此若 $A$ 正定，則 $A$ 的特徵值均為正。</p>
-
+<!-- eng start -->
+Show that if $A$ has an eigenvalue $\lambda \leq 0$, then there is nonzero vector $\bx$ such that $\bx\trans A\bx \leq 0$.  Therefore, if $A$ is positive definite, then every eigenvalue of $A$ is positive.    
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15085,9 +15124,11 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>證明若 $A$ 的特徵值均為正，則 $\bx\trans A\bx \geq 0$。<br>
+<h5 id="Exercise-5(b)">Exercise 5(b)<a class="anchor-link" href="#Exercise-5(b)">&#182;</a></h5><p>證明若 $A$ 的特徵值均為正，則對於所有非零向量 $\bx$ 都有 $\bx\trans A\bx &gt; 0$。<br>
 （參考 607-3。）</p>
-
+<!-- eng start -->
+Show that if every eigenvalue of $A$ is positive, then $\bx\trans A\bx > 0$ for any nonzero vector $\bx$.  (See 607-3.)  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15101,9 +15142,14 @@ $$
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>證明以下敘述等價：</p>
 <ol>
 <li>$A$ 是半正定矩陣。</li>
-<li>$A$ 是格拉姆矩陣。</li>
+<li>$A$ 是格拉姆矩陣。  </li>
 </ol>
+<!-- eng start -->
+Show that the following are equivalent.  
 
+1. $A$ is positive semidefinite.  
+2. $A$ is a Gram matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15115,7 +15161,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-7">Exercise 7<a class="anchor-link" href="#Exercise-7">&#182;</a></h5><p>以下練習探討矩陣根號的概念。</p>
-
+<!-- eng start -->
+The following exercises explore the notion of the square root of a matrix.    
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15129,7 +15177,9 @@ $$
 <h5 id="Exercise-7(a)">Exercise 7(a)<a class="anchor-link" href="#Exercise-7(a)">&#182;</a></h5><p>證明若 $A$ 是一正定矩陣，<br>
 則其可寫成 $A = M^2$，<br>
 其中 $M$ 是對稱矩陣。</p>
-
+<!-- eng start -->
+Show that if $A$ is a positive definite matrix, then it can be written as $A = M^2$, where $M$ is a symmetric matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15143,7 +15193,11 @@ $$
 <h5 id="Exercise-7(b)">Exercise 7(b)<a class="anchor-link" href="#Exercise-7(b)">&#182;</a></h5><p>若 $A$ 是一正定矩陣、$B$ 為一對稱矩陣，<br>
 證明 $AB$ 的特徵值均為實數。</p>
 <p>提示：證明 $AB$ 和某對稱矩陣相似。</p>
+<!-- eng start -->
+Suppose $A$ is a positive definite matrix and $B$ is a symmetric matrix.  Show that every eigenvalue of $AB$ is real.  
 
+Hint:  Show that $AB$ is similar to some symmetric matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15156,7 +15210,11 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-8">Exercise 8<a class="anchor-link" href="#Exercise-8">&#182;</a></h5><p>回顧 213-5 中提到的廣義內積的定義。</p>
 <p>以下練習說明廣義內積完全是由正定矩陣做出來的。</p>
+<!-- eng start -->
+Recall the definition of an inner product in 213-5.  
 
+The following exercises show that any inner product is the quadratic form of some positive definite matrix.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15170,7 +15228,9 @@ $$
 <h5 id="Exercise-8(a)">Exercise 8(a)<a class="anchor-link" href="#Exercise-8(a)">&#182;</a></h5><p>令 $A$ 為一正定矩陣。<br>
 定義 $\inp{\bx}{\by}_A:=\by\trans A\bx$。</p>
 <p>證明 $\inp{\cdot}{\cdot}_A$ 為一內積。</p>
-
+<!-- eng start -->
+Let $A$ be a positive definite matrix.  Define $\inp{\bx}{\by}_A:=\by\trans A\bx$.  Show that $\inp{\cdot}{\cdot}_A$ is an inner product.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15185,7 +15245,11 @@ $$
 找一個矩陣 $A$ 使得對所有向量 $\bx$ 和 $\by$ 都有 $\inp{\bx}{\by} = \by\trans A\bx$。<br>
 驗證這個矩陣必須是正定的。</p>
 <p>提示：選一些特別的 $\bx$ 和 $\by$ 來找到 $A$ 的各項。</p>
+<!-- eng start -->
+Let $\inp{\cdot}{\cdot}$ be an inner product.  Find a matrix $A$ such that $\inp{\bx}{\by} = \by\trans A\bx$ for any vectors $\bx$ and $\by$.  Verify that this matrix must be positive definite.  
 
+Hint:  Substitute some particular $\bx$ and $\by$ to find the entries of $A$.  
+<!-- eng end -->
 </div>
 </div>
 </div>

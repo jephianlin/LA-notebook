@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E5%B0%8D%E4%B8%80%E5%80%8B%E7%89%B9%E5%BE%B5%E5%90%91%E9%87%8F%E5%8C%96%E7%B0%A1">&#23565;&#19968;&#20491;&#29305;&#24501;&#21521;&#37327;&#21270;&#31777;<a class="anchor-link" href="#%E5%B0%8D%E4%B8%80%E5%80%8B%E7%89%B9%E5%BE%B5%E5%90%91%E9%87%8F%E5%8C%96%E7%B0%A1">&#182;</a></h1>
+<h1 id="%E5%B0%8D%E4%B8%80%E5%80%8B%E7%89%B9%E5%BE%B5%E5%90%91%E9%87%8F%E5%8C%96%E7%B0%A1">&#23565;&#19968;&#20491;&#29305;&#24501;&#21521;&#37327;&#21270;&#31777;<a class="anchor-link" href="#%E5%B0%8D%E4%B8%80%E5%80%8B%E7%89%B9%E5%BE%B5%E5%90%91%E9%87%8F%E5%8C%96%E7%B0%A1">&#182;</a></h1><p>Reduction</p>
+
 </div>
 </div>
 </div>
@@ -14632,7 +14639,9 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\idmap}{\operatorname{id}}
 \newcommand{\am}{\operatorname{am}}
-\newcommand{\gm}{\operatorname{gm}}$</p>
+\newcommand{\gm}{\operatorname{gm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\iner}{\operatorname{iner}}$</p>
 
 </div>
 </div>
@@ -14734,7 +14743,7 @@ Thus, there is a unitary matrix $Q$ whose first column is $\frac{\bv}{\|\bv\|}$.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Reduction-Lemma">Reduction Lemma<a class="anchor-link" href="#Reduction-Lemma">&#182;</a></h5><p>Let $A$ be a complex matrix.<br>
+<h5 id="Reduction-lemma">Reduction lemma<a class="anchor-link" href="#Reduction-lemma">&#182;</a></h5><p>Let $A$ be a complex matrix.<br>
 Suppose $\bv$ is an eigenvector of $A$ with respect to the eigenvalue $\lambda$.<br>
 Let $Q$ be an invertible matrix whose first column is $\bv$.<br>
 Then $Q^{-1}AQ$ has the form</p>
@@ -14801,7 +14810,9 @@ However, $A_2$ can still possibly have a non-real eigenvalue.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。<br>
 令 $\beta = \{\bu_1,\ldots,\bu_n\}$ 為 $Q$ 的行向量集合。</p>
-
+<!-- eng start -->
+Run the code below.  Let $\beta = \{\bu_1,\ldots,\bu_n\}$ be the columns of $Q$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14848,7 +14859,9 @@ However, $A_2$ can still possibly have a non-real eigenvalue.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>求 $[f_A(\bu_1)]_\beta$。</p>
-
+<!-- eng start -->
+Find $[f_A(\bu_1)]_\beta$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14860,7 +14873,9 @@ However, $A_2$ can still possibly have a non-real eigenvalue.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>求 $Q^{-1}$。</p>
-
+<!-- eng start -->
+Find $Q^{-1}$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14872,7 +14887,9 @@ However, $A_2$ can still possibly have a non-real eigenvalue.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(c)">Exercise 1(c)<a class="anchor-link" href="#Exercise-1(c)">&#182;</a></h5><p>求 $[f_A]_\beta^\beta$.</p>
-
+<!-- eng start -->
+Find $[f_A]_\beta^\beta$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14898,7 +14915,9 @@ However, $A_2$ can still possibly have a non-real eigenvalue.</p>
 （其長度將由文意決定。）<br>
 已知以下矩陣 $A$ 皆有 $\bone$ 這個特徵向量。<br>
 求出 $A$ 的所有特徵值。</p>
-
+<!-- eng start -->
+Let $\bone$ be the all-ones vector (whose dimension will be clear by the context).  It is known that each of the following matrices has $\bone$ as an eigenvector.  Find all eigenvalues of $A$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14989,7 +15008,22 @@ $$
 $$<p>已知 $\bone$ 為 $A$ 的一特徵值。<br>
 求 $A$ 的所有特徵值。</p>
 <p>提示：將 $A$ 對 $\bone$ 化簡後，再對 $A_2$ 化簡一次。</p>
+<!-- eng start -->
+Let  
 
+$$
+    A = \begin{bmatrix}
+     0 & 1 & 1 & 1 \\
+     1 & 2 & 0 & 0 \\
+     1 & 0 & 2 & 0 \\
+     1 & 0 & 0 & 2 \\ 
+    \end{bmatrix}.
+$$
+
+It is known that $\bone$ is an eigenvector of $A$.  Find all eigenvalues of $A$.  
+
+Hint: Apply the reduction lemma to $A$ and $\bone$ to get $A_2$.  Then apply the lemma again to $A_2$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15007,7 +15041,18 @@ $$
      0 &amp; 0 &amp; 1 \\
      1 &amp; 0 &amp; 0 
     \end{bmatrix}.  
+$$<p></p>
+<!-- eng start -->
+Let  
+
 $$
+    A = \begin{bmatrix}
+     0 & 1 & 0 \\
+     0 & 0 & 1 \\
+     1 & 0 & 0 
+    \end{bmatrix}.  
+$$  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15028,7 +15073,24 @@ $$
      \lambda &amp; * \\
      \bzero &amp; A_2
     \end{bmatrix}.
+$$<!-- eng start -->
+Let  
+
+$\omega = e^{\frac{2\pi}{3}i}$ and  
+
 $$
+    \bv = \begin{bmatrix} 1 \\ \omega \\ \omega^2 \end{bmatrix}.
+$$
+
+Find the eigenvalue $\lambda$ corresponding to $\bv$.  Then explain how to find a unitary matrix $Q$ such that 
+
+$$
+    Q^* AQ = \begin{bmatrix}
+     \lambda & * \\
+     \bzero & A_2
+    \end{bmatrix}.
+$$
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15049,7 +15111,23 @@ $$
      \lambda &amp; * \\
      \bzero &amp; A_2
     \end{bmatrix}.
+$$<p></p>
+<!-- eng start -->
+Let  
+
 $$
+    \bv = \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}.
+$$
+
+Find the eigenvalue $\lambda$ corresponding to $\bv$.  Then explain how to find a unitary matrix $Q$ such that 
+
+$$
+    Q^* AQ = \begin{bmatrix}
+     \lambda & * \\
+     \bzero & A_2
+    \end{bmatrix}.
+$$
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15063,7 +15141,7 @@ $$
 <h5 id="Exercise-4(c)">Exercise 4(c)<a class="anchor-link" href="#Exercise-4(c)">&#182;</a></h5><p>令 $\omega = e^{\frac{2\pi}{3}i}$ 且</p>
 $$
     \bv = \begin{bmatrix} 1 \\ \omega \\ \omega^2 \end{bmatrix}.
-$$<p>已知 $\bv$ 所對應的特徵值 $\lambda$ 為 $\omega = a + bi$。
+$$<p>已知 $\bv$ 所對應的特徵值為 $\omega = a + bi$。
 令 $\bv = \bx + \by i$，也就是 $\bx$ 和 $\by$ 分別為 $\bv$ 的實部和虛部向量。</p>
 <p>驗證</p>
 $$
@@ -15078,7 +15156,37 @@ $$
      -b &amp; a &amp; * \\
      0 &amp; 0 &amp; A_2
     \end{bmatrix}.
+$$<p></p>
+<!-- eng start -->
+Let  
+
+$\omega = e^{\frac{2\pi}{3}i}$ 且  
+
 $$
+    \bv = \begin{bmatrix} 1 \\ \omega \\ \omega^2 \end{bmatrix}.
+$$
+
+It is known that $\omega = a + bi$ is the eigenvalue corresponding to $\bv$.  Let $\bv = \bx + \by i$ such that $\bx$ and $\by$ are both real vectors.
+
+Verify that  
+
+$$
+    \begin{aligned}
+    A \bx &= a\bx - b\by, \\
+    A \by &= b\bx + a\by.
+    \end{aligned}
+$$
+
+Then find the eigenvalue $\lambda$ corresponding to $\bv$.  Then explain how to find a unitary matrix $Q$ such that 
+
+$$
+    Q^{-1} AQ = \begin{bmatrix}
+     a & b & * \\
+     -b & a & * \\
+     0 & 0 & A_2
+    \end{bmatrix}.
+$$  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15095,7 +15203,11 @@ $$
 <p>這表示 $\bv\mapsto Q\bv$ 這個動作不會改變 $\bv$ 的長度，<br>
 因此么正矩陣和實垂直矩陣常被視為高維度的鏡射和旋轉。<br>
 （我們沒有說清楚高維度的鏡射和旋轉是什麼意思。）</p>
+<!-- eng start -->
+Let $Q$ be an $n\times n$ unitary matrix and $\bx,\by\in\mathbb{C}^n$.  Show that $\inp{\bx}{\by} = \inp{Q\bx}{Q\by}$.  (The same statement also holds when $Q$ is a real orthogonal matrix and $\bx$ and $\by$ are real vectors.)  
 
+Therefore, the mapping $\bv\mapsto Q\bv$ preserves the length of any vector $\bv$, so unitary matrices and real orthogonal matrices are usually viewed as reflections or rotations in higher dimensions.  (However, we did not clarify the meaning of reflections and rotations.)  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15111,8 +15223,12 @@ $$
 並令 $Q$ 為一 $n\times n$ 矩陣，<br>
 其第 $a,b$-項為 $\zeta^{a-1}{b-1}$。</p>
 <p>證明 $Q$ 是一個么正矩陣。<br>
-（這個矩陣稱為<strong>離散傅立葉變換矩陣</strong>。）</p>
+（這個矩陣稱為<strong>離散傅立葉變換矩陣</strong> 。）</p>
+<!-- eng start -->
+Fix a positive integer $n$.  Let $\zeta = e^{\frac{2\pi}{n}i}$ and $Q$ the $n\times n$ matrix whose $a,b$-entry is $\zeta^{a-1}{b-1}$.  
 
+Show that $Q$ is a unitary matrix.  (The matrix $Q$ is known as the **discrete Fourier transform matrix** .)  
+<!-- eng end -->
 </div>
 </div>
 </div>

@@ -14454,6 +14454,11 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 /* Misc */
 a.anchor-link {
   display: none;
@@ -14515,11 +14520,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   width: 100%;
 }
 
-@media print {
-  .jp-Collapser {
-    display: none;
-  }
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
 
+@media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
     display: block;
@@ -14553,12 +14559,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14573,7 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E5%85%B1%E8%AE%8A%E7%95%B0%E6%95%B8%E7%9F%A9%E9%99%A3">&#20849;&#35722;&#30064;&#25976;&#30697;&#38499;<a class="anchor-link" href="#%E5%85%B1%E8%AE%8A%E7%95%B0%E6%95%B8%E7%9F%A9%E9%99%A3">&#182;</a></h1>
+<h1 id="%E5%85%B1%E8%AE%8A%E7%95%B0%E6%95%B8%E7%9F%A9%E9%99%A3">&#20849;&#35722;&#30064;&#25976;&#30697;&#38499;<a class="anchor-link" href="#%E5%85%B1%E8%AE%8A%E7%95%B0%E6%95%B8%E7%9F%A9%E9%99%A3">&#182;</a></h1><p>Covariance matrix</p>
+
 </div>
 </div>
 </div>
@@ -14803,7 +14810,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
-
+<!-- eng start -->
+Run the code below.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14816,8 +14825,8 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### code</span>
-<span class="n">set_random_seed</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="n">print_ans</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">set_random_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">print_ans</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -14849,7 +14858,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>令 $\bx$ 和 $\by$ 分別為 $X$ 的兩個行向量。<br>
 求 $\bx$ 的平均值和變異數、$\by$ 的平均值和變異數、以及 $\bx$ 和 $\by$ 的共變異數。</p>
-
+<!-- eng start -->
+Let $\bx$ and $\by$ be the columns of $X$.  Find the mean and the variance of $\bx$, the mean and the variance of $\by$, and the covariance of $\bx$ and $\by$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14862,7 +14873,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>將 $X$ 的各行當成資料的特徵。<br>
 求特徵和特徵之間的共變異數矩陣。</p>
-
+<!-- eng start -->
+Consider the columns of $X$ as the features.  Find the covariance matrix of them.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14885,7 +14898,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>說明資料矩陣的共變異數矩陣必定是半正定。</p>
-
+<!-- eng start -->
+Show that the covariance matrix of any data is positive semidefinite.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14896,11 +14911,13 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $\bx$ 和 $\by$ 為兩筆平均值為 $0$ 的資料。<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>令 $\bx$ 和 $\by$ 為兩筆平均值為 $0$ 的特徵資料。<br>
 令 $X$ 為由 $\bx$ 和 $\by$ 作為行向量的資料矩陣。<br>
 若已知 $C = \frac{1}{N-1}X\trans X$ 為其共變異數矩陣。<br>
 利用 $C$ 來求 $\bx + \by$ 的變異數。</p>
-
+<!-- eng start -->
+Let $\bx$ and $\by$ be two features with means $0$.  Let $X$ be the matrix whose columns are $\bx$ and $\by$.  Given the covariance matrix $C = \frac{1}{N-1}X\trans X$, find the variance of $\bx + \by$ by $C$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14915,7 +14932,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 每張圖中都代表一筆二維資料，<br>
 每個點的 $x$-座標組成一個特徵向量 $\bx$，<br>
 而每個點的 $y$-座標組成一個特徵向量 $\by$。</p>
-
+<!-- eng start -->
+Run the code below.  Each figure shows a set of $2$-dimensional data points.  In each figure, the $x$-coordinates of the points form a feature vector $\bx$, and the $y$-coordinates of the points form a feature vector $\by$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14957,7 +14976,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(a)">Exercise 4(a)<a class="anchor-link" href="#Exercise-4(a)">&#182;</a></h5><p>利用圖形來判斷哪一筆資料中的 $\bx$ 的變異數最大。</p>
-
+<!-- eng start -->
+Observe the figures and determine which dataset has the maximum variance of $\bx$.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14969,7 +14990,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-4(b)">Exercise 4(b)<a class="anchor-link" href="#Exercise-4(b)">&#182;</a></h5><p>判斷每張圖中 $\bx$ 和 $\by$ 的共變異數為正、負、或是零。</p>
-
+<!-- eng start -->
+For each figure, determine if the covariance of $\bx$ and $\by$ is positive, negative, or zero.  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14981,7 +15004,9 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>查找資料並解釋 <code>np.random.multivariate_normal</code> 的用法。</p>
-
+<!-- eng start -->
+Search online and explain the usage of `np.random.multivariate_normal` .  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -14992,10 +15017,12 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $\bx$ 和 $\by$ 為兩筆長度為 $N$ 的資料、<br>
+<h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>令 $\bx$ 和 $\by$ 為兩筆長度為 $N$ 的特徵資料、<br>
 而 $\mu_\bx$ 和 $\mu_\by$ 分別為它們的平均數。<br>
 以下探討計算共變異數、變異數不同計算方法。</p>
-
+<!-- eng start -->
+Let $\bx$ and $\by$ be $N$-dimensional feature vectors with means $\mu_\bx$ and $\mu_\by$, respectively.  The following exercises provide alternative formulas for the covariance and the variance.       
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15009,7 +15036,14 @@ When $X$ is a such matrix of dimension $N\times d$, the row vectors are called t
 <h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>證明 $\bx$ 和 $\by$ 的共變異數也可寫成</p>
 $$
     \frac{1}{N-1}(\inp{\bx}{\by} - N\mu_\bx\mu_\by).
+$$<p></p>
+<!-- eng start -->
+Show that the covariance of $\bx$ and $\by$ can also be written as  
+
 $$
+    \frac{1}{N-1}(\inp{\bx}{\by} - N\mu_\bx\mu_\by).
+$$  
+<!-- eng end -->
 </div>
 </div>
 </div>
@@ -15023,7 +15057,14 @@ $$
 <h5 id="Exercise-6(a)">Exercise 6(a)<a class="anchor-link" href="#Exercise-6(a)">&#182;</a></h5><p>證明 $\bx$ 的變異數也可寫成</p>
 $$
     \frac{1}{N-1}(\|\bx\|^2 - N\mu_\bx^2).
+$$<p></p>
+<!-- eng start -->
+Show that the variance of $\bx$ can also be written as  
+
 $$
+    \frac{1}{N-1}(\|\bx\|^2 - N\mu_\bx^2).
+$$  
+<!-- eng end -->
 </div>
 </div>
 </div>
