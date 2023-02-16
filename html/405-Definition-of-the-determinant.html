@@ -14539,6 +14539,10 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   display: none;
 }
 
+@page {
+    margin: 0.5in; /* Margin for each printed piece of paper */
+}
+
 @media print {
   .jp-Cell-inputWrapper,
   .jp-Cell-outputWrapper {
@@ -14698,7 +14702,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 <ul>
 <li>$\det(I_n) = 1$.</li>
 <li>If $E$ is the elementary matrix of $\rho_i\leftrightarrow\rho_j$, then $\det(EA) = -\det(A)$ and we define $\det(E) = -1$.</li>
-<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $\det(EA) = k\det(A)$ and we define $\Vol_R(E) = k$.</li>
+<li>If $E$ is the elementary matrix of $\rho_i:\times k$, then $\det(EA) = k\det(A)$ and we define $\det(E) = k$.</li>
 </ul>
 <p>(Note that this statement still holds even when $k = 0$.)</p>
 <ul>
