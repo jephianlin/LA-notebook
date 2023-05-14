@@ -36,6 +36,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14464,10 +14465,6 @@ a.anchor-link {
   display: none;
 }
 
-.highlight  {
-  margin: 0.4em;
-}
-
 /* Input area styling */
 .jp-InputArea {
   overflow: hidden;
@@ -14477,9 +14474,26 @@ a.anchor-link {
   overflow: hidden;
 }
 
-.CodeMirror pre {
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
   margin: 0;
-  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
 }
 
 /* Using table instead of flexbox so that we can use break-inside property */
@@ -14523,6 +14537,10 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 /* Hiding the collapser by default */
 .jp-Collapser {
   display: none;
+}
+
+@page {
+    margin: 0.5in; /* Margin for each printed piece of paper */
 }
 
 @media print {
@@ -14573,7 +14591,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14585,20 +14603,20 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License"><br>
+<p><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /><br />
 This work by Jephian Lin is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14646,7 +14664,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14664,7 +14682,7 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14675,15 +14693,15 @@ This work by Jephian Lin is licensed under a <a href="http://creativecommons.org
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let $A$ be an $n\times n$ symmetric matrix.<br>
-According to the spectral theorem, all eigenvalues of $A$ are real, so they can be arranged from small to large on the real line.<br>
-Let $n_+(A)$, $n_-(A)$, and $n_0(A)$ be the number of positive, negative, and zero eigenvalues of $A$, respectively.<br>
+<p>Let $A$ be an $n\times n$ symmetric matrix.<br />
+According to the spectral theorem, all eigenvalues of $A$ are real, so they can be arranged from small to large on the real line.<br />
+Let $n_+(A)$, $n_-(A)$, and $n_0(A)$ be the number of positive, negative, and zero eigenvalues of $A$, respectively.<br />
 Then the <strong>inertia</strong> of $A$ is defined as</p>
 $$
     \iner(A) = (n_+(A), n_-(A), n_0(A)).
@@ -14692,7 +14710,7 @@ $$
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14707,13 +14725,13 @@ $$<p>Notice that $Q$ <em>has to</em> be invertible, yet it is $Q\trans$ in the r
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Sylvester's-law-of-inertia">Sylvester's law of inertia<a class="anchor-link" href="#Sylvester's-law-of-inertia">&#182;</a></h5><p>If two symmetric matrices are congruent, then they have the same inertia.<br>
+<h5 id="Sylvester's-law-of-inertia">Sylvester's law of inertia<a class="anchor-link" href="#Sylvester's-law-of-inertia">&#182;</a></h5><p>If two symmetric matrices are congruent, then they have the same inertia.<br />
 Moreover, every real symmetric matrix $A$ is congruent to a matrix of the form</p>
 $$
     \begin{bmatrix}
@@ -14727,24 +14745,23 @@ $$<p>where $p = n_+(A)$, $q = n_-(A)$, and $r = n_0(A)$.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Since every invertible matrix can be decomposed into the product of some elementary matrix.<br>
+<p>Since every invertible matrix can be decomposed into the product of some elementary matrix.<br />
 Two symmetric matrices $A$ and $B$ are congruent means there are elementary matrices $E_1,\ldots, E_k$ such that</p>
 $$
     E_k\trans\cdots E_1\trans AE_1\cdots E_k = B.
-$$<p></p>
-<p>That is, applying some symmetric row/column operations simultaneously to $A$ will result in $B$.</p>
+$$<p>That is, applying some symmetric row/column operations simultaneously to $A$ will result in $B$.</p>
 
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14759,7 +14776,7 @@ $$<p></p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14770,7 +14787,7 @@ $$<p></p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14778,12 +14795,13 @@ $$<p></p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1">Exercise 1<a class="anchor-link" href="#Exercise-1">&#182;</a></h5><p>執行以下程式碼。</p>
 <!-- eng start -->
-Run the code below.  
+<p>Run the code below.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div  class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14816,7 +14834,7 @@ Run the code below.
 </div>
 
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14824,28 +14842,30 @@ Run the code below.
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-1(a)">Exercise 1(a)<a class="anchor-link" href="#Exercise-1(a)">&#182;</a></h5><p>對 $A$ 進行列運算 $\rho_2:-\rho_1$、再進行行運算 $\kappa_2:-\kappa_1$ 的結果為何？</p>
 <!-- eng start -->
-Apply the row operation $\rho_2:-\rho_1$ and the column operation $\kappa_2:-\kappa_1$ to $A$.  What is the result?
+<p>Apply the row operation $\rho_2:-\rho_1$ and the column operation $\kappa_2:-\kappa_1$ to $A$.  What is the result?</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>將 $A$ 進行一系列對稱的行列運算，讓它變成對角矩陣且對角線上只有 $1$、$0$、$-1$。<br>
+<h5 id="Exercise-1(b)">Exercise 1(b)<a class="anchor-link" href="#Exercise-1(b)">&#182;</a></h5><p>將 $A$ 進行一系列對稱的行列運算，讓它變成對角矩陣且對角線上只有 $1$、$0$、$-1$。<br />
 求 $\iner(A)$。</p>
 <!-- eng start -->
-Apply some symmetric row/column operations simultaneously to $A$ so that it becomes a diagonal matrix with $1$, $0$, or $-1$ on the diagonal.  Find $\iner(A)$.  
+<p>Apply some symmetric row/column operations simultaneously to $A$ so that it becomes a diagonal matrix with $1$, $0$, or $-1$ on the diagonal.  Find $\iner(A)$.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14856,7 +14876,7 @@ Apply some symmetric row/column operations simultaneously to $A$ so that it beco
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14864,13 +14884,14 @@ Apply some symmetric row/column operations simultaneously to $A$ so that it beco
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h5 id="Exercise-2">Exercise 2<a class="anchor-link" href="#Exercise-2">&#182;</a></h5><p>求以下矩陣 $A$ 的 $\iner(A)$。</p>
 <!-- eng start -->
-Find $\iner(A)$ for the following matrices.  
+<p>Find $\iner(A)$ for the following matrices.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14886,7 +14907,7 @@ $$
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14902,7 +14923,7 @@ $$
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14919,7 +14940,7 @@ $$
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14936,22 +14957,23 @@ $$
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>一個矩陣 $A$ 的 <strong>二次型（quadratic form）</strong> 指的是長得像 $\bx\trans A\bx$ 的式子。<br>
+<h5 id="Exercise-3">Exercise 3<a class="anchor-link" href="#Exercise-3">&#182;</a></h5><p>一個矩陣 $A$ 的 <strong>二次型（quadratic form）</strong> 指的是長得像 $\bx\trans A\bx$ 的式子。<br />
 證明以下關於二次型的性質。</p>
 <!-- eng start -->
-The **quadratic form** of a matrix $A$ is any expression of the form $\bx\trans A\bx$.  Prove the following properties about the quadratic form.   
+<p>The <strong>quadratic form</strong> of a matrix $A$ is any expression of the form $\bx\trans A\bx$.  Prove the following properties about the quadratic form.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14967,106 +14989,105 @@ $$
 $$<p>證明 $\bx\trans A\bx \geq 0$。</p>
 <p>提示：展開後並將其寫成 $1(ax + by)^2 + 3(cx+dy)^2$。</p>
 <!-- eng start -->
-Let  
-
+<p>Let</p>
 $$
     A = \begin{bmatrix}
-     2 & -1 \\
-     -1 & 2 
+     2 &amp; -1 \\
+     -1 &amp; 2 
     \end{bmatrix}, \quad
     \bx = \begin{bmatrix} x \\ y \end{bmatrix}.
-$$
-
-Prove that $\bx\trans A\bx \geq 0$.  
-
-Hint:  Expand it and try to write it into the form of $1(ax + by)^2 + 3(cx+dy)^2$.  
+$$<p>Prove that $\bx\trans A\bx \geq 0$.</p>
+<p>Hint:  Expand it and try to write it into the form of $1(ax + by)^2 + 3(cx+dy)^2$.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>令 $A$ 為一 $2\times 2$ 實對稱矩陣，且其特徵值為 $\lambda_1,\lambda_2$。<br>
+<h5 id="Exercise-3(b)">Exercise 3(b)<a class="anchor-link" href="#Exercise-3(b)">&#182;</a></h5><p>令 $A$ 為一 $2\times 2$ 實對稱矩陣，且其特徵值為 $\lambda_1,\lambda_2$。<br />
 令</p>
 $$
     \bx = \begin{bmatrix} x \\ y \end{bmatrix}.
 $$<p>證明 $\bx\trans A\bx$ 可寫成 $\lambda_1(ax + bx)^2 + \lambda_2(cx + dy)^2$ 的形式。</p>
 <!-- eng start -->
-Let $A$ be a $2\times 2$ real symmetric matrix with eigenvalues $\lambda_1,\lambda_2$.  Let  
-
+<p>Let $A$ be a $2\times 2$ real symmetric matrix with eigenvalues $\lambda_1,\lambda_2$.  Let</p>
 $$
     \bx = \begin{bmatrix} x \\ y \end{bmatrix}.
-$$
-
-Show that $\bx\trans A\bx$ can be written as $\lambda_1(ax + bx)^2 + \lambda_2(cx + dy)^2$.  
+$$<p>Show that $\bx\trans A\bx$ can be written as $\lambda_1(ax + bx)^2 + \lambda_2(cx + dy)^2$.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>令 $A$ 為一 $2\times 2$ 實對稱矩陣，且其特徵值為 $\lambda_1,\lambda_2$。<br>
+<h5 id="Exercise-3(c)">Exercise 3(c)<a class="anchor-link" href="#Exercise-3(c)">&#182;</a></h5><p>令 $A$ 為一 $2\times 2$ 實對稱矩陣，且其特徵值為 $\lambda_1,\lambda_2$。<br />
 證明：</p>
 <ol>
 <li>若 $\lambda_1, \lambda_2 \geq 0$ 時，$\bx\trans A\bx \geq 0$。</li>
 <li>若 $\lambda_1, \lambda_2 \leq 0$ 時，$\bx\trans A\bx \leq 0$。</li>
 <li>若 $\lambda_1, \lambda_2 &gt; 0$ 且 $\bx\neq\bzero$ 時，$\bx\trans A\bx &gt; 0$。</li>
-<li>若 $\lambda_1, \lambda_2 &lt; 0$ 且 $\bx\neq\bzero$ 時，$\bx\trans A\bx &lt; 0$。  </li>
+<li>若 $\lambda_1, \lambda_2 &lt; 0$ 且 $\bx\neq\bzero$ 時，$\bx\trans A\bx &lt; 0$。</li>
 </ol>
 <!-- eng start -->
-Let $A$ be a $2\times 2$ real symmetric matrix with eigenvalues $\lambda_1,\lambda_2$.  Show the following:
-
-1. If $\lambda_1, \lambda_2 \geq 0$, then $\bx\trans A\bx \geq 0$.  
-2. If $\lambda_1, \lambda_2 \leq 0$, then $\bx\trans A\bx \leq 0$.  
-3. If $\lambda_1, \lambda_2 > 0$ and $\bx\neq\bzero$, then $\bx\trans A\bx > 0$.  
-4. If $\lambda_1, \lambda_2 < 0$ and $\bx\neq\bzero$, then $\bx\trans A\bx < 0$.  
+<p>Let $A$ be a $2\times 2$ real symmetric matrix with eigenvalues $\lambda_1,\lambda_2$.  Show the following:</p>
+<ol>
+<li>If $\lambda_1, \lambda_2 \geq 0$, then $\bx\trans A\bx \geq 0$.</li>
+<li>If $\lambda_1, \lambda_2 \leq 0$, then $\bx\trans A\bx \leq 0$.</li>
+<li>If $\lambda_1, \lambda_2 &gt; 0$ and $\bx\neq\bzero$, then $\bx\trans A\bx &gt; 0$.</li>
+<li>If $\lambda_1, \lambda_2 &lt; 0$ and $\bx\neq\bzero$, then $\bx\trans A\bx &lt; 0$.</li>
+</ol>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $A$ 為一 $2\times 2$ 實對稱矩陣。<br>
+<h5 id="Exercise-4">Exercise 4<a class="anchor-link" href="#Exercise-4">&#182;</a></h5><p>令 $A$ 為一 $2\times 2$ 實對稱矩陣。<br />
 證明：</p>
 <ol>
 <li>若 $\det(A) &gt; 0$ 且 $\tr(A) &gt; 0$，則 $\iner(A) = (2,0,0)$。</li>
 <li>若 $\det(A) &gt; 0$ 且 $\tr(A) &lt; 0$，則 $\iner(A) = (0,2,0)$。</li>
-<li>若 $\det(A) &lt; 0$，則 $\iner(A) = (1,1,0)$。  </li>
+<li>若 $\det(A) &lt; 0$，則 $\iner(A) = (1,1,0)$。</li>
 </ol>
 <!-- eng start -->
-Let $A$ be a $2\times 2$ real symmetric matrix.  Show the following:
-
-1. If $\det(A) > 0$ and $\tr(A) > 0$, then $\iner(A) = (2,0,0)$.  
-2. If $\det(A) > 0$ and $\tr(A) < 0$, then $\iner(A) = (0,2,0)$.  
-3. If $\det(A) < 0$, then $\iner(A) = (1,1,0)$.  
+<p>Let $A$ be a $2\times 2$ real symmetric matrix.  Show the following:</p>
+<ol>
+<li>If $\det(A) &gt; 0$ and $\tr(A) &gt; 0$, then $\iner(A) = (2,0,0)$.</li>
+<li>If $\det(A) &gt; 0$ and $\tr(A) &lt; 0$, then $\iner(A) = (0,2,0)$.</li>
+<li>If $\det(A) &lt; 0$, then $\iner(A) = (1,1,0)$.</li>
+</ol>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ 為一二次可微函數且其微分連續。
-令 $(x_0,y_0)\in\mathbb{R}^2$ 為一點、<br>
+<h5 id="Exercise-5">Exercise 5<a class="anchor-link" href="#Exercise-5">&#182;</a></h5><p>令 $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ 為一二次可微函數且其微分連續。<br />
+令 $(x_0,y_0)\in\mathbb{R}^2$ 為一點使得一次微分 $f_x(x_0,y_0) = f_y(x_0,y_0) = 0$、<br />
 而 $f_{xx}, f_{xy} = f_{yx}, f_{yy}$ 分別為 $f$ 對 $x$ 或 $y$ 的二次微分。</p>
 <p>令</p>
 $$
@@ -15074,10 +15095,10 @@ $$
     f_{xx} &amp; f_{yx} \\
     f_{xy} &amp; f_{yy}
     \end{bmatrix}, \quad
-    \bx = \begin{bmatrix} x \\ y_0 + y \end{bmatrix}.
+    \bx = \begin{bmatrix} x_0 + x \\ y_0 + y \end{bmatrix}.
 $$<p>已知 $f$ 的函數值可以用</p>
 $$
-    f(x_0 + x, y_0 + y) \sim f(x_0, y_0) + \bx\trans A \bx
+    f(x_0 + x, y_0 + y) \sim f(x_0, y_0) + \frac{1}{2}\bx\trans A \bx
 $$<p>逼近。</p>
 <p>說明為什麼：</p>
 <ol>
@@ -15086,37 +15107,31 @@ $$<p>逼近。</p>
 <li>若 $\det(A) &lt; 0$，則 $f$ 在 $(x_0,y_0)$ 為𩣑點。</li>
 </ol>
 <!-- eng start -->
-Let $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ be a function whose second derivatives exist and are continuous.  Let $(x_0,y_0)\in\mathbb{R}^2$ be a point and $f_{xx}, f_{xy} = f_{yx}, f_{yy}$ the second partial derivatives of $f$ with respect to $x$ and $y$.  
-
-Let  
-
+<p>Let $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ be a function whose second derivatives exist and are continuous.  Let $(x_0,y_0)\in\mathbb{R}^2$ be a point such that the first derivatives $f_x(x_0,y_0) = f_y(x_0,y_0) = 0$, and let $f_{xx}, f_{xy} = f_{yx}, f_{yy}$ be the second partial derivatives of $f$ with respect to $x$ and $y$.</p>
+<p>Let</p>
 $$
     A = \begin{bmatrix}
-    f_{xx} & f_{yx} \\
-    f_{xy} & f_{yy}
+    f_{xx} &amp; f_{yx} \\
+    f_{xy} &amp; f_{yy}
     \end{bmatrix}, \quad
-    \bx = \begin{bmatrix} x \\ y_0 + y \end{bmatrix}.
+    \bx = \begin{bmatrix} x + x+0 \\ y_0 + y \end{bmatrix}.
+$$<p>It is known that the approximation</p>
 $$
-
-It is known that the approximation
-
-$$
-    f(x_0 + x, y_0 + y) \sim f(x_0, y_0) + \bx\trans A \bx
-$$
-
-holds.  
-
-Give some intuitive reasons to the following facts.  
-
-1. If $\det(A) > 0$ and $\tr(A) > 0$, then $f$ has a local minimum at $(x_0,y_0)$.  
-2. If $\det(A) > 0$ and $\tr(A) < 0$, then $f$ has a local maximum at $(x_0,y_0)$.  
-3. If $\det(A) < 0$, then $f$ has a saddle point at $(x_0,y_0)$.  
+    f(x_0 + x, y_0 + y) \sim f(x_0, y_0) + \frac{1}{2}\bx\trans A \bx
+$$<p>holds.</p>
+<p>Give some intuitive reasons to the following facts.</p>
+<ol>
+<li>If $\det(A) &gt; 0$ and $\tr(A) &gt; 0$, then $f$ has a local minimum at $(x_0,y_0)$.</li>
+<li>If $\det(A) &gt; 0$ and $\tr(A) &lt; 0$, then $f$ has a local maximum at $(x_0,y_0)$.</li>
+<li>If $\det(A) &lt; 0$, then $f$ has a saddle point at $(x_0,y_0)$.</li>
+</ol>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -15125,17 +15140,15 @@ Give some intuitive reasons to the following facts.
 <h5 id="Exercise-6">Exercise 6<a class="anchor-link" href="#Exercise-6">&#182;</a></h5><p>利用以下步驟證明西爾維斯特慣性定理。</p>
 <h5 id="Sylvester's-law-of-inertia">Sylvester's law of inertia<a class="anchor-link" href="#Sylvester's-law-of-inertia">&#182;</a></h5><p>If two symmetric matrices are congruent, then they have the same inertia.</p>
 <!-- eng start -->
-Use the given instructions to prove Sylvester's law of inertia.  
-
-##### Sylvester's law of inertia
-
-If two symmetric matrices are congruent, then they have the same inertia.  
+<p>Use the given instructions to prove Sylvester's law of inertia.</p>
+<h5 id="Sylvester's-law-of-inertia">Sylvester's law of inertia<a class="anchor-link" href="#Sylvester's-law-of-inertia">&#182;</a></h5><p>If two symmetric matrices are congruent, then they have the same inertia.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -15149,22 +15162,20 @@ $$
     \end{bmatrix}.
 $$<p>說明 $E(t)\trans AE(t)$ 在任何 $t\in\mathbb{R}$ 時都有相同的零維數。</p>
 <!-- eng start -->
-Define  
-
+<p>Define</p>
 $$
     E(t) = \begin{bmatrix}
-     1 & t \\
-     0 & 1
+     1 &amp; t \\
+     0 &amp; 1
     \end{bmatrix}.
-$$
-
-Show that $E(t)\trans AE(t)$ has the same nullity for any $t\in\mathbb{R}$.  
+$$<p>Show that $E(t)\trans AE(t)$ has the same nullity for any $t\in\mathbb{R}$.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -15178,22 +15189,20 @@ $$
     \end{bmatrix}.
 $$<p>說明 $E(t)\trans AE(t)$ 在任何 $t &gt; 0$ 時都有相同的零維數。</p>
 <!-- eng start -->
-Define  
-
+<p>Define</p>
 $$
     E(t) = \begin{bmatrix}
-     t & 0 \\
-     0 & 1
+     t &amp; 0 \\
+     0 &amp; 1
     \end{bmatrix}.
-$$
-
-Show that $E(t)\trans AE(t)$ has the same nullity for any $t > 0$.  
+$$<p>Show that $E(t)\trans AE(t)$ has the same nullity for any $t &gt; 0$.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -15207,32 +15216,31 @@ $$
     \end{bmatrix}.
 $$<p>說明 $\iner(E\trans AE) = \iner(A)$。</p>
 <!-- eng start -->
-Define  
-
+<p>Define</p>
 $$
     E = \begin{bmatrix}
-     -1 & 0 \\
-     0 & 1
+     -1 &amp; 0 \\
+     0 &amp; 1
     \end{bmatrix}.
-$$
-
-Show that $\iner(E\trans AE) = \iner(A)$.  
+$$<p>Show that $\iner(E\trans AE) = \iner(A)$.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Exercise-6(d)">Exercise 6(d)<a class="anchor-link" href="#Exercise-6(d)">&#182;</a></h5><p>已知矩陣的特徵值會隨矩陣的數值連續變動。<br>
+<h5 id="Exercise-6(d)">Exercise 6(d)<a class="anchor-link" href="#Exercise-6(d)">&#182;</a></h5><p>已知矩陣的特徵值會隨矩陣的數值連續變動。<br />
 利用這個性質證明西爾維斯特慣性定理。</p>
 <!-- eng start -->
-It is known that the eigenvalues is a continuous function of the entries of the matrix.  Use this fact to prove Sylvester's law of inertia.  
+<p>It is known that the eigenvalues is a continuous function of the entries of the matrix.  Use this fact to prove Sylvester's law of inertia.</p>
 <!-- eng end -->
+
 </div>
 </div>
 </div>
